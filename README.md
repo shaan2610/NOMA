@@ -1,7 +1,7 @@
 # NOMA 🏠⚡  
 **Turn Rent Into Yield & On-Chain Reputation**
 
-Built at **ETHGlobal HackMoney**
+Built at **ETH HackMoney 2026**
 
 ---
 
