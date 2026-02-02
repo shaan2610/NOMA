@@ -7,7 +7,7 @@ Built at **ETHGlobal HackMoney**
 
 ## 👥 Team
 
-- **Federico Loterstein** — Frontend Lead / Tech Lead  
+- **Federico Loterstein** — Frontend Lead  
   GitHub: @fedeloters  
 
 - **Shan Kumar** — Backend & Smart Contracts  
@@ -17,7 +17,7 @@ Built at **ETHGlobal HackMoney**
   GitHub: @espejeljuanma  
 
 - **Ali Pizra** — Product Designer / UI / Storytelling  
-  Location: Bangkok / Bali (UTC+7 / UTC+8)
+
 
 ---
 
