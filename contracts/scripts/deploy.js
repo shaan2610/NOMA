@@ -15,6 +15,16 @@ const hre = require("hardhat");
  *   npx hardhat run scripts/deploy.js --network arcTestnet
  */
 
+function buildGasOverrides(feeData) {
+  if (!feeData) return {};
+  const bump = (value) => (value ? (value * 12n) / 10n : value);
+  return {
+    maxFeePerGas: bump(feeData.maxFeePerGas),
+    maxPriorityFeePerGas: bump(feeData.maxPriorityFeePerGas),
+    gasPrice: bump(feeData.gasPrice),
+  };
+}
+
 async function main() {
   const [deployer] = await hre.ethers.getSigners();
   
@@ -27,6 +37,8 @@ async function main() {
 
   // Track deployed addresses
   const deployed = {};
+  const feeData = await hre.ethers.provider.getFeeData();
+  const gasOverrides = buildGasOverrides(feeData);
 
   // ═══════════════════════════════════════════════════
   // 1. Deploy MockUSDC (or use existing)
@@ -41,7 +53,7 @@ async function main() {
     console.log(`   Using existing USDC: ${usdcAddress}`);
   } else {
     const MockUSDC = await hre.ethers.getContractFactory("MockUSDC");
-    const mockUSDC = await MockUSDC.deploy();
+    const mockUSDC = await MockUSDC.deploy(gasOverrides);
     await mockUSDC.waitForDeployment();
     usdcAddress = await mockUSDC.getAddress();
     deployed.MockUSDC = usdcAddress;
@@ -54,7 +66,7 @@ async function main() {
   console.log("\n📦 [2/5] Deploying LeaseNFT...");
   
   const LeaseNFT = await hre.ethers.getContractFactory("LeaseNFT");
-  const leaseNFT = await LeaseNFT.deploy();
+  const leaseNFT = await LeaseNFT.deploy(gasOverrides);
   await leaseNFT.waitForDeployment();
   deployed.LeaseNFT = await leaseNFT.getAddress();
   console.log(`   ✅ LeaseNFT deployed: ${deployed.LeaseNFT}`);
@@ -65,7 +77,7 @@ async function main() {
   console.log("\n📦 [3/5] Deploying NomaVault...");
   
   const NomaVault = await hre.ethers.getContractFactory("NomaVault");
-  const nomaVault = await NomaVault.deploy(usdcAddress);
+  const nomaVault = await NomaVault.deploy(usdcAddress, gasOverrides);
   await nomaVault.waitForDeployment();
   deployed.NomaVault = await nomaVault.getAddress();
   console.log(`   ✅ NomaVault deployed: ${deployed.NomaVault}`);
@@ -76,7 +88,7 @@ async function main() {
   console.log("\n📦 [4/5] Deploying ReputationRegistry...");
   
   const ReputationRegistry = await hre.ethers.getContractFactory("ReputationRegistry");
-  const reputationRegistry = await ReputationRegistry.deploy();
+  const reputationRegistry = await ReputationRegistry.deploy(gasOverrides);
   await reputationRegistry.waitForDeployment();
   deployed.ReputationRegistry = await reputationRegistry.getAddress();
   console.log(`   ✅ ReputationRegistry deployed: ${deployed.ReputationRegistry}`);
@@ -87,7 +99,7 @@ async function main() {
   console.log("\n📦 [5/5] Deploying NomaPayment...");
   
   const NomaPayment = await hre.ethers.getContractFactory("NomaPayment");
-  const nomaPayment = await NomaPayment.deploy(usdcAddress);
+  const nomaPayment = await NomaPayment.deploy(usdcAddress, gasOverrides);
   await nomaPayment.waitForDeployment();
   deployed.NomaPayment = await nomaPayment.getAddress();
   console.log(`   ✅ NomaPayment deployed: ${deployed.NomaPayment}`);
@@ -99,23 +111,26 @@ async function main() {
 
   // Set payment contract in LeaseNFT
   console.log("   Setting payment contract in LeaseNFT...");
-  await leaseNFT.setPaymentContract(deployed.NomaPayment);
+  await (await leaseNFT.setPaymentContract(deployed.NomaPayment, gasOverrides)).wait();
 
   // Set payment contract in NomaVault
   console.log("   Setting payment contract in NomaVault...");
-  await nomaVault.setPaymentContract(deployed.NomaPayment);
+  await (await nomaVault.setPaymentContract(deployed.NomaPayment, gasOverrides)).wait();
 
   // Set payment contract in ReputationRegistry
   console.log("   Setting payment contract in ReputationRegistry...");
-  await reputationRegistry.setPaymentContract(deployed.NomaPayment);
+  await (await reputationRegistry.setPaymentContract(deployed.NomaPayment, gasOverrides)).wait();
 
   // Set contract references in NomaPayment
   console.log("   Setting contract references in NomaPayment...");
-  await nomaPayment.setContracts(
-    deployed.LeaseNFT,
-    deployed.NomaVault,
-    deployed.ReputationRegistry
-  );
+  await (
+    await nomaPayment.setContracts(
+      deployed.LeaseNFT,
+      deployed.NomaVault,
+      deployed.ReputationRegistry,
+      gasOverrides
+    )
+  ).wait();
 
   console.log("   ✅ All contracts configured!");
 

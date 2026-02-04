@@ -137,20 +137,39 @@ See [`contracts/README.md`](./contracts/README.md) for detailed documentation.
 - [x] Implement yield routing logic (minimal)
 - [x] Emit events for frontend display
 - [x] Write minimal contract tests
-- [ ] Deploy to testnet
-- [ ] Capture testnet TxIDs
-- [ ] Final contract verification
+- [x] **Deploy to Sepolia testnet** ✅
+- [x] **Capture testnet addresses** ✅
+- [x] **Contract configuration complete** ✅
 - [ ] Support demo debugging
+- [ ] Optional: Verify contracts on Etherscan
 
 ---
 
 ## 🌐 Networks
 
-| Network | Status |
-|---------|--------|
-| Local (Hardhat) | ✅ Ready |
-| Arc Testnet | 🔜 Pending |
-| Arc Mainnet | 🔜 Pending |
+| Network | Status | Contracts |
+|---------|--------|-----------|
+| Local (Hardhat) | ✅ Ready | [Deploy locally](./contracts/README.md#deployment) |
+| **Sepolia Testnet** | ✅ **DEPLOYED** | [View Addresses](#-sepolia-deployment) |
+| Arc Testnet | 🔜 Pending | Coming soon |
+| Arc Mainnet | 🔜 Pending | Coming soon |
+
+---
+
+## 🚀 Sepolia Deployment
+
+**Deployed on:** February 4, 2026  
+**Network:** Sepolia Testnet (Chain ID: 11155111)
+
+| Contract | Address | Explorer |
+|----------|---------|----------|
+| MockUSDC | `0xc7f13f249BB6F0DBBC3370f27328F067fb8AE19b` | [View](https://sepolia.etherscan.io/address/0xc7f13f249BB6F0DBBC3370f27328F067fb8AE19b) |
+| LeaseNFT | `0x8f0237b2076887988b796C6054A9a5a6Cf5cA058` | [View](https://sepolia.etherscan.io/address/0x8f0237b2076887988b796C6054A9a5a6Cf5cA058) |
+| NomaVault | `0xc8a37Bd0B65862e9e38F7568621e4349d84De007` | [View](https://sepolia.etherscan.io/address/0xc8a37Bd0B65862e9e38F7568621e4349d84De007) |
+| ReputationRegistry | `0x54063F6114cCDD076f60a5AB3729a8C89B0264ad` | [View](https://sepolia.etherscan.io/address/0x54063F6114cCDD076f60a5AB3729a8C89B0264ad) |
+| NomaPayment | `0xdF07D598dFb950A4bE8C43a2B72f84150aC9bBc4` | [View](https://sepolia.etherscan.io/address/0xdF07D598dFb950A4bE8C43a2B72f84150aC9bBc4) |
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for full deployment details and usage guide.
 
 ---
 
