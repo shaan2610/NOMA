@@ -9,7 +9,7 @@ import "../interfaces/ICircleGateway.sol";
  * @title MockCircleGateway
  * @notice Mock implementation of Circle's CCTP for demo purposes
  * @dev Simulates cross-chain USDC transfers
- * 
+ *
  * In production, this would integrate with:
  * - Circle CCTP (Cross-Chain Transfer Protocol)
  * - Circle Programmable Wallets
@@ -50,10 +50,7 @@ contract MockCircleGateway is ICircleGateway {
         uint256 amount
     );
 
-    event TransferCompleted(
-        uint64 indexed messageId,
-        uint256 timestamp
-    );
+    event TransferCompleted(uint64 indexed messageId, uint256 timestamp);
 
     // ============ Constructor ============
 
@@ -62,14 +59,14 @@ contract MockCircleGateway is ICircleGateway {
         _messageIdCounter = 1;
 
         // Set up mock domain IDs
-        chainDomains[1] = 0;       // Ethereum Mainnet
-        chainDomains[137] = 1;     // Polygon
-        chainDomains[42161] = 2;   // Arbitrum
-        chainDomains[10] = 3;      // Optimism
-        chainDomains[8453] = 4;    // Base
-        chainDomains[43114] = 5;   // Avalanche
+        chainDomains[1] = 0; // Ethereum Mainnet
+        chainDomains[137] = 1; // Polygon
+        chainDomains[42161] = 2; // Arbitrum
+        chainDomains[10] = 3; // Optimism
+        chainDomains[8453] = 4; // Base
+        chainDomains[43114] = 5; // Avalanche
         // Arc would have its own domain
-        chainDomains[1234] = 100;  // Arc (mock chain ID)
+        chainDomains[1234] = 100; // Arc (mock chain ID)
     }
 
     // ============ Core Functions ============
@@ -101,13 +98,7 @@ contract MockCircleGateway is ICircleGateway {
             timestamp: block.timestamp
         });
 
-        emit DepositForBurn(
-            messageId,
-            msg.sender,
-            destinationDomain,
-            recipient,
-            amount
-        );
+        emit DepositForBurn(messageId, msg.sender, destinationDomain, recipient, amount);
 
         // For demo: auto-complete transfers after short delay
         // In production, this would be handled by Circle's attestation service

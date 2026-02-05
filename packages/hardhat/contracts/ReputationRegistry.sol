@@ -8,7 +8,7 @@ import "./interfaces/INomaTypes.sol";
  * @title ReputationRegistry
  * @notice On-chain reputation tracking for NOMA tenants
  * @dev Tracks payment history and calculates reputation scores
- * 
+ *
  * ┌─────────────────────────────────────────────────────────────────┐
  * │                    REPUTATION SYSTEM                            │
  * │                                                                  │
@@ -99,12 +99,7 @@ contract ReputationRegistry is Ownable, INomaTypes {
      * @param isEarly Whether payment was early
      * @param isLate Whether payment was late
      */
-    function recordPayment(
-        address tenant,
-        uint256 leaseId,
-        bool isEarly,
-        bool isLate
-    ) external onlyPaymentContract {
+    function recordPayment(address tenant, uint256 leaseId, bool isEarly, bool isLate) external onlyPaymentContract {
         Reputation storage rep = reputations[tenant];
         LeaseStats storage stats = leaseStats[tenant][leaseId];
 
@@ -154,12 +149,9 @@ contract ReputationRegistry is Ownable, INomaTypes {
      * @param tenant Tenant address
      * @param leaseId Lease ID
      */
-    function recordMissedPayment(
-        address tenant,
-        uint256 leaseId
-    ) external onlyPaymentContract {
+    function recordMissedPayment(address tenant, uint256 leaseId) external onlyPaymentContract {
         Reputation storage rep = reputations[tenant];
-        
+
         if (rep.tenant == address(0)) {
             rep.tenant = tenant;
             rep.score = BASE_SCORE;
@@ -171,11 +163,7 @@ contract ReputationRegistry is Ownable, INomaTypes {
 
         emit ReputationUpdated(tenant, rep.score, rep.tier);
 
-        emit AIAgentTrigger(
-            "MISSED_PAYMENT",
-            leaseId,
-            abi.encode(tenant, rep.missedPayments, rep.score)
-        );
+        emit AIAgentTrigger("MISSED_PAYMENT", leaseId, abi.encode(tenant, rep.missedPayments, rep.score));
     }
 
     /**
@@ -183,10 +171,7 @@ contract ReputationRegistry is Ownable, INomaTypes {
      * @param tenant Tenant address
      * @param yieldAmount Amount of yield earned
      */
-    function addYieldEarned(
-        address tenant,
-        uint256 yieldAmount
-    ) external onlyPaymentContract {
+    function addYieldEarned(address tenant, uint256 yieldAmount) external onlyPaymentContract {
         reputations[tenant].totalYieldEarned += yieldAmount;
     }
 
@@ -213,7 +198,7 @@ contract ReputationRegistry is Ownable, INomaTypes {
     function _calculateTier(uint256 paymentCount, uint256 score) internal pure returns (ReputationTier) {
         // Must have minimum score to advance tiers
         if (score < 300) return ReputationTier.New;
-        
+
         if (paymentCount >= PREMIUM_THRESHOLD && score >= 700) {
             return ReputationTier.Premium;
         } else if (paymentCount >= TRUSTED_THRESHOLD && score >= 550) {
@@ -228,9 +213,7 @@ contract ReputationRegistry is Ownable, INomaTypes {
      * @notice Check if payment count is a milestone
      */
     function _isMilestone(uint256 count) internal pure returns (bool) {
-        return count == BASIC_THRESHOLD || 
-               count == TRUSTED_THRESHOLD || 
-               count == PREMIUM_THRESHOLD;
+        return count == BASIC_THRESHOLD || count == TRUSTED_THRESHOLD || count == PREMIUM_THRESHOLD;
     }
 
     // ============ View Functions ============
@@ -280,10 +263,7 @@ contract ReputationRegistry is Ownable, INomaTypes {
      * @param leaseId Lease ID
      * @return stats Lease payment stats
      */
-    function getLeaseStats(
-        address tenant,
-        uint256 leaseId
-    ) external view returns (LeaseStats memory) {
+    function getLeaseStats(address tenant, uint256 leaseId) external view returns (LeaseStats memory) {
         return leaseStats[tenant][leaseId];
     }
 
@@ -293,12 +273,9 @@ contract ReputationRegistry is Ownable, INomaTypes {
      * @return eligible Whether tenant can access lending
      * @return reason Eligibility reason
      */
-    function checkLendingEligibility(address tenant) external view returns (
-        bool eligible,
-        string memory reason
-    ) {
+    function checkLendingEligibility(address tenant) external view returns (bool eligible, string memory reason) {
         Reputation memory rep = reputations[tenant];
-        
+
         if (rep.tier == ReputationTier.Premium) {
             return (true, "Premium tier - Full lending access");
         } else if (rep.tier == ReputationTier.Trusted) {
@@ -306,7 +283,7 @@ contract ReputationRegistry is Ownable, INomaTypes {
         } else if (rep.tier == ReputationTier.Basic && rep.score >= 500) {
             return (true, "Basic tier - Limited lending access");
         }
-        
+
         return (false, "Build more reputation to unlock lending");
     }
 
@@ -316,12 +293,11 @@ contract ReputationRegistry is Ownable, INomaTypes {
      * @return paymentsNeeded Number of payments to next tier
      * @return nextTier The next tier to achieve
      */
-    function getNextTierProgress(address tenant) external view returns (
-        uint256 paymentsNeeded,
-        ReputationTier nextTier
-    ) {
+    function getNextTierProgress(
+        address tenant
+    ) external view returns (uint256 paymentsNeeded, ReputationTier nextTier) {
         Reputation memory rep = reputations[tenant];
-        
+
         if (rep.tier == ReputationTier.Premium) {
             return (0, ReputationTier.Premium);
         } else if (rep.tier == ReputationTier.Trusted) {

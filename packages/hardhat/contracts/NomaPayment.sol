@@ -14,7 +14,7 @@ import "./ReputationRegistry.sol";
  * @title NomaPayment
  * @notice Core payment processing contract for NOMA protocol
  * @dev Handles rent payments, USDC settlement, and event emission
- * 
+ *
  * ┌─────────────────────────────────────────────────────────────────────────┐
  * │                         PAYMENT FLOW                                     │
  * │                                                                          │
@@ -95,11 +95,7 @@ contract NomaPayment is Ownable, ReentrancyGuard, INomaTypes {
      * @param _vault NomaVault contract address
      * @param _reputation ReputationRegistry contract address
      */
-    function setContracts(
-        address _leaseNFT,
-        address _vault,
-        address _reputation
-    ) external onlyOwner {
+    function setContracts(address _leaseNFT, address _vault, address _reputation) external onlyOwner {
         leaseNFT = LeaseNFT(_leaseNFT);
         vault = NomaVault(_vault);
         reputation = ReputationRegistry(_reputation);
@@ -119,20 +115,20 @@ contract NomaPayment is Ownable, ReentrancyGuard, INomaTypes {
      * @notice Pay rent for a lease
      * @param leaseId The lease ID to pay rent for
      * @return paymentId The ID of the payment record
-     * 
+     *
      * @dev This is the main entry point for rent payments
      * Flow: Tenant → USDC → Vault → Lease Update → Reputation Update
      */
     function payRent(uint256 leaseId) external nonReentrant returns (uint256 paymentId) {
         // Get lease data
         Lease memory lease = leaseNFT.getLease(leaseId);
-        
+
         // Validations
         if (lease.status != LeaseStatus.Active) revert LeaseNotActive();
         if (msg.sender != lease.tenant) revert NotTenant();
 
         uint256 amount = lease.monthlyRent;
-        
+
         // Check allowance and balance
         if (usdc.allowance(msg.sender, address(this)) < amount) {
             revert InsufficientAllowance();
@@ -154,9 +150,10 @@ contract NomaPayment is Ownable, ReentrancyGuard, INomaTypes {
 
         // Create payment record
         paymentId = _paymentIdCounter++;
-        
-        PaymentStatus status = isEarly ? PaymentStatus.Paid : 
-            (block.timestamp <= dueDate + gracePeriod ? PaymentStatus.Paid : PaymentStatus.Late);
+
+        PaymentStatus status = isEarly
+            ? PaymentStatus.Paid
+            : (block.timestamp <= dueDate + gracePeriod ? PaymentStatus.Paid : PaymentStatus.Late);
 
         payments[paymentId] = RentPayment({
             paymentId: paymentId,
@@ -175,24 +172,15 @@ contract NomaPayment is Ownable, ReentrancyGuard, INomaTypes {
         leaseNFT.recordPayment(leaseId, amount);
 
         // Update reputation
-        reputation.recordPayment(
-            lease.tenant,
-            leaseId,
-            isEarly,
-            status == PaymentStatus.Late
-        );
+        reputation.recordPayment(lease.tenant, leaseId, isEarly, status == PaymentStatus.Late);
 
         // Emit events
         emit RentPaid(leaseId, paymentId, lease.tenant, amount, isEarly, yieldEarned);
-        
+
         emit PaymentSettled(paymentId, leaseId, amount, SETTLEMENT_CHAIN);
 
         // AI Agent trigger for payment analysis
-        emit AIAgentTrigger(
-            "PAYMENT_RECEIVED",
-            leaseId,
-            abi.encode(paymentId, amount, isEarly, yieldEarned)
-        );
+        emit AIAgentTrigger("PAYMENT_RECEIVED", leaseId, abi.encode(paymentId, amount, isEarly, yieldEarned));
 
         // Transfer to landlord (in production, could be held in vault for yield)
         vault.withdrawToLandlord(leaseId, lease.landlord, amount);
@@ -206,10 +194,7 @@ contract NomaPayment is Ownable, ReentrancyGuard, INomaTypes {
      * @param amount Amount to pay
      * @return paymentId The payment ID
      */
-    function payRentCustomAmount(
-        uint256 leaseId,
-        uint256 amount
-    ) external nonReentrant returns (uint256 paymentId) {
+    function payRentCustomAmount(uint256 leaseId, uint256 amount) external nonReentrant returns (uint256 paymentId) {
         if (amount == 0) revert InvalidAmount();
 
         Lease memory lease = leaseNFT.getLease(leaseId);
@@ -229,7 +214,7 @@ contract NomaPayment is Ownable, ReentrancyGuard, INomaTypes {
 
         // Create payment record
         paymentId = _paymentIdCounter++;
-        
+
         payments[paymentId] = RentPayment({
             paymentId: paymentId,
             leaseId: leaseId,
@@ -296,11 +281,11 @@ contract NomaPayment is Ownable, ReentrancyGuard, INomaTypes {
     function getPaymentHistory(uint256 leaseId) external view returns (RentPayment[] memory) {
         uint256[] memory paymentIds = leasePayments[leaseId];
         RentPayment[] memory paymentList = new RentPayment[](paymentIds.length);
-        
+
         for (uint256 i = 0; i < paymentIds.length; i++) {
             paymentList[i] = payments[paymentIds[i]];
         }
-        
+
         return paymentList;
     }
 
@@ -310,13 +295,10 @@ contract NomaPayment is Ownable, ReentrancyGuard, INomaTypes {
      * @return isDue Whether rent is due
      * @return daysUntilDue Days until due (negative if overdue)
      */
-    function checkRentDue(uint256 leaseId) external view returns (
-        bool isDue,
-        int256 daysUntilDue
-    ) {
+    function checkRentDue(uint256 leaseId) external view returns (bool isDue, int256 daysUntilDue) {
         Lease memory lease = leaseNFT.getLease(leaseId);
         uint256 dueDate = _calculateCurrentDueDate(lease.dueDay);
-        
+
         if (block.timestamp >= dueDate) {
             isDue = true;
             daysUntilDue = -int256((block.timestamp - dueDate) / 1 days);
@@ -334,11 +316,11 @@ contract NomaPayment is Ownable, ReentrancyGuard, INomaTypes {
     function estimateEarlyPaymentYield(uint256 leaseId) external view returns (uint256) {
         Lease memory lease = leaseNFT.getLease(leaseId);
         uint256 dueDate = _calculateCurrentDueDate(lease.dueDay);
-        
+
         if (block.timestamp >= dueDate) {
             return 0; // No yield for on-time or late payments
         }
-        
+
         uint256 daysEarly = (dueDate - block.timestamp) / 1 days;
         return vault.estimateYield(lease.monthlyRent, daysEarly);
     }

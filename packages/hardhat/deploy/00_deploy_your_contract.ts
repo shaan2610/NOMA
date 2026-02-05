@@ -67,12 +67,9 @@ const deployNomaContracts: DeployFunction = async function (hre: HardhatRuntimeE
   const nomaPaymentContract = await hre.ethers.getContract<Contract>("NomaPayment", deployer);
 
   // Configure NomaPayment with contract addresses
-  const tx1 = await nomaPaymentContract.setContracts(
-    leaseNFT.address,
-    nomaVault.address,
-    reputationRegistry.address,
-    { gasLimit: 500000 }
-  );
+  const tx1 = await nomaPaymentContract.setContracts(leaseNFT.address, nomaVault.address, reputationRegistry.address, {
+    gasLimit: 500000,
+  });
   await tx1.wait();
   console.log("✅ NomaPayment configured with contract addresses");
 

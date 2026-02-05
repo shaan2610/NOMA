@@ -125,11 +125,7 @@ export default function PayRent() {
       )}
 
       {/* Pay Button */}
-      <button
-        className="btn btn-primary btn-lg"
-        onClick={handlePayRent}
-        disabled={isMining || !address || !leaseId}
-      >
+      <button className="btn btn-primary btn-lg" onClick={handlePayRent} disabled={isMining || !address || !leaseId}>
         {isMining ? (
           <>
             <span className="loading loading-spinner"></span>
@@ -162,7 +158,7 @@ export default function PayRent() {
             <br />
             2. Make sure you have enough USDC and have approved the NomaPayment contract
             <br />
-            3. Click "Pay Rent" to submit the payment
+            3. Click &quot;Pay Rent&quot; to submit the payment
             <br />
             4. Early payments earn yield and boost your reputation!
           </div>

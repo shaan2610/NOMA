@@ -10,7 +10,7 @@ import "./interfaces/INomaTypes.sol";
  * @title LeaseNFT
  * @notice NFT representation of rental leases for the NOMA protocol
  * @dev Each lease is minted as an NFT owned by the tenant
- * 
+ *
  * ┌─────────────────────────────────────────────────────────────┐
  * │                      LEASE NFT                               │
  * │  ┌─────────────────────────────────────────────────────┐   │
@@ -151,11 +151,7 @@ contract LeaseNFT is ERC721, ERC721URIStorage, Ownable, INomaTypes {
         emit LeaseCreated(leaseId, tenant, landlord, monthlyRent, dueDay);
 
         // AI Agent trigger for new lease
-        emit AIAgentTrigger(
-            "NEW_LEASE",
-            leaseId,
-            abi.encode(tenant, landlord, monthlyRent)
-        );
+        emit AIAgentTrigger("NEW_LEASE", leaseId, abi.encode(tenant, landlord, monthlyRent));
     }
 
     /**
@@ -163,10 +159,7 @@ contract LeaseNFT is ERC721, ERC721URIStorage, Ownable, INomaTypes {
      * @param leaseId The lease to update
      * @param amount Amount paid
      */
-    function recordPayment(
-        uint256 leaseId,
-        uint256 amount
-    ) external onlyPaymentContract {
+    function recordPayment(uint256 leaseId, uint256 amount) external onlyPaymentContract {
         Lease storage lease = leases[leaseId];
         if (lease.status != LeaseStatus.Active) revert LeaseNotActive();
 
@@ -186,11 +179,7 @@ contract LeaseNFT is ERC721, ERC721URIStorage, Ownable, INomaTypes {
         lease.endDate = block.timestamp;
 
         // AI Agent trigger for lease termination
-        emit AIAgentTrigger(
-            "LEASE_TERMINATED",
-            leaseId,
-            abi.encode(lease.tenant, lease.totalPaid, lease.paymentCount)
-        );
+        emit AIAgentTrigger("LEASE_TERMINATED", leaseId, abi.encode(lease.tenant, lease.totalPaid, lease.paymentCount));
     }
 
     // ============ View Functions ============
@@ -238,36 +227,26 @@ contract LeaseNFT is ERC721, ERC721URIStorage, Ownable, INomaTypes {
      */
     function getNextDueDate(uint256 leaseId) external view returns (uint256) {
         Lease storage lease = leases[leaseId];
-        
+
         // Calculate next due date based on current time and due day
         uint256 currentMonth = (block.timestamp / 30 days);
         uint256 dueDate = (currentMonth * 30 days) + (lease.dueDay * 1 days);
-        
+
         // If we're past this month's due date, return next month's
         if (block.timestamp > dueDate) {
             dueDate += 30 days;
         }
-        
+
         return dueDate;
     }
 
     // ============ ERC721 Overrides ============
 
-    function tokenURI(uint256 tokenId)
-        public
-        view
-        override(ERC721, ERC721URIStorage)
-        returns (string memory)
-    {
+    function tokenURI(uint256 tokenId) public view override(ERC721, ERC721URIStorage) returns (string memory) {
         return super.tokenURI(tokenId);
     }
 
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        override(ERC721, ERC721URIStorage)
-        returns (bool)
-    {
+    function supportsInterface(bytes4 interfaceId) public view override(ERC721, ERC721URIStorage) returns (bool) {
         return super.supportsInterface(interfaceId);
     }
 }

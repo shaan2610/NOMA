@@ -11,7 +11,7 @@ import "./interfaces/INomaTypes.sol";
  * @title NomaVault
  * @notice Vault for USDC deposits, yield generation, and fund management
  * @dev Handles yield routing for early rent payments
- * 
+ *
  * ┌─────────────────────────────────────────────────────────────────┐
  * │                        NOMA VAULT                                │
  * │                                                                  │
@@ -147,11 +147,7 @@ contract NomaVault is Ownable, ReentrancyGuard, INomaTypes {
             emit YieldRouted(leaseId, yieldEarned, currentStrategy);
 
             // AI Agent trigger for yield routing
-            emit AIAgentTrigger(
-                "YIELD_ROUTING",
-                leaseId,
-                abi.encode(amount, yieldEarned, currentStrategy)
-            );
+            emit AIAgentTrigger("YIELD_ROUTING", leaseId, abi.encode(amount, yieldEarned, currentStrategy));
         }
 
         return yieldEarned;
@@ -194,14 +190,11 @@ contract NomaVault is Ownable, ReentrancyGuard, INomaTypes {
      * @param daysEarly Days before due date
      * @return estimatedYield Estimated yield amount
      */
-    function estimateYield(
-        uint256 amount,
-        uint256 daysEarly
-    ) external view returns (uint256 estimatedYield) {
+    function estimateYield(uint256 amount, uint256 daysEarly) external view returns (uint256 estimatedYield) {
         // Base yield + bonus for days early
         uint256 baseYield = (amount * earlyPaymentYieldBps) / 10000;
         uint256 earlyBonus = (amount * daysEarly * 2) / 10000; // 0.02% per day early
-        
+
         return baseYield + earlyBonus;
     }
 
@@ -226,12 +219,8 @@ contract NomaVault is Ownable, ReentrancyGuard, INomaTypes {
      */
     function updateYieldStrategy(string calldata strategy) external onlyOwner {
         currentStrategy = strategy;
-        
-        emit AIAgentTrigger(
-            "STRATEGY_UPDATE",
-            0,
-            abi.encode(strategy, mockAPY)
-        );
+
+        emit AIAgentTrigger("STRATEGY_UPDATE", 0, abi.encode(strategy, mockAPY));
     }
 
     /**
@@ -259,12 +248,11 @@ contract NomaVault is Ownable, ReentrancyGuard, INomaTypes {
      * @return strategy Current strategy
      * @return apy Current APY
      */
-    function getVaultStats() external view returns (
-        uint256 deposits,
-        uint256 yield_,
-        string memory strategy,
-        uint256 apy
-    ) {
+    function getVaultStats()
+        external
+        view
+        returns (uint256 deposits, uint256 yield_, string memory strategy, uint256 apy)
+    {
         return (totalDeposits, totalYieldGenerated, currentStrategy, mockAPY);
     }
 
@@ -274,10 +262,7 @@ contract NomaVault is Ownable, ReentrancyGuard, INomaTypes {
      * @return deposited Amount deposited
      * @return yieldEarned Yield earned
      */
-    function getLeaseVaultInfo(uint256 leaseId) external view returns (
-        uint256 deposited,
-        uint256 yieldEarned
-    ) {
+    function getLeaseVaultInfo(uint256 leaseId) external view returns (uint256 deposited, uint256 yieldEarned) {
         return (leaseDeposits[leaseId], leaseYield[leaseId]);
     }
 }

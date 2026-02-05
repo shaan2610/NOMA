@@ -26,11 +26,7 @@ export default function CreateLease() {
     try {
       await createLease({
         functionName: "createLeaseAsLandlord",
-        args: [
-          formData.tenant as `0x${string}`,
-          BigInt(formData.monthlyRent),
-          BigInt(formData.dueDay),
-        ],
+        args: [formData.tenant as `0x${string}`, BigInt(formData.monthlyRent), BigInt(formData.dueDay)],
       });
       alert("Lease created successfully!");
       // Reset form
@@ -122,11 +118,7 @@ export default function CreateLease() {
             </div>
 
             {/* Submit Button */}
-            <button
-              type="submit"
-              className="btn btn-primary btn-lg w-full"
-              disabled={isMining || !address}
-            >
+            <button type="submit" className="btn btn-primary btn-lg w-full" disabled={isMining || !address}>
               {isMining ? (
                 <>
                   <span className="loading loading-spinner"></span>
@@ -158,13 +150,13 @@ export default function CreateLease() {
         <div>
           <h3 className="font-bold">Landlord Instructions:</h3>
           <div className="text-sm">
-            1. Enter the tenant's Ethereum address
+            1. Enter the tenant&apos;s Ethereum address
             <br />
             2. Set the monthly rent amount in USDC
             <br />
             3. Choose the day of the month rent is due (1-28)
             <br />
-            4. Click "Create Lease" to mint the Lease NFT
+            4. Click &quot;Create Lease&quot; to mint the Lease NFT
             <br />
             5. The lease will be active immediately
           </div>

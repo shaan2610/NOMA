@@ -3,7 +3,7 @@
 import Link from "next/link";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
-import { HomeIcon, DocumentPlusIcon, CurrencyDollarIcon } from "@heroicons/react/24/outline";
+import { CurrencyDollarIcon, DocumentPlusIcon, HomeIcon } from "@heroicons/react/24/outline";
 
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
@@ -14,9 +14,7 @@ const Home: NextPage = () => {
         <div className="px-5 text-center max-w-4xl">
           <h1 className="text-center mb-8">
             <span className="block text-6xl font-bold mb-4">🏠 NOMA</span>
-            <span className="block text-2xl italic text-primary">
-              "Turn rent into yield and reputation"
-            </span>
+            <span className="block text-2xl italic text-primary">&quot;Turn rent into yield and reputation&quot;</span>
           </h1>
 
           <div className="card bg-base-200 shadow-xl mb-8">

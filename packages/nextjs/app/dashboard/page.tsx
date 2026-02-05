@@ -1,7 +1,7 @@
 "use client";
 
 import { useAccount } from "wagmi";
-import { useScaffoldReadContract, useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
+import { useScaffoldEventHistory, useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 export default function Dashboard() {
   const { address } = useAccount();
@@ -65,7 +65,7 @@ export default function Dashboard() {
         <h2 className="text-2xl font-bold mb-4">My Leases</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {leaseIds && leaseIds.length > 0 ? (
-            leaseIds.map((leaseId) => (
+            leaseIds.map(leaseId => (
               <div key={leaseId.toString()} className="card bg-base-200 shadow-xl">
                 <div className="card-body">
                   <h2 className="card-title">Lease #{leaseId.toString()}</h2>

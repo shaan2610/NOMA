@@ -14,7 +14,7 @@ contract MockUSDC is ERC20, Ownable {
 
     constructor() ERC20("USD Coin", "USDC") Ownable(msg.sender) {
         // Mint initial supply to deployer for testing
-        _mint(msg.sender, 1_000_000 * 10**DECIMALS); // 1M USDC
+        _mint(msg.sender, 1_000_000 * 10 ** DECIMALS); // 1M USDC
     }
 
     function decimals() public pure override returns (uint8) {
@@ -35,7 +35,7 @@ contract MockUSDC is ERC20, Ownable {
      * @param amount Amount to receive (max 10,000 USDC per call)
      */
     function faucet(uint256 amount) external {
-        require(amount <= 10_000 * 10**DECIMALS, "Max 10,000 USDC per faucet call");
+        require(amount <= 10_000 * 10 ** DECIMALS, "Max 10,000 USDC per faucet call");
         _mint(msg.sender, amount);
     }
 
@@ -43,6 +43,6 @@ contract MockUSDC is ERC20, Ownable {
      * @notice Convenience function to get 1,000 USDC
      */
     function getFaucetDrip() external {
-        _mint(msg.sender, 1_000 * 10**DECIMALS);
+        _mint(msg.sender, 1_000 * 10 ** DECIMALS);
     }
 }
