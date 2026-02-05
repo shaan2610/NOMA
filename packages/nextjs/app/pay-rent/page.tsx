@@ -33,11 +33,35 @@ export default function PayRent() {
     args: [address, nomaPaymentAddress],
   });
 
+  // Check USDC balance
+  const { data: usdcBalance, refetch: refetchBalance } = useScaffoldReadContract({
+    contractName: "MockUSDC",
+    functionName: "balanceOf",
+    args: [address],
+  });
+
   // Write: Approve USDC
   const { writeContractAsync: approveUSDC, isMining: isApproving } = useScaffoldWriteContract("MockUSDC");
 
   // Write: Pay rent
   const { writeContractAsync: payRent, isMining: isPaying } = useScaffoldWriteContract("NomaPayment");
+
+  // Write: Get test USDC (using same hook as approve)
+  const { writeContractAsync: getTestUSDC, isMining: isGettingUSDC } = useScaffoldWriteContract("MockUSDC");
+
+  const handleGetTestUSDC = async () => {
+    try {
+      await getTestUSDC({
+        functionName: "getFaucetDrip",
+      });
+      alert("Success! You received 1,000 test USDC");
+      // Refetch balance after getting USDC
+      setTimeout(() => refetchBalance(), 2000);
+    } catch (e) {
+      console.error("Error getting test USDC:", e);
+      alert("Error getting test USDC. Check console for details.");
+    }
+  };
 
   const handleApprove = async () => {
     if (!lease || !nomaPaymentAddress) {
@@ -46,13 +70,24 @@ export default function PayRent() {
     }
 
     try {
-      // Approve a large amount (or just the monthly rent)
-      const approvalAmount = lease.monthlyRent * 12n; // Approve for 12 months
+      // Approve enough for multiple payments (12 months worth)
+      // This way user doesn't need to approve every month
+      const approvalAmount = lease.monthlyRent * 12n;
+
+      console.log("Approving USDC:", {
+        amount: approvalAmount.toString(),
+        amountInUSDC: (Number(approvalAmount) / 1e6).toLocaleString(),
+        monthlyRent: lease.monthlyRent.toString(),
+        monthlyRentInUSDC: (Number(lease.monthlyRent) / 1e6).toLocaleString(),
+      });
+
       await approveUSDC({
         functionName: "approve",
         args: [nomaPaymentAddress, approvalAmount],
       });
-      alert("USDC approval successful! You can now pay rent.");
+      alert(
+        `USDC approval successful! Approved ${(Number(approvalAmount) / 1e6).toLocaleString()} USDC for rent payments.`,
+      );
       // Refetch allowance after approval
       setTimeout(() => refetchAllowance(), 2000);
     } catch (e) {
@@ -67,11 +102,40 @@ export default function PayRent() {
       return;
     }
 
-    // Check if approval is needed
-    if (!allowance || allowance < (lease?.monthlyRent || 0n)) {
-      alert("Please approve USDC spending first!");
+    if (!lease) {
+      alert("Lease data not loaded");
       return;
     }
+
+    // Check if approval is sufficient for this payment
+    const requiredAmount = lease.monthlyRent;
+    if (!allowance || allowance < requiredAmount) {
+      alert(
+        `Insufficient allowance! Need ${(Number(requiredAmount) / 1e6).toLocaleString()} USDC approved. Current: ${(Number(allowance || 0n) / 1e6).toLocaleString()} USDC`,
+      );
+      return;
+    }
+
+    // Check if user has enough USDC balance
+    if (!usdcBalance || usdcBalance < requiredAmount) {
+      alert(
+        `Insufficient USDC balance!\n\n` +
+          `Required: ${(Number(requiredAmount) / 1e6).toLocaleString()} USDC\n` +
+          `Your Balance: ${(Number(usdcBalance || 0n) / 1e6).toLocaleString()} USDC\n\n` +
+          `Please get more USDC tokens to pay rent.`,
+      );
+      return;
+    }
+
+    console.log("Paying rent:", {
+      leaseId,
+      requiredAmount: requiredAmount.toString(),
+      requiredAmountInUSDC: (Number(requiredAmount) / 1e6).toLocaleString(),
+      currentAllowance: allowance.toString(),
+      currentAllowanceInUSDC: (Number(allowance) / 1e6).toLocaleString(),
+      usdcBalance: usdcBalance.toString(),
+      usdcBalanceInUSDC: (Number(usdcBalance) / 1e6).toLocaleString(),
+    });
 
     try {
       await payRent({
@@ -79,8 +143,11 @@ export default function PayRent() {
         args: [BigInt(leaseId)],
       });
       alert("Rent payment successful!");
-      // Refetch allowance after payment
-      setTimeout(() => refetchAllowance(), 2000);
+      // Refetch allowance and balance after payment
+      setTimeout(() => {
+        refetchAllowance();
+        refetchBalance();
+      }, 2000);
     } catch (e) {
       console.error("Error paying rent:", e);
       alert("Error paying rent. Check console for details.");
@@ -171,6 +238,47 @@ export default function PayRent() {
               ? "⚠️ USDC approval required before payment"
               : `✅ Approved: ${(Number(allowance || 0n) / 1e6).toLocaleString()} USDC`}
           </span>
+        </div>
+      )}
+
+      {/* USDC Balance Status */}
+      {lease && address && usdcBalance !== undefined && (
+        <div className={`alert ${usdcBalance < lease.monthlyRent ? "alert-error" : "alert-info"}`}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="stroke-current shrink-0 h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <div className="flex flex-col gap-2 flex-1">
+            <span className="font-semibold">
+              💰 Your USDC Balance: {(Number(usdcBalance) / 1e6).toLocaleString()} USDC
+            </span>
+            {usdcBalance < lease.monthlyRent && (
+              <span className="text-sm">
+                ⚠️ Insufficient balance! Need {(Number(lease.monthlyRent) / 1e6).toLocaleString()} USDC to pay rent.
+              </span>
+            )}
+          </div>
+          {usdcBalance < lease.monthlyRent && (
+            <button className="btn btn-sm btn-warning" onClick={handleGetTestUSDC} disabled={isGettingUSDC}>
+              {isGettingUSDC ? (
+                <>
+                  <span className="loading loading-spinner loading-xs"></span>
+                  Getting...
+                </>
+              ) : (
+                "Get 1,000 Test USDC"
+              )}
+            </button>
+          )}
         </div>
       )}
 
