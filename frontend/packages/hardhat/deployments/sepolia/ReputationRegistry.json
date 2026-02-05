@@ -1,0 +1,1213 @@
+{
+  "address": "0x54063F6114cCDD076f60a5AB3729a8C89B0264ad",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnableInvalidOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "OwnableUnauthorizedAccount",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "TenantNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "Unauthorized",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "string",
+          "name": "triggerType",
+          "type": "string"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "AIAgentTrigger",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "landlord",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "monthlyRent",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "dueDay",
+          "type": "uint256"
+        }
+      ],
+      "name": "LeaseCreated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "paymentId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "settlementChain",
+          "type": "string"
+        }
+      ],
+      "name": "PaymentSettled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "paymentId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "isEarly",
+          "type": "bool"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "yieldEarned",
+          "type": "uint256"
+        }
+      ],
+      "name": "RentPaid",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "newScore",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "enum INomaTypes.ReputationTier",
+          "name": "newTier",
+          "type": "uint8"
+        }
+      ],
+      "name": "ReputationUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "strategy",
+          "type": "string"
+        }
+      ],
+      "name": "YieldRouted",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "BASE_SCORE",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "BASIC_THRESHOLD",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "EARLY_BONUS",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "LATE_PENALTY",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MAX_SCORE",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MISSED_PENALTY",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "ON_TIME_BONUS",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "PREMIUM_THRESHOLD",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "TRUSTED_THRESHOLD",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "yieldAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "addYieldEarned",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        }
+      ],
+      "name": "checkLendingEligibility",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "eligible",
+          "type": "bool"
+        },
+        {
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getLeaseStats",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "totalPayments",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "onTimePayments",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "earlyPayments",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "latePayments",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct ReputationRegistry.LeaseStats",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        }
+      ],
+      "name": "getNextTierProgress",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "paymentsNeeded",
+          "type": "uint256"
+        },
+        {
+          "internalType": "enum INomaTypes.ReputationTier",
+          "name": "nextTier",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        }
+      ],
+      "name": "getReputation",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "tenant",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalPayments",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "onTimePayments",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "earlyPayments",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "latePayments",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "missedPayments",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalYieldEarned",
+              "type": "uint256"
+            },
+            {
+              "internalType": "enum INomaTypes.ReputationTier",
+              "name": "tier",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "score",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct INomaTypes.Reputation",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        }
+      ],
+      "name": "getScore",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        }
+      ],
+      "name": "getTier",
+      "outputs": [
+        {
+          "internalType": "enum INomaTypes.ReputationTier",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "enum INomaTypes.ReputationTier",
+          "name": "tier",
+          "type": "uint8"
+        }
+      ],
+      "name": "getTierName",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "leaseStats",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "totalPayments",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "onTimePayments",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "earlyPayments",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "latePayments",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "paymentContract",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        }
+      ],
+      "name": "recordMissedPayment",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "isEarly",
+          "type": "bool"
+        },
+        {
+          "internalType": "bool",
+          "name": "isLate",
+          "type": "bool"
+        }
+      ],
+      "name": "recordPayment",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "reputations",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalPayments",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "onTimePayments",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "earlyPayments",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "latePayments",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "missedPayments",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalYieldEarned",
+          "type": "uint256"
+        },
+        {
+          "internalType": "enum INomaTypes.ReputationTier",
+          "name": "tier",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint256",
+          "name": "score",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_paymentContract",
+          "type": "address"
+        }
+      ],
+      "name": "setPaymentContract",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x10f180e80ed7011be5ffd32a16b2dda3ee4b29a4be01a4af1332ecd7bc0fa1c7",
+  "receipt": {
+    "to": null,
+    "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "contractAddress": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+    "transactionIndex": 0,
+    "gasUsed": "1232386",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000020000000000000100000800000000000000000000000000000000400000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000040000000000000000000000000000000008000000000000000200000000000000000000000002000000000000000000020000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x7651e7e7847997ad0420a80e319de3de8db263f6ccc3a6135ff2ff56de30426d",
+    "transactionHash": "0x10f180e80ed7011be5ffd32a16b2dda3ee4b29a4be01a4af1332ecd7bc0fa1c7",
+    "logs": [
+      {
+        "transactionIndex": 0,
+        "blockNumber": 17,
+        "transactionHash": "0x10f180e80ed7011be5ffd32a16b2dda3ee4b29a4be01a4af1332ecd7bc0fa1c7",
+        "address": "0x54063F6114cCDD076f60a5AB3729a8C89B0264ad",
+        "topics": [
+          "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x000000000000000000000000f39fd6e51aad88f6f4ce6ab8827279cfffb92266"
+        ],
+        "data": "0x",
+        "logIndex": 0,
+        "blockHash": "0x7651e7e7847997ad0420a80e319de3de8db263f6ccc3a6135ff2ff56de30426d"
+      }
+    ],
+    "blockNumber": 17,
+    "cumulativeGasUsed": "1232386",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "46b81ae9e1ea028be64b386a1387d251",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"TenantNotFound\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Unauthorized\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"string\",\"name\":\"triggerType\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"AIAgentTrigger\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"landlord\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"monthlyRent\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"dueDay\",\"type\":\"uint256\"}],\"name\":\"LeaseCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"paymentId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"settlementChain\",\"type\":\"string\"}],\"name\":\"PaymentSettled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"paymentId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"isEarly\",\"type\":\"bool\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"yieldEarned\",\"type\":\"uint256\"}],\"name\":\"RentPaid\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"newScore\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"enum INomaTypes.ReputationTier\",\"name\":\"newTier\",\"type\":\"uint8\"}],\"name\":\"ReputationUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"strategy\",\"type\":\"string\"}],\"name\":\"YieldRouted\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"BASE_SCORE\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"BASIC_THRESHOLD\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"EARLY_BONUS\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"LATE_PENALTY\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"MAX_SCORE\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"MISSED_PENALTY\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ON_TIME_BONUS\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"PREMIUM_THRESHOLD\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"TRUSTED_THRESHOLD\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"yieldAmount\",\"type\":\"uint256\"}],\"name\":\"addYieldEarned\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"}],\"name\":\"checkLendingEligibility\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"eligible\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"reason\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"name\":\"getLeaseStats\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"totalPayments\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"onTimePayments\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"earlyPayments\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"latePayments\",\"type\":\"uint256\"}],\"internalType\":\"struct ReputationRegistry.LeaseStats\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"}],\"name\":\"getNextTierProgress\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"paymentsNeeded\",\"type\":\"uint256\"},{\"internalType\":\"enum INomaTypes.ReputationTier\",\"name\":\"nextTier\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"}],\"name\":\"getReputation\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"totalPayments\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"onTimePayments\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"earlyPayments\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"latePayments\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"missedPayments\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalYieldEarned\",\"type\":\"uint256\"},{\"internalType\":\"enum INomaTypes.ReputationTier\",\"name\":\"tier\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"score\",\"type\":\"uint256\"}],\"internalType\":\"struct INomaTypes.Reputation\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"}],\"name\":\"getScore\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"}],\"name\":\"getTier\",\"outputs\":[{\"internalType\":\"enum INomaTypes.ReputationTier\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"enum INomaTypes.ReputationTier\",\"name\":\"tier\",\"type\":\"uint8\"}],\"name\":\"getTierName\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"leaseStats\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalPayments\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"onTimePayments\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"earlyPayments\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"latePayments\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"paymentContract\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"name\":\"recordMissedPayment\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"isEarly\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"isLate\",\"type\":\"bool\"}],\"name\":\"recordPayment\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"reputations\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"totalPayments\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"onTimePayments\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"earlyPayments\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"latePayments\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"missedPayments\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalYieldEarned\",\"type\":\"uint256\"},{\"internalType\":\"enum INomaTypes.ReputationTier\",\"name\":\"tier\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"score\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_paymentContract\",\"type\":\"address\"}],\"name\":\"setPaymentContract\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Tracks payment history and calculates reputation scores  \\u250c\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2510 \\u2502                    REPUTATION SYSTEM                            \\u2502 \\u2502                                                                  \\u2502 \\u2502  Score Calculation:                                              \\u2502 \\u2502  \\u250c\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2510   \\u2502 \\u2502  \\u2502 Base Score: 500                                          \\u2502   \\u2502 \\u2502  \\u2502 + On-time payment: +50 points                            \\u2502   \\u2502 \\u2502  \\u2502 + Early payment: +75 points                              \\u2502   \\u2502 \\u2502  \\u2502 - Late payment: -100 points                              \\u2502   \\u2502 \\u2502  \\u2502 - Missed payment: -200 points                            \\u2502   \\u2502 \\u2502  \\u2502 Max Score: 1000                                          \\u2502   \\u2502 \\u2502  \\u2514\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2518   \\u2502 \\u2502                                                                  \\u2502 \\u2502  Tiers:                                                          \\u2502 \\u2502  \\u250c\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2510 \\u250c\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2510 \\u250c\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2510 \\u250c\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2510              \\u2502 \\u2502  \\u2502   NEW   \\u2502 \\u2502  BASIC  \\u2502 \\u2502 TRUSTED \\u2502 \\u2502 PREMIUM \\u2502              \\u2502 \\u2502  \\u2502  0-2    \\u2502 \\u2502   3-5   \\u2502 \\u2502  6-11   \\u2502 \\u2502   12+   \\u2502              \\u2502 \\u2502  \\u2502payments \\u2502 \\u2502payments \\u2502 \\u2502payments \\u2502 \\u2502payments \\u2502              \\u2502 \\u2502  \\u2514\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2518 \\u2514\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2518 \\u2514\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2518 \\u2514\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2518              \\u2502 \\u2514\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2518\",\"errors\":{\"OwnableInvalidOwner(address)\":[{\"details\":\"The owner is not a valid owner account. (eg. `address(0)`)\"}],\"OwnableUnauthorizedAccount(address)\":[{\"details\":\"The caller account is not authorized to perform an operation.\"}]},\"kind\":\"dev\",\"methods\":{\"addYieldEarned(address,uint256)\":{\"params\":{\"tenant\":\"Tenant address\",\"yieldAmount\":\"Amount of yield earned\"}},\"checkLendingEligibility(address)\":{\"params\":{\"tenant\":\"Tenant address\"},\"returns\":{\"eligible\":\"Whether tenant can access lending\",\"reason\":\"Eligibility reason\"}},\"getLeaseStats(address,uint256)\":{\"params\":{\"leaseId\":\"Lease ID\",\"tenant\":\"Tenant address\"},\"returns\":{\"_0\":\"stats Lease payment stats\"}},\"getNextTierProgress(address)\":{\"params\":{\"tenant\":\"Tenant address\"},\"returns\":{\"nextTier\":\"The next tier to achieve\",\"paymentsNeeded\":\"Number of payments to next tier\"}},\"getReputation(address)\":{\"params\":{\"tenant\":\"Tenant address\"},\"returns\":{\"_0\":\"Reputation data\"}},\"getScore(address)\":{\"params\":{\"tenant\":\"Tenant address\"},\"returns\":{\"_0\":\"score Current reputation score\"}},\"getTier(address)\":{\"params\":{\"tenant\":\"Tenant address\"},\"returns\":{\"_0\":\"tier Current reputation tier\"}},\"getTierName(uint8)\":{\"params\":{\"tier\":\"The tier enum\"},\"returns\":{\"_0\":\"name Tier name\"}},\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"recordMissedPayment(address,uint256)\":{\"params\":{\"leaseId\":\"Lease ID\",\"tenant\":\"Tenant address\"}},\"recordPayment(address,uint256,bool,bool)\":{\"params\":{\"isEarly\":\"Whether payment was early\",\"isLate\":\"Whether payment was late\",\"leaseId\":\"Lease ID\",\"tenant\":\"Tenant address\"}},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner.\"},\"setPaymentContract(address)\":{\"params\":{\"_paymentContract\":\"Address of NomaPayment contract\"}},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"}},\"title\":\"ReputationRegistry\",\"version\":1},\"userdoc\":{\"events\":{\"AIAgentTrigger(string,uint256,bytes)\":{\"notice\":\"Emitted for AI agent trigger points\"},\"LeaseCreated(uint256,address,address,uint256,uint256)\":{\"notice\":\"Emitted when a new lease is created\"},\"PaymentSettled(uint256,uint256,uint256,string)\":{\"notice\":\"Emitted when payment is settled on Arc\"},\"RentPaid(uint256,uint256,address,uint256,bool,uint256)\":{\"notice\":\"Emitted when rent is paid\"},\"ReputationUpdated(address,uint256,uint8)\":{\"notice\":\"Emitted when reputation is updated\"},\"YieldRouted(uint256,uint256,string)\":{\"notice\":\"Emitted when yield is routed\"}},\"kind\":\"user\",\"methods\":{\"addYieldEarned(address,uint256)\":{\"notice\":\"Add yield earned to tenant's record\"},\"checkLendingEligibility(address)\":{\"notice\":\"Check if tenant is eligible for lending access\"},\"getLeaseStats(address,uint256)\":{\"notice\":\"Get lease-specific stats\"},\"getNextTierProgress(address)\":{\"notice\":\"Calculate payments needed for next tier\"},\"getReputation(address)\":{\"notice\":\"Get tenant reputation\"},\"getScore(address)\":{\"notice\":\"Get tenant reputation score\"},\"getTier(address)\":{\"notice\":\"Get tenant reputation tier\"},\"getTierName(uint8)\":{\"notice\":\"Get tier name as string\"},\"leaseStats(address,uint256)\":{\"notice\":\"Mapping of tenant to lease-specific stats\"},\"paymentContract()\":{\"notice\":\"Payment contract address\"},\"recordMissedPayment(address,uint256)\":{\"notice\":\"Record a missed payment\"},\"recordPayment(address,uint256,bool,bool)\":{\"notice\":\"Record a payment and update reputation\"},\"reputations(address)\":{\"notice\":\"Mapping of tenant to reputation data\"},\"setPaymentContract(address)\":{\"notice\":\"Set the payment contract address\"}},\"notice\":\"On-chain reputation tracking for NOMA tenants\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/ReputationRegistry.sol\":\"ReputationRegistry\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/access/Ownable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (access/Ownable.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {Context} from \\\"../utils/Context.sol\\\";\\n\\n/**\\n * @dev Contract module which provides a basic access control mechanism, where\\n * there is an account (an owner) that can be granted exclusive access to\\n * specific functions.\\n *\\n * The initial owner is set to the address provided by the deployer. This can\\n * later be changed with {transferOwnership}.\\n *\\n * This module is used through inheritance. It will make available the modifier\\n * `onlyOwner`, which can be applied to your functions to restrict their use to\\n * the owner.\\n */\\nabstract contract Ownable is Context {\\n    address private _owner;\\n\\n    /**\\n     * @dev The caller account is not authorized to perform an operation.\\n     */\\n    error OwnableUnauthorizedAccount(address account);\\n\\n    /**\\n     * @dev The owner is not a valid owner account. (eg. `address(0)`)\\n     */\\n    error OwnableInvalidOwner(address owner);\\n\\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\\n\\n    /**\\n     * @dev Initializes the contract setting the address provided by the deployer as the initial owner.\\n     */\\n    constructor(address initialOwner) {\\n        if (initialOwner == address(0)) {\\n            revert OwnableInvalidOwner(address(0));\\n        }\\n        _transferOwnership(initialOwner);\\n    }\\n\\n    /**\\n     * @dev Throws if called by any account other than the owner.\\n     */\\n    modifier onlyOwner() {\\n        _checkOwner();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Returns the address of the current owner.\\n     */\\n    function owner() public view virtual returns (address) {\\n        return _owner;\\n    }\\n\\n    /**\\n     * @dev Throws if the sender is not the owner.\\n     */\\n    function _checkOwner() internal view virtual {\\n        if (owner() != _msgSender()) {\\n            revert OwnableUnauthorizedAccount(_msgSender());\\n        }\\n    }\\n\\n    /**\\n     * @dev Leaves the contract without owner. It will not be possible to call\\n     * `onlyOwner` functions. Can only be called by the current owner.\\n     *\\n     * NOTE: Renouncing ownership will leave the contract without an owner,\\n     * thereby disabling any functionality that is only available to the owner.\\n     */\\n    function renounceOwnership() public virtual onlyOwner {\\n        _transferOwnership(address(0));\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Can only be called by the current owner.\\n     */\\n    function transferOwnership(address newOwner) public virtual onlyOwner {\\n        if (newOwner == address(0)) {\\n            revert OwnableInvalidOwner(address(0));\\n        }\\n        _transferOwnership(newOwner);\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Internal function without access restriction.\\n     */\\n    function _transferOwnership(address newOwner) internal virtual {\\n        address oldOwner = _owner;\\n        _owner = newOwner;\\n        emit OwnershipTransferred(oldOwner, newOwner);\\n    }\\n}\\n\",\"keccak256\":\"0xff6d0bb2e285473e5311d9d3caacb525ae3538a80758c10649a4d61029b017bb\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Context.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.1) (utils/Context.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Provides information about the current execution context, including the\\n * sender of the transaction and its data. While these are generally available\\n * via msg.sender and msg.data, they should not be accessed in such a direct\\n * manner, since when dealing with meta-transactions the account sending and\\n * paying for execution may not be the actual sender (as far as an application\\n * is concerned).\\n *\\n * This contract is only required for intermediate, library-like contracts.\\n */\\nabstract contract Context {\\n    function _msgSender() internal view virtual returns (address) {\\n        return msg.sender;\\n    }\\n\\n    function _msgData() internal view virtual returns (bytes calldata) {\\n        return msg.data;\\n    }\\n\\n    function _contextSuffixLength() internal view virtual returns (uint256) {\\n        return 0;\\n    }\\n}\\n\",\"keccak256\":\"0x493033a8d1b176a037b2cc6a04dad01a5c157722049bbecf632ca876224dd4b2\",\"license\":\"MIT\"},\"contracts/ReputationRegistry.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.20;\\n\\nimport \\\"@openzeppelin/contracts/access/Ownable.sol\\\";\\nimport \\\"./interfaces/INomaTypes.sol\\\";\\n\\n/**\\n * @title ReputationRegistry\\n * @notice On-chain reputation tracking for NOMA tenants\\n * @dev Tracks payment history and calculates reputation scores\\n * \\n * \\u250c\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2510\\n * \\u2502                    REPUTATION SYSTEM                            \\u2502\\n * \\u2502                                                                  \\u2502\\n * \\u2502  Score Calculation:                                              \\u2502\\n * \\u2502  \\u250c\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2510   \\u2502\\n * \\u2502  \\u2502 Base Score: 500                                          \\u2502   \\u2502\\n * \\u2502  \\u2502 + On-time payment: +50 points                            \\u2502   \\u2502\\n * \\u2502  \\u2502 + Early payment: +75 points                              \\u2502   \\u2502\\n * \\u2502  \\u2502 - Late payment: -100 points                              \\u2502   \\u2502\\n * \\u2502  \\u2502 - Missed payment: -200 points                            \\u2502   \\u2502\\n * \\u2502  \\u2502 Max Score: 1000                                          \\u2502   \\u2502\\n * \\u2502  \\u2514\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2518   \\u2502\\n * \\u2502                                                                  \\u2502\\n * \\u2502  Tiers:                                                          \\u2502\\n * \\u2502  \\u250c\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2510 \\u250c\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2510 \\u250c\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2510 \\u250c\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2510              \\u2502\\n * \\u2502  \\u2502   NEW   \\u2502 \\u2502  BASIC  \\u2502 \\u2502 TRUSTED \\u2502 \\u2502 PREMIUM \\u2502              \\u2502\\n * \\u2502  \\u2502  0-2    \\u2502 \\u2502   3-5   \\u2502 \\u2502  6-11   \\u2502 \\u2502   12+   \\u2502              \\u2502\\n * \\u2502  \\u2502payments \\u2502 \\u2502payments \\u2502 \\u2502payments \\u2502 \\u2502payments \\u2502              \\u2502\\n * \\u2502  \\u2514\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2518 \\u2514\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2518 \\u2514\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2518 \\u2514\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2518              \\u2502\\n * \\u2514\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2518\\n */\\ncontract ReputationRegistry is Ownable, INomaTypes {\\n    // ============ Constants ============\\n\\n    uint256 public constant BASE_SCORE = 500;\\n    uint256 public constant MAX_SCORE = 1000;\\n    uint256 public constant ON_TIME_BONUS = 50;\\n    uint256 public constant EARLY_BONUS = 75;\\n    uint256 public constant LATE_PENALTY = 100;\\n    uint256 public constant MISSED_PENALTY = 200;\\n\\n    // Tier thresholds (payment counts)\\n    uint256 public constant BASIC_THRESHOLD = 3;\\n    uint256 public constant TRUSTED_THRESHOLD = 6;\\n    uint256 public constant PREMIUM_THRESHOLD = 12;\\n\\n    // ============ State Variables ============\\n\\n    /// @notice Payment contract address\\n    address public paymentContract;\\n\\n    /// @notice Mapping of tenant to reputation data\\n    mapping(address => Reputation) public reputations;\\n\\n    /// @notice Mapping of tenant to lease-specific stats\\n    mapping(address => mapping(uint256 => LeaseStats)) public leaseStats;\\n\\n    /// @notice Lease-specific payment stats\\n    struct LeaseStats {\\n        uint256 totalPayments;\\n        uint256 onTimePayments;\\n        uint256 earlyPayments;\\n        uint256 latePayments;\\n    }\\n\\n    // ============ Errors ============\\n\\n    error Unauthorized();\\n    error TenantNotFound();\\n\\n    // ============ Modifiers ============\\n\\n    modifier onlyPaymentContract() {\\n        if (msg.sender != paymentContract) revert Unauthorized();\\n        _;\\n    }\\n\\n    // ============ Constructor ============\\n\\n    constructor() Ownable(msg.sender) {}\\n\\n    // ============ Admin Functions ============\\n\\n    /**\\n     * @notice Set the payment contract address\\n     * @param _paymentContract Address of NomaPayment contract\\n     */\\n    function setPaymentContract(address _paymentContract) external onlyOwner {\\n        paymentContract = _paymentContract;\\n    }\\n\\n    // ============ Reputation Management ============\\n\\n    /**\\n     * @notice Record a payment and update reputation\\n     * @param tenant Tenant address\\n     * @param leaseId Lease ID\\n     * @param isEarly Whether payment was early\\n     * @param isLate Whether payment was late\\n     */\\n    function recordPayment(\\n        address tenant,\\n        uint256 leaseId,\\n        bool isEarly,\\n        bool isLate\\n    ) external onlyPaymentContract {\\n        Reputation storage rep = reputations[tenant];\\n        LeaseStats storage stats = leaseStats[tenant][leaseId];\\n\\n        // Initialize if first payment\\n        if (rep.tenant == address(0)) {\\n            rep.tenant = tenant;\\n            rep.score = BASE_SCORE;\\n        }\\n\\n        // Update counts\\n        rep.totalPayments++;\\n        stats.totalPayments++;\\n\\n        if (isEarly) {\\n            rep.earlyPayments++;\\n            rep.onTimePayments++;\\n            stats.earlyPayments++;\\n            stats.onTimePayments++;\\n            rep.score = _addScore(rep.score, EARLY_BONUS);\\n        } else if (isLate) {\\n            rep.latePayments++;\\n            stats.latePayments++;\\n            rep.score = _subtractScore(rep.score, LATE_PENALTY);\\n        } else {\\n            rep.onTimePayments++;\\n            stats.onTimePayments++;\\n            rep.score = _addScore(rep.score, ON_TIME_BONUS);\\n        }\\n\\n        // Update tier\\n        rep.tier = _calculateTier(rep.totalPayments, rep.score);\\n\\n        emit ReputationUpdated(tenant, rep.score, rep.tier);\\n\\n        // AI Agent trigger for reputation milestone\\n        if (_isMilestone(rep.totalPayments)) {\\n            emit AIAgentTrigger(\\n                \\\"REPUTATION_MILESTONE\\\",\\n                leaseId,\\n                abi.encode(tenant, rep.totalPayments, rep.score, rep.tier)\\n            );\\n        }\\n    }\\n\\n    /**\\n     * @notice Record a missed payment\\n     * @param tenant Tenant address\\n     * @param leaseId Lease ID\\n     */\\n    function recordMissedPayment(\\n        address tenant,\\n        uint256 leaseId\\n    ) external onlyPaymentContract {\\n        Reputation storage rep = reputations[tenant];\\n        \\n        if (rep.tenant == address(0)) {\\n            rep.tenant = tenant;\\n            rep.score = BASE_SCORE;\\n        }\\n\\n        rep.missedPayments++;\\n        rep.score = _subtractScore(rep.score, MISSED_PENALTY);\\n        rep.tier = _calculateTier(rep.totalPayments, rep.score);\\n\\n        emit ReputationUpdated(tenant, rep.score, rep.tier);\\n\\n        emit AIAgentTrigger(\\n            \\\"MISSED_PAYMENT\\\",\\n            leaseId,\\n            abi.encode(tenant, rep.missedPayments, rep.score)\\n        );\\n    }\\n\\n    /**\\n     * @notice Add yield earned to tenant's record\\n     * @param tenant Tenant address\\n     * @param yieldAmount Amount of yield earned\\n     */\\n    function addYieldEarned(\\n        address tenant,\\n        uint256 yieldAmount\\n    ) external onlyPaymentContract {\\n        reputations[tenant].totalYieldEarned += yieldAmount;\\n    }\\n\\n    // ============ Internal Functions ============\\n\\n    /**\\n     * @notice Add to score with cap at MAX_SCORE\\n     */\\n    function _addScore(uint256 current, uint256 bonus) internal pure returns (uint256) {\\n        uint256 newScore = current + bonus;\\n        return newScore > MAX_SCORE ? MAX_SCORE : newScore;\\n    }\\n\\n    /**\\n     * @notice Subtract from score with floor at 0\\n     */\\n    function _subtractScore(uint256 current, uint256 penalty) internal pure returns (uint256) {\\n        return current > penalty ? current - penalty : 0;\\n    }\\n\\n    /**\\n     * @notice Calculate reputation tier\\n     */\\n    function _calculateTier(uint256 paymentCount, uint256 score) internal pure returns (ReputationTier) {\\n        // Must have minimum score to advance tiers\\n        if (score < 300) return ReputationTier.New;\\n        \\n        if (paymentCount >= PREMIUM_THRESHOLD && score >= 700) {\\n            return ReputationTier.Premium;\\n        } else if (paymentCount >= TRUSTED_THRESHOLD && score >= 550) {\\n            return ReputationTier.Trusted;\\n        } else if (paymentCount >= BASIC_THRESHOLD && score >= 400) {\\n            return ReputationTier.Basic;\\n        }\\n        return ReputationTier.New;\\n    }\\n\\n    /**\\n     * @notice Check if payment count is a milestone\\n     */\\n    function _isMilestone(uint256 count) internal pure returns (bool) {\\n        return count == BASIC_THRESHOLD || \\n               count == TRUSTED_THRESHOLD || \\n               count == PREMIUM_THRESHOLD;\\n    }\\n\\n    // ============ View Functions ============\\n\\n    /**\\n     * @notice Get tenant reputation\\n     * @param tenant Tenant address\\n     * @return Reputation data\\n     */\\n    function getReputation(address tenant) external view returns (Reputation memory) {\\n        return reputations[tenant];\\n    }\\n\\n    /**\\n     * @notice Get tenant reputation score\\n     * @param tenant Tenant address\\n     * @return score Current reputation score\\n     */\\n    function getScore(address tenant) external view returns (uint256) {\\n        return reputations[tenant].score;\\n    }\\n\\n    /**\\n     * @notice Get tenant reputation tier\\n     * @param tenant Tenant address\\n     * @return tier Current reputation tier\\n     */\\n    function getTier(address tenant) external view returns (ReputationTier) {\\n        return reputations[tenant].tier;\\n    }\\n\\n    /**\\n     * @notice Get tier name as string\\n     * @param tier The tier enum\\n     * @return name Tier name\\n     */\\n    function getTierName(ReputationTier tier) external pure returns (string memory) {\\n        if (tier == ReputationTier.Premium) return \\\"Premium\\\";\\n        if (tier == ReputationTier.Trusted) return \\\"Trusted\\\";\\n        if (tier == ReputationTier.Basic) return \\\"Basic\\\";\\n        return \\\"New\\\";\\n    }\\n\\n    /**\\n     * @notice Get lease-specific stats\\n     * @param tenant Tenant address\\n     * @param leaseId Lease ID\\n     * @return stats Lease payment stats\\n     */\\n    function getLeaseStats(\\n        address tenant,\\n        uint256 leaseId\\n    ) external view returns (LeaseStats memory) {\\n        return leaseStats[tenant][leaseId];\\n    }\\n\\n    /**\\n     * @notice Check if tenant is eligible for lending access\\n     * @param tenant Tenant address\\n     * @return eligible Whether tenant can access lending\\n     * @return reason Eligibility reason\\n     */\\n    function checkLendingEligibility(address tenant) external view returns (\\n        bool eligible,\\n        string memory reason\\n    ) {\\n        Reputation memory rep = reputations[tenant];\\n        \\n        if (rep.tier == ReputationTier.Premium) {\\n            return (true, \\\"Premium tier - Full lending access\\\");\\n        } else if (rep.tier == ReputationTier.Trusted) {\\n            return (true, \\\"Trusted tier - Standard lending access\\\");\\n        } else if (rep.tier == ReputationTier.Basic && rep.score >= 500) {\\n            return (true, \\\"Basic tier - Limited lending access\\\");\\n        }\\n        \\n        return (false, \\\"Build more reputation to unlock lending\\\");\\n    }\\n\\n    /**\\n     * @notice Calculate payments needed for next tier\\n     * @param tenant Tenant address\\n     * @return paymentsNeeded Number of payments to next tier\\n     * @return nextTier The next tier to achieve\\n     */\\n    function getNextTierProgress(address tenant) external view returns (\\n        uint256 paymentsNeeded,\\n        ReputationTier nextTier\\n    ) {\\n        Reputation memory rep = reputations[tenant];\\n        \\n        if (rep.tier == ReputationTier.Premium) {\\n            return (0, ReputationTier.Premium);\\n        } else if (rep.tier == ReputationTier.Trusted) {\\n            return (PREMIUM_THRESHOLD - rep.totalPayments, ReputationTier.Premium);\\n        } else if (rep.tier == ReputationTier.Basic) {\\n            return (TRUSTED_THRESHOLD - rep.totalPayments, ReputationTier.Trusted);\\n        }\\n        return (BASIC_THRESHOLD - rep.totalPayments, ReputationTier.Basic);\\n    }\\n}\\n\",\"keccak256\":\"0x669debbe76a2a91ac3c6cc89a4a37a068d53e0b787228e85e94ccc3828380733\",\"license\":\"MIT\"},\"contracts/interfaces/INomaTypes.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.20;\\n\\n/**\\n * @title INomaTypes\\n * @notice Common types and interfaces for the NOMA protocol\\n * @dev Used across LeaseNFT, NomaVault, NomaPayment, and ReputationRegistry\\n */\\ninterface INomaTypes {\\n    // ============ Enums ============\\n\\n    /// @notice Status of a lease\\n    enum LeaseStatus {\\n        Active,      // Lease is active and accepting payments\\n        Completed,   // Lease term completed\\n        Terminated   // Lease terminated early\\n    }\\n\\n    /// @notice Status of a rent payment\\n    enum PaymentStatus {\\n        Pending,     // Payment expected but not received\\n        Paid,        // Payment received and settled\\n        Late,        // Payment received after due date\\n        Missed       // Payment window passed without payment\\n    }\\n\\n    /// @notice Reputation tier for tenants\\n    enum ReputationTier {\\n        New,         // 0-2 payments\\n        Basic,       // 3-5 payments\\n        Trusted,     // 6-11 payments\\n        Premium      // 12+ payments\\n    }\\n\\n    // ============ Structs ============\\n\\n    /// @notice Lease information stored on-chain\\n    struct Lease {\\n        uint256 leaseId;           // Unique lease identifier\\n        address tenant;            // Tenant wallet address\\n        address landlord;          // Landlord wallet address\\n        uint256 monthlyRent;       // Monthly rent amount in USDC (6 decimals)\\n        uint256 dueDay;            // Day of month rent is due (1-28)\\n        uint256 startDate;         // Lease start timestamp\\n        uint256 endDate;           // Lease end timestamp (0 = indefinite)\\n        LeaseStatus status;        // Current lease status\\n        uint256 totalPaid;         // Total rent paid to date\\n        uint256 paymentCount;      // Number of payments made\\n    }\\n\\n    /// @notice Individual rent payment record\\n    struct RentPayment {\\n        uint256 paymentId;         // Unique payment identifier\\n        uint256 leaseId;           // Associated lease ID\\n        uint256 amount;            // Amount paid in USDC\\n        uint256 dueDate;           // When payment was due\\n        uint256 paidDate;          // When payment was made\\n        PaymentStatus status;      // Payment status\\n        bool isEarly;              // Paid before due date\\n        uint256 yieldEarned;       // Yield earned from early payment\\n    }\\n\\n    /// @notice Tenant reputation data\\n    struct Reputation {\\n        address tenant;            // Tenant wallet\\n        uint256 totalPayments;     // Total payments made\\n        uint256 onTimePayments;    // Payments made on/before due date\\n        uint256 earlyPayments;     // Payments made early\\n        uint256 latePayments;      // Late payments\\n        uint256 missedPayments;    // Missed payments\\n        uint256 totalYieldEarned;  // Total yield from early payments\\n        ReputationTier tier;       // Current reputation tier\\n        uint256 score;             // Numeric score (0-1000)\\n    }\\n\\n    // ============ Events ============\\n\\n    /// @notice Emitted when a new lease is created\\n    event LeaseCreated(\\n        uint256 indexed leaseId,\\n        address indexed tenant,\\n        address indexed landlord,\\n        uint256 monthlyRent,\\n        uint256 dueDay\\n    );\\n\\n    /// @notice Emitted when rent is paid\\n    event RentPaid(\\n        uint256 indexed leaseId,\\n        uint256 indexed paymentId,\\n        address indexed tenant,\\n        uint256 amount,\\n        bool isEarly,\\n        uint256 yieldEarned\\n    );\\n\\n    /// @notice Emitted when payment is settled on Arc\\n    event PaymentSettled(\\n        uint256 indexed paymentId,\\n        uint256 indexed leaseId,\\n        uint256 amount,\\n        string settlementChain\\n    );\\n\\n    /// @notice Emitted when reputation is updated\\n    event ReputationUpdated(\\n        address indexed tenant,\\n        uint256 newScore,\\n        ReputationTier newTier\\n    );\\n\\n    /// @notice Emitted when yield is routed\\n    event YieldRouted(\\n        uint256 indexed leaseId,\\n        uint256 amount,\\n        string strategy\\n    );\\n\\n    /// @notice Emitted for AI agent trigger points\\n    event AIAgentTrigger(\\n        string indexed triggerType,\\n        uint256 indexed leaseId,\\n        bytes data\\n    );\\n}\\n\",\"keccak256\":\"0xc25e5b820d743865f1e3d1bc7008d29ad79acef180954b9d634a623603fe6582\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50338061003757604051631e4fbdf760e01b81526000600482015260240160405180910390fd5b61004081610046565b50610096565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b6114d9806100a56000396000f3fe608060405234801561001057600080fd5b506004361061018d5760003560e01c80638abb20cc116100de578063b45aae5211610097578063e64bd59311610071578063e64bd59314610444578063e7e40df814610464578063ef83400c14610477578063f2fde38b1461048a57600080fd5b8063b45aae52146103d4578063cdd942d814610410578063d47875d01461041857600080fd5b80638abb20cc146103595780638da5cb5b1461036c5780639af01c2d146103915780639c89a0e2146103995780639c91dd56146103b9578063a360da5f146103cc57600080fd5b80633b9c52671161014b578063729a79c511610125578063729a79c5146103145780637effe56814610335578063826dc1421461033e5780638822ee8b1461034657600080fd5b80633b9c5267146102bc5780635298bf9914610302578063715018a61461030a57600080fd5b8062a829141461019257806306fa15a7146101f6578063177fb4f2146102745780632471f45a1461028a57806327ff6223146102925780632c27cd481461029b575b600080fd5b6101d16101a0366004611127565b6003602081815260009384526040808520909152918352912080546001820154600283015492909301549092919084565b6040805194855260208501939093529183015260608201526080015b60405180910390f35b61025f610204366004611151565b60026020819052600091825260409091208054600182015492820154600383015460048401546005850154600686015460078701546008909701546001600160a01b0390961697969495939492939192909160ff9091169089565b6040516101ed999897969594939291906111a4565b61027c606481565b6040519081526020016101ed565b61027c600681565b61027c6103e881565b6102ae6102a9366004611151565b61049d565b6040516101ed929190611201565b6102cf6102ca366004611127565b610605565b6040516101ed91908151815260208083015190820152604080830151908201526060918201519181019190915260800190565b61027c60c881565b610312610688565b005b610327610322366004611151565b61069c565b6040516101ed92919061125b565b61027c6101f481565b61027c600381565b610312610354366004611127565b610852565b610312610367366004611151565b6108b0565b6000546001600160a01b03165b6040516001600160a01b0390911681526020016101ed565b61027c600c81565b6103ac6103a7366004611151565b6108da565b6040516101ed9190611276565b600154610379906001600160a01b031681565b61027c603281565b6104036103e2366004611151565b6001600160a01b031660009081526002602052604090206007015460ff1690565b6040516101ed91906112e9565b61027c604b81565b61027c610426366004611151565b6001600160a01b031660009081526002602052604090206008015490565b6104576104523660046112f7565b610994565b6040516101ed9190611318565b61031261047236600461133b565b610a67565b610312610485366004611127565b610d4a565b610312610498366004611151565b610eff565b6001600160a01b038082166000908152600260208181526040808420815161012081018352815490961686526001810154928601929092529181015491840191909152600380820154606085015260048201546080850152600582015460a0850152600682015460c08501526007820154929384938493919260e084019160ff169081111561052e5761052e61116c565b600381111561053f5761053f61116c565b815260089190910154602090910152905060038160e0015160038111156105685761056861116c565b0361057a575060009360039350915050565b60028160e0015160038111156105925761059261116c565b036105b25760208101516105a790600c61139e565b946003945092505050565b60018160e0015160038111156105ca576105ca61116c565b036105ea5760208101516105df90600661139e565b946002945092505050565b60208101516105fa90600361139e565b946001945092505050565b6106306040518060800160405280600081526020016000815260200160008152602001600081525090565b506001600160a01b038216600090815260036020818152604080842085855282529283902083516080810185528154815260018201549281019290925260028101549382019390935291015460608201525b92915050565b610690610f42565b61069a6000610f6f565b565b6001600160a01b03808216600090815260026020818152604080842081516101208101835281549096168652600181015492860192909252918101549184019190915260038082015460608581019190915260048301546080860152600583015460a0860152600683015460c08601526007830154939490938593919260e084019160ff16908111156107315761073161116c565b60038111156107425761074261116c565b815260089190910154602090910152905060038160e00151600381111561076b5761076b61116c565b03610795576001604051806060016040528060228152602001611439602291399250925050915091565b60028160e0015160038111156107ad576107ad61116c565b036107d757600160405180606001604052806026815260200161147e602691399250925050915091565b60018160e0015160038111156107ef576107ef61116c565b14801561080357506101f481610100015110155b1561082d57600160405180606001604052806023815260200161145b602391399250925050915091565b6000604051806060016040528060278152602001611412602791399250925050915091565b6001546001600160a01b0316331461087c576040516282b42960e81b815260040160405180910390fd5b6001600160a01b038216600090815260026020526040812060060180548392906108a79084906113b1565b90915550505050565b6108b8610f42565b600180546001600160a01b0319166001600160a01b0392909216919091179055565b6108e26110a5565b6001600160a01b03808316600090815260026020818152604092839020835161012081018552815490951685526001810154918501919091529081015491830191909152600380820154606084015260048201546080840152600582015460a0840152600682015460c0840152600782015460e084019160ff9091169081111561096e5761096e61116c565b600381111561097f5761097f61116c565b81526020016008820154815250509050919050565b606060038260038111156109aa576109aa61116c565b036109d25750506040805180820190915260078152665072656d69756d60c81b602082015290565b60028260038111156109e6576109e661116c565b03610a0e575050604080518082019091526007815266151c9d5cdd195960ca1b602082015290565b6001826003811115610a2257610a2261116c565b03610a48575050604080518082019091526005815264426173696360d81b602082015290565b50506040805180820190915260038152624e657760e81b602082015290565b6001546001600160a01b03163314610a91576040516282b42960e81b815260040160405180910390fd5b6001600160a01b0380851660009081526002602090815260408083206003835281842088855290925290912081549192909116610aea5781546001600160a01b0319166001600160a01b0387161782556101f460088301555b600182018054906000610afc836113c4565b90915550508054816000610b0f836113c4565b91905055508315610b8f57600382018054906000610b2c836113c4565b9091555050600282018054906000610b43836113c4565b9091555050600281018054906000610b5a836113c4565b9091555050600181018054906000610b71836113c4565b9190505550610b858260080154604b610fbf565b6008830155610c15565b8215610bd257600482018054906000610ba7836113c4565b9091555050600381018054906000610bbe836113c4565b9190505550610b8582600801546064610fe9565b600282018054906000610be4836113c4565b9091555050600181018054906000610bfb836113c4565b9190505550610c0f82600801546032610fbf565b60088301555b610c278260010154836008015461100a565b60078301805460ff19166001836003811115610c4557610c4561116c565b0217905550600882015460078301546040516001600160a01b038916927fe49cf8896948048b69e1531d3f28ce172d4464f874cedc6c5e3b002d1cc2f20b92610c939260ff90911690611201565b60405180910390a2610ca88260010154611087565b15610d4257604080517352455055544154494f4e5f4d494c4553544f4e4560601b8152905190819003601401812060018401546008850154600786015489947f24dae94385c9aa4ee70d42172eb2ccbc9f8e6f09eedd940918dcd46e5563abf993610d1f938d939192909160ff16906020016113dd565b60408051601f1981840301815290829052610d3991611318565b60405180910390a35b505050505050565b6001546001600160a01b03163314610d74576040516282b42960e81b815260040160405180910390fd5b6001600160a01b0380831660009081526002602052604090208054909116610db85780546001600160a01b0319166001600160a01b0384161781556101f460088201555b600581018054906000610dca836113c4565b9190505550610dde816008015460c8610fe9565b600882018190556001820154610df39161100a565b60078201805460ff19166001836003811115610e1157610e1161116c565b0217905550600881015460078201546040516001600160a01b038616927fe49cf8896948048b69e1531d3f28ce172d4464f874cedc6c5e3b002d1cc2f20b92610e5f9260ff90911690611201565b60405180910390a26040516d135254d4d15117d410565351539560921b81528290600e0160408051918290038220600585015460088601546001600160a01b0389166020860152928401526060830191909152907f24dae94385c9aa4ee70d42172eb2ccbc9f8e6f09eedd940918dcd46e5563abf99060800160408051601f1981840301815290829052610ef291611318565b60405180910390a3505050565b610f07610f42565b6001600160a01b038116610f3657604051631e4fbdf760e01b8152600060048201526024015b60405180910390fd5b610f3f81610f6f565b50565b6000546001600160a01b0316331461069a5760405163118cdaa760e01b8152336004820152602401610f2d565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b600080610fcc83856113b1565b90506103e88111610fdd5780610fe1565b6103e85b949350505050565b6000818311610ff9576000611003565b611003828461139e565b9392505050565b600061012c82101561101e57506000610682565b600c831015801561103157506102bc8210155b1561103e57506003610682565b6006831015801561105157506102268210155b1561105e57506002610682565b6003831015801561107157506101908210155b1561107e57506001610682565b50600092915050565b600060038214806110985750600682145b80610682575050600c1490565b60405180610120016040528060006001600160a01b03168152602001600081526020016000815260200160008152602001600081526020016000815260200160008152602001600060038111156110fe576110fe61116c565b8152602001600081525090565b80356001600160a01b038116811461112257600080fd5b919050565b6000806040838503121561113a57600080fd5b6111438361110b565b946020939093013593505050565b60006020828403121561116357600080fd5b6110038261110b565b634e487b7160e01b600052602160045260246000fd5b600481106111a057634e487b7160e01b600052602160045260246000fd5b9052565b6001600160a01b038a1681526020810189905260408101889052606081018790526080810186905260a0810185905260c0810184905261012081016111ec60e0830185611182565b826101008301529a9950505050505050505050565b828152604081016110036020830184611182565b6000815180845260005b8181101561123b5760208185018101518683018201520161121f565b506000602082860101526020601f19601f83011685010191505092915050565b8215158152604060208201526000610fe16040830184611215565b60006101208201905060018060a01b0383511682526020830151602083015260408301516040830152606083015160608301526080830151608083015260a083015160a083015260c083015160c083015260e08301516112d960e0840182611182565b5061010092830151919092015290565b602081016106828284611182565b60006020828403121561130957600080fd5b81356004811061100357600080fd5b6020815260006110036020830184611215565b8035801515811461112257600080fd5b6000806000806080858703121561135157600080fd5b61135a8561110b565b93506020850135925061136f6040860161132b565b915061137d6060860161132b565b905092959194509250565b634e487b7160e01b600052601160045260246000fd5b8181038181111561068257610682611388565b8082018082111561068257610682611388565b6000600182016113d6576113d6611388565b5060010190565b6001600160a01b03851681526020810184905260408101839052608081016114086060830184611182565b9594505050505056fe4275696c64206d6f72652072657075746174696f6e20746f20756e6c6f636b206c656e64696e675072656d69756d2074696572202d2046756c6c206c656e64696e672061636365737342617369632074696572202d204c696d69746564206c656e64696e6720616363657373547275737465642074696572202d205374616e64617264206c656e64696e6720616363657373a2646970667358221220f40ce1db0f2ec4202bade60e354bd5983b8f05bb50ac263c9c8688697465753764736f6c63430008140033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061018d5760003560e01c80638abb20cc116100de578063b45aae5211610097578063e64bd59311610071578063e64bd59314610444578063e7e40df814610464578063ef83400c14610477578063f2fde38b1461048a57600080fd5b8063b45aae52146103d4578063cdd942d814610410578063d47875d01461041857600080fd5b80638abb20cc146103595780638da5cb5b1461036c5780639af01c2d146103915780639c89a0e2146103995780639c91dd56146103b9578063a360da5f146103cc57600080fd5b80633b9c52671161014b578063729a79c511610125578063729a79c5146103145780637effe56814610335578063826dc1421461033e5780638822ee8b1461034657600080fd5b80633b9c5267146102bc5780635298bf9914610302578063715018a61461030a57600080fd5b8062a829141461019257806306fa15a7146101f6578063177fb4f2146102745780632471f45a1461028a57806327ff6223146102925780632c27cd481461029b575b600080fd5b6101d16101a0366004611127565b6003602081815260009384526040808520909152918352912080546001820154600283015492909301549092919084565b6040805194855260208501939093529183015260608201526080015b60405180910390f35b61025f610204366004611151565b60026020819052600091825260409091208054600182015492820154600383015460048401546005850154600686015460078701546008909701546001600160a01b0390961697969495939492939192909160ff9091169089565b6040516101ed999897969594939291906111a4565b61027c606481565b6040519081526020016101ed565b61027c600681565b61027c6103e881565b6102ae6102a9366004611151565b61049d565b6040516101ed929190611201565b6102cf6102ca366004611127565b610605565b6040516101ed91908151815260208083015190820152604080830151908201526060918201519181019190915260800190565b61027c60c881565b610312610688565b005b610327610322366004611151565b61069c565b6040516101ed92919061125b565b61027c6101f481565b61027c600381565b610312610354366004611127565b610852565b610312610367366004611151565b6108b0565b6000546001600160a01b03165b6040516001600160a01b0390911681526020016101ed565b61027c600c81565b6103ac6103a7366004611151565b6108da565b6040516101ed9190611276565b600154610379906001600160a01b031681565b61027c603281565b6104036103e2366004611151565b6001600160a01b031660009081526002602052604090206007015460ff1690565b6040516101ed91906112e9565b61027c604b81565b61027c610426366004611151565b6001600160a01b031660009081526002602052604090206008015490565b6104576104523660046112f7565b610994565b6040516101ed9190611318565b61031261047236600461133b565b610a67565b610312610485366004611127565b610d4a565b610312610498366004611151565b610eff565b6001600160a01b038082166000908152600260208181526040808420815161012081018352815490961686526001810154928601929092529181015491840191909152600380820154606085015260048201546080850152600582015460a0850152600682015460c08501526007820154929384938493919260e084019160ff169081111561052e5761052e61116c565b600381111561053f5761053f61116c565b815260089190910154602090910152905060038160e0015160038111156105685761056861116c565b0361057a575060009360039350915050565b60028160e0015160038111156105925761059261116c565b036105b25760208101516105a790600c61139e565b946003945092505050565b60018160e0015160038111156105ca576105ca61116c565b036105ea5760208101516105df90600661139e565b946002945092505050565b60208101516105fa90600361139e565b946001945092505050565b6106306040518060800160405280600081526020016000815260200160008152602001600081525090565b506001600160a01b038216600090815260036020818152604080842085855282529283902083516080810185528154815260018201549281019290925260028101549382019390935291015460608201525b92915050565b610690610f42565b61069a6000610f6f565b565b6001600160a01b03808216600090815260026020818152604080842081516101208101835281549096168652600181015492860192909252918101549184019190915260038082015460608581019190915260048301546080860152600583015460a0860152600683015460c08601526007830154939490938593919260e084019160ff16908111156107315761073161116c565b60038111156107425761074261116c565b815260089190910154602090910152905060038160e00151600381111561076b5761076b61116c565b03610795576001604051806060016040528060228152602001611439602291399250925050915091565b60028160e0015160038111156107ad576107ad61116c565b036107d757600160405180606001604052806026815260200161147e602691399250925050915091565b60018160e0015160038111156107ef576107ef61116c565b14801561080357506101f481610100015110155b1561082d57600160405180606001604052806023815260200161145b602391399250925050915091565b6000604051806060016040528060278152602001611412602791399250925050915091565b6001546001600160a01b0316331461087c576040516282b42960e81b815260040160405180910390fd5b6001600160a01b038216600090815260026020526040812060060180548392906108a79084906113b1565b90915550505050565b6108b8610f42565b600180546001600160a01b0319166001600160a01b0392909216919091179055565b6108e26110a5565b6001600160a01b03808316600090815260026020818152604092839020835161012081018552815490951685526001810154918501919091529081015491830191909152600380820154606084015260048201546080840152600582015460a0840152600682015460c0840152600782015460e084019160ff9091169081111561096e5761096e61116c565b600381111561097f5761097f61116c565b81526020016008820154815250509050919050565b606060038260038111156109aa576109aa61116c565b036109d25750506040805180820190915260078152665072656d69756d60c81b602082015290565b60028260038111156109e6576109e661116c565b03610a0e575050604080518082019091526007815266151c9d5cdd195960ca1b602082015290565b6001826003811115610a2257610a2261116c565b03610a48575050604080518082019091526005815264426173696360d81b602082015290565b50506040805180820190915260038152624e657760e81b602082015290565b6001546001600160a01b03163314610a91576040516282b42960e81b815260040160405180910390fd5b6001600160a01b0380851660009081526002602090815260408083206003835281842088855290925290912081549192909116610aea5781546001600160a01b0319166001600160a01b0387161782556101f460088301555b600182018054906000610afc836113c4565b90915550508054816000610b0f836113c4565b91905055508315610b8f57600382018054906000610b2c836113c4565b9091555050600282018054906000610b43836113c4565b9091555050600281018054906000610b5a836113c4565b9091555050600181018054906000610b71836113c4565b9190505550610b858260080154604b610fbf565b6008830155610c15565b8215610bd257600482018054906000610ba7836113c4565b9091555050600381018054906000610bbe836113c4565b9190505550610b8582600801546064610fe9565b600282018054906000610be4836113c4565b9091555050600181018054906000610bfb836113c4565b9190505550610c0f82600801546032610fbf565b60088301555b610c278260010154836008015461100a565b60078301805460ff19166001836003811115610c4557610c4561116c565b0217905550600882015460078301546040516001600160a01b038916927fe49cf8896948048b69e1531d3f28ce172d4464f874cedc6c5e3b002d1cc2f20b92610c939260ff90911690611201565b60405180910390a2610ca88260010154611087565b15610d4257604080517352455055544154494f4e5f4d494c4553544f4e4560601b8152905190819003601401812060018401546008850154600786015489947f24dae94385c9aa4ee70d42172eb2ccbc9f8e6f09eedd940918dcd46e5563abf993610d1f938d939192909160ff16906020016113dd565b60408051601f1981840301815290829052610d3991611318565b60405180910390a35b505050505050565b6001546001600160a01b03163314610d74576040516282b42960e81b815260040160405180910390fd5b6001600160a01b0380831660009081526002602052604090208054909116610db85780546001600160a01b0319166001600160a01b0384161781556101f460088201555b600581018054906000610dca836113c4565b9190505550610dde816008015460c8610fe9565b600882018190556001820154610df39161100a565b60078201805460ff19166001836003811115610e1157610e1161116c565b0217905550600881015460078201546040516001600160a01b038616927fe49cf8896948048b69e1531d3f28ce172d4464f874cedc6c5e3b002d1cc2f20b92610e5f9260ff90911690611201565b60405180910390a26040516d135254d4d15117d410565351539560921b81528290600e0160408051918290038220600585015460088601546001600160a01b0389166020860152928401526060830191909152907f24dae94385c9aa4ee70d42172eb2ccbc9f8e6f09eedd940918dcd46e5563abf99060800160408051601f1981840301815290829052610ef291611318565b60405180910390a3505050565b610f07610f42565b6001600160a01b038116610f3657604051631e4fbdf760e01b8152600060048201526024015b60405180910390fd5b610f3f81610f6f565b50565b6000546001600160a01b0316331461069a5760405163118cdaa760e01b8152336004820152602401610f2d565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b600080610fcc83856113b1565b90506103e88111610fdd5780610fe1565b6103e85b949350505050565b6000818311610ff9576000611003565b611003828461139e565b9392505050565b600061012c82101561101e57506000610682565b600c831015801561103157506102bc8210155b1561103e57506003610682565b6006831015801561105157506102268210155b1561105e57506002610682565b6003831015801561107157506101908210155b1561107e57506001610682565b50600092915050565b600060038214806110985750600682145b80610682575050600c1490565b60405180610120016040528060006001600160a01b03168152602001600081526020016000815260200160008152602001600081526020016000815260200160008152602001600060038111156110fe576110fe61116c565b8152602001600081525090565b80356001600160a01b038116811461112257600080fd5b919050565b6000806040838503121561113a57600080fd5b6111438361110b565b946020939093013593505050565b60006020828403121561116357600080fd5b6110038261110b565b634e487b7160e01b600052602160045260246000fd5b600481106111a057634e487b7160e01b600052602160045260246000fd5b9052565b6001600160a01b038a1681526020810189905260408101889052606081018790526080810186905260a0810185905260c0810184905261012081016111ec60e0830185611182565b826101008301529a9950505050505050505050565b828152604081016110036020830184611182565b6000815180845260005b8181101561123b5760208185018101518683018201520161121f565b506000602082860101526020601f19601f83011685010191505092915050565b8215158152604060208201526000610fe16040830184611215565b60006101208201905060018060a01b0383511682526020830151602083015260408301516040830152606083015160608301526080830151608083015260a083015160a083015260c083015160c083015260e08301516112d960e0840182611182565b5061010092830151919092015290565b602081016106828284611182565b60006020828403121561130957600080fd5b81356004811061100357600080fd5b6020815260006110036020830184611215565b8035801515811461112257600080fd5b6000806000806080858703121561135157600080fd5b61135a8561110b565b93506020850135925061136f6040860161132b565b915061137d6060860161132b565b905092959194509250565b634e487b7160e01b600052601160045260246000fd5b8181038181111561068257610682611388565b8082018082111561068257610682611388565b6000600182016113d6576113d6611388565b5060010190565b6001600160a01b03851681526020810184905260408101839052608081016114086060830184611182565b9594505050505056fe4275696c64206d6f72652072657075746174696f6e20746f20756e6c6f636b206c656e64696e675072656d69756d2074696572202d2046756c6c206c656e64696e672061636365737342617369632074696572202d204c696d69746564206c656e64696e6720616363657373547275737465642074696572202d205374616e64617264206c656e64696e6720616363657373a2646970667358221220f40ce1db0f2ec4202bade60e354bd5983b8f05bb50ac263c9c8688697465753764736f6c63430008140033",
+  "devdoc": {
+    "details": "Tracks payment history and calculates reputation scores  ┌─────────────────────────────────────────────────────────────────┐ │                    REPUTATION SYSTEM                            │ │                                                                  │ │  Score Calculation:                                              │ │  ┌─────────────────────────────────────────────────────────┐   │ │  │ Base Score: 500                                          │   │ │  │ + On-time payment: +50 points                            │   │ │  │ + Early payment: +75 points                              │   │ │  │ - Late payment: -100 points                              │   │ │  │ - Missed payment: -200 points                            │   │ │  │ Max Score: 1000                                          │   │ │  └─────────────────────────────────────────────────────────┘   │ │                                                                  │ │  Tiers:                                                          │ │  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐              │ │  │   NEW   │ │  BASIC  │ │ TRUSTED │ │ PREMIUM │              │ │  │  0-2    │ │   3-5   │ │  6-11   │ │   12+   │              │ │  │payments │ │payments │ │payments │ │payments │              │ │  └─────────┘ └─────────┘ └─────────┘ └─────────┘              │ └─────────────────────────────────────────────────────────────────┘",
+    "errors": {
+      "OwnableInvalidOwner(address)": [
+        {
+          "details": "The owner is not a valid owner account. (eg. `address(0)`)"
+        }
+      ],
+      "OwnableUnauthorizedAccount(address)": [
+        {
+          "details": "The caller account is not authorized to perform an operation."
+        }
+      ]
+    },
+    "kind": "dev",
+    "methods": {
+      "addYieldEarned(address,uint256)": {
+        "params": {
+          "tenant": "Tenant address",
+          "yieldAmount": "Amount of yield earned"
+        }
+      },
+      "checkLendingEligibility(address)": {
+        "params": {
+          "tenant": "Tenant address"
+        },
+        "returns": {
+          "eligible": "Whether tenant can access lending",
+          "reason": "Eligibility reason"
+        }
+      },
+      "getLeaseStats(address,uint256)": {
+        "params": {
+          "leaseId": "Lease ID",
+          "tenant": "Tenant address"
+        },
+        "returns": {
+          "_0": "stats Lease payment stats"
+        }
+      },
+      "getNextTierProgress(address)": {
+        "params": {
+          "tenant": "Tenant address"
+        },
+        "returns": {
+          "nextTier": "The next tier to achieve",
+          "paymentsNeeded": "Number of payments to next tier"
+        }
+      },
+      "getReputation(address)": {
+        "params": {
+          "tenant": "Tenant address"
+        },
+        "returns": {
+          "_0": "Reputation data"
+        }
+      },
+      "getScore(address)": {
+        "params": {
+          "tenant": "Tenant address"
+        },
+        "returns": {
+          "_0": "score Current reputation score"
+        }
+      },
+      "getTier(address)": {
+        "params": {
+          "tenant": "Tenant address"
+        },
+        "returns": {
+          "_0": "tier Current reputation tier"
+        }
+      },
+      "getTierName(uint8)": {
+        "params": {
+          "tier": "The tier enum"
+        },
+        "returns": {
+          "_0": "name Tier name"
+        }
+      },
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "recordMissedPayment(address,uint256)": {
+        "params": {
+          "leaseId": "Lease ID",
+          "tenant": "Tenant address"
+        }
+      },
+      "recordPayment(address,uint256,bool,bool)": {
+        "params": {
+          "isEarly": "Whether payment was early",
+          "isLate": "Whether payment was late",
+          "leaseId": "Lease ID",
+          "tenant": "Tenant address"
+        }
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
+      },
+      "setPaymentContract(address)": {
+        "params": {
+          "_paymentContract": "Address of NomaPayment contract"
+        }
+      },
+      "transferOwnership(address)": {
+        "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      }
+    },
+    "title": "ReputationRegistry",
+    "version": 1
+  },
+  "userdoc": {
+    "events": {
+      "AIAgentTrigger(string,uint256,bytes)": {
+        "notice": "Emitted for AI agent trigger points"
+      },
+      "LeaseCreated(uint256,address,address,uint256,uint256)": {
+        "notice": "Emitted when a new lease is created"
+      },
+      "PaymentSettled(uint256,uint256,uint256,string)": {
+        "notice": "Emitted when payment is settled on Arc"
+      },
+      "RentPaid(uint256,uint256,address,uint256,bool,uint256)": {
+        "notice": "Emitted when rent is paid"
+      },
+      "ReputationUpdated(address,uint256,uint8)": {
+        "notice": "Emitted when reputation is updated"
+      },
+      "YieldRouted(uint256,uint256,string)": {
+        "notice": "Emitted when yield is routed"
+      }
+    },
+    "kind": "user",
+    "methods": {
+      "addYieldEarned(address,uint256)": {
+        "notice": "Add yield earned to tenant's record"
+      },
+      "checkLendingEligibility(address)": {
+        "notice": "Check if tenant is eligible for lending access"
+      },
+      "getLeaseStats(address,uint256)": {
+        "notice": "Get lease-specific stats"
+      },
+      "getNextTierProgress(address)": {
+        "notice": "Calculate payments needed for next tier"
+      },
+      "getReputation(address)": {
+        "notice": "Get tenant reputation"
+      },
+      "getScore(address)": {
+        "notice": "Get tenant reputation score"
+      },
+      "getTier(address)": {
+        "notice": "Get tenant reputation tier"
+      },
+      "getTierName(uint8)": {
+        "notice": "Get tier name as string"
+      },
+      "leaseStats(address,uint256)": {
+        "notice": "Mapping of tenant to lease-specific stats"
+      },
+      "paymentContract()": {
+        "notice": "Payment contract address"
+      },
+      "recordMissedPayment(address,uint256)": {
+        "notice": "Record a missed payment"
+      },
+      "recordPayment(address,uint256,bool,bool)": {
+        "notice": "Record a payment and update reputation"
+      },
+      "reputations(address)": {
+        "notice": "Mapping of tenant to reputation data"
+      },
+      "setPaymentContract(address)": {
+        "notice": "Set the payment contract address"
+      }
+    },
+    "notice": "On-chain reputation tracking for NOMA tenants",
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 8,
+        "contract": "contracts/ReputationRegistry.sol:ReputationRegistry",
+        "label": "_owner",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_address"
+      },
+      {
+        "astId": 6128,
+        "contract": "contracts/ReputationRegistry.sol:ReputationRegistry",
+        "label": "paymentContract",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_address"
+      },
+      {
+        "astId": 6134,
+        "contract": "contracts/ReputationRegistry.sol:ReputationRegistry",
+        "label": "reputations",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_mapping(t_address,t_struct(Reputation)6934_storage)"
+      },
+      {
+        "astId": 6142,
+        "contract": "contracts/ReputationRegistry.sol:ReputationRegistry",
+        "label": "leaseStats",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_mapping(t_address,t_mapping(t_uint256,t_struct(LeaseStats)6152_storage))"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_enum(ReputationTier)6871": {
+        "encoding": "inplace",
+        "label": "enum INomaTypes.ReputationTier",
+        "numberOfBytes": "1"
+      },
+      "t_mapping(t_address,t_mapping(t_uint256,t_struct(LeaseStats)6152_storage))": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => mapping(uint256 => struct ReputationRegistry.LeaseStats))",
+        "numberOfBytes": "32",
+        "value": "t_mapping(t_uint256,t_struct(LeaseStats)6152_storage)"
+      },
+      "t_mapping(t_address,t_struct(Reputation)6934_storage)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => struct INomaTypes.Reputation)",
+        "numberOfBytes": "32",
+        "value": "t_struct(Reputation)6934_storage"
+      },
+      "t_mapping(t_uint256,t_struct(LeaseStats)6152_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct ReputationRegistry.LeaseStats)",
+        "numberOfBytes": "32",
+        "value": "t_struct(LeaseStats)6152_storage"
+      },
+      "t_struct(LeaseStats)6152_storage": {
+        "encoding": "inplace",
+        "label": "struct ReputationRegistry.LeaseStats",
+        "members": [
+          {
+            "astId": 6145,
+            "contract": "contracts/ReputationRegistry.sol:ReputationRegistry",
+            "label": "totalPayments",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 6147,
+            "contract": "contracts/ReputationRegistry.sol:ReputationRegistry",
+            "label": "onTimePayments",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 6149,
+            "contract": "contracts/ReputationRegistry.sol:ReputationRegistry",
+            "label": "earlyPayments",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 6151,
+            "contract": "contracts/ReputationRegistry.sol:ReputationRegistry",
+            "label": "latePayments",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint256"
+          }
+        ],
+        "numberOfBytes": "128"
+      },
+      "t_struct(Reputation)6934_storage": {
+        "encoding": "inplace",
+        "label": "struct INomaTypes.Reputation",
+        "members": [
+          {
+            "astId": 6916,
+            "contract": "contracts/ReputationRegistry.sol:ReputationRegistry",
+            "label": "tenant",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_address"
+          },
+          {
+            "astId": 6918,
+            "contract": "contracts/ReputationRegistry.sol:ReputationRegistry",
+            "label": "totalPayments",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 6920,
+            "contract": "contracts/ReputationRegistry.sol:ReputationRegistry",
+            "label": "onTimePayments",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 6922,
+            "contract": "contracts/ReputationRegistry.sol:ReputationRegistry",
+            "label": "earlyPayments",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 6924,
+            "contract": "contracts/ReputationRegistry.sol:ReputationRegistry",
+            "label": "latePayments",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 6926,
+            "contract": "contracts/ReputationRegistry.sol:ReputationRegistry",
+            "label": "missedPayments",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 6928,
+            "contract": "contracts/ReputationRegistry.sol:ReputationRegistry",
+            "label": "totalYieldEarned",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 6931,
+            "contract": "contracts/ReputationRegistry.sol:ReputationRegistry",
+            "label": "tier",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_enum(ReputationTier)6871"
+          },
+          {
+            "astId": 6933,
+            "contract": "contracts/ReputationRegistry.sol:ReputationRegistry",
+            "label": "score",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_uint256"
+          }
+        ],
+        "numberOfBytes": "288"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

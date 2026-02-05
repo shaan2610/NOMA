@@ -1,0 +1,1739 @@
+{
+  "address": "0x8f0237b2076887988b796C6054A9a5a6Cf5cA058",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "ERC721IncorrectOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "ERC721InsufficientApproval",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "approver",
+          "type": "address"
+        }
+      ],
+      "name": "ERC721InvalidApprover",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        }
+      ],
+      "name": "ERC721InvalidOperator",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "ERC721InvalidOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "receiver",
+          "type": "address"
+        }
+      ],
+      "name": "ERC721InvalidReceiver",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "ERC721InvalidSender",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "ERC721NonexistentToken",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidAddress",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidDueDay",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidRentAmount",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "LeaseNotActive",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnableInvalidOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "OwnableUnauthorizedAccount",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "Unauthorized",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "string",
+          "name": "triggerType",
+          "type": "string"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "AIAgentTrigger",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "approved",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "Approval",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "approved",
+          "type": "bool"
+        }
+      ],
+      "name": "ApprovalForAll",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "_fromTokenId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "_toTokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "BatchMetadataUpdate",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "landlord",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "monthlyRent",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "dueDay",
+          "type": "uint256"
+        }
+      ],
+      "name": "LeaseCreated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "MetadataUpdate",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "paymentId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "settlementChain",
+          "type": "string"
+        }
+      ],
+      "name": "PaymentSettled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "paymentId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "isEarly",
+          "type": "bool"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "yieldEarned",
+          "type": "uint256"
+        }
+      ],
+      "name": "RentPaid",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "newScore",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "enum INomaTypes.ReputationTier",
+          "name": "newTier",
+          "type": "uint8"
+        }
+      ],
+      "name": "ReputationUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "Transfer",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "strategy",
+          "type": "string"
+        }
+      ],
+      "name": "YieldRouted",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "approve",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "monthlyRent",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "dueDay",
+          "type": "uint256"
+        }
+      ],
+      "name": "createLeaseAsLandlord",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "landlord",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "monthlyRent",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "dueDay",
+          "type": "uint256"
+        }
+      ],
+      "name": "createLeaseAsTenant",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getApproved",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "landlord",
+          "type": "address"
+        }
+      ],
+      "name": "getLandlordLeases",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getLease",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "leaseId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "tenant",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "landlord",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "monthlyRent",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "dueDay",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "startDate",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "endDate",
+              "type": "uint256"
+            },
+            {
+              "internalType": "enum INomaTypes.LeaseStatus",
+              "name": "status",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalPaid",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "paymentCount",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct INomaTypes.Lease",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getNextDueDate",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        }
+      ],
+      "name": "getTenantLeases",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        }
+      ],
+      "name": "isApprovedForAll",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        }
+      ],
+      "name": "isLeaseActive",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "landlordLeases",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "leases",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "tenant",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "landlord",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "monthlyRent",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "dueDay",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "startDate",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "endDate",
+          "type": "uint256"
+        },
+        {
+          "internalType": "enum INomaTypes.LeaseStatus",
+          "name": "status",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalPaid",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "paymentCount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "name",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "ownerOf",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "paymentContract",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "recordPayment",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "safeTransferFrom",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "safeTransferFrom",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        },
+        {
+          "internalType": "bool",
+          "name": "approved",
+          "type": "bool"
+        }
+      ],
+      "name": "setApprovalForAll",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_paymentContract",
+          "type": "address"
+        }
+      ],
+      "name": "setPaymentContract",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes4",
+          "name": "interfaceId",
+          "type": "bytes4"
+        }
+      ],
+      "name": "supportsInterface",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "symbol",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "tenantLeases",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "leaseId",
+          "type": "uint256"
+        }
+      ],
+      "name": "terminateLease",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "tokenURI",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "transferFrom",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xfd03515af3266aa98c029b5319df2e43d20d54c6e437fb8a06c8668528c48223",
+  "receipt": {
+    "to": null,
+    "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "contractAddress": "0x0165878A594ca255338adfa4d48449f69242Eb8F",
+    "transactionIndex": 0,
+    "gasUsed": "1869753",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000001000000000000000000000000000000000000020000000000000100000800000000000000000000000000000000440000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000200000000000000000000000002000000000000000000020000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x1f28c8a3b15694a773fef60ad34bafd7ad32d04d490defa9ab23382976fb4a91",
+    "transactionHash": "0xfd03515af3266aa98c029b5319df2e43d20d54c6e437fb8a06c8668528c48223",
+    "logs": [
+      {
+        "transactionIndex": 0,
+        "blockNumber": 13,
+        "transactionHash": "0xfd03515af3266aa98c029b5319df2e43d20d54c6e437fb8a06c8668528c48223",
+        "address": "0x8f0237b2076887988b796C6054A9a5a6Cf5cA058",
+        "topics": [
+          "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x000000000000000000000000f39fd6e51aad88f6f4ce6ab8827279cfffb92266"
+        ],
+        "data": "0x",
+        "logIndex": 0,
+        "blockHash": "0x1f28c8a3b15694a773fef60ad34bafd7ad32d04d490defa9ab23382976fb4a91"
+      }
+    ],
+    "blockNumber": 13,
+    "cumulativeGasUsed": "1869753",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "46b81ae9e1ea028be64b386a1387d251",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"ERC721IncorrectOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ERC721InsufficientApproval\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"approver\",\"type\":\"address\"}],\"name\":\"ERC721InvalidApprover\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"ERC721InvalidOperator\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"ERC721InvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"}],\"name\":\"ERC721InvalidReceiver\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"ERC721InvalidSender\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ERC721NonexistentToken\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InvalidAddress\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InvalidDueDay\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InvalidRentAmount\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"LeaseNotActive\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Unauthorized\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"string\",\"name\":\"triggerType\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"AIAgentTrigger\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"approved\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"ApprovalForAll\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_fromTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_toTokenId\",\"type\":\"uint256\"}],\"name\":\"BatchMetadataUpdate\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"landlord\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"monthlyRent\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"dueDay\",\"type\":\"uint256\"}],\"name\":\"LeaseCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"MetadataUpdate\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"paymentId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"settlementChain\",\"type\":\"string\"}],\"name\":\"PaymentSettled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"paymentId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"isEarly\",\"type\":\"bool\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"yieldEarned\",\"type\":\"uint256\"}],\"name\":\"RentPaid\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"newScore\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"enum INomaTypes.ReputationTier\",\"name\":\"newTier\",\"type\":\"uint8\"}],\"name\":\"ReputationUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"strategy\",\"type\":\"string\"}],\"name\":\"YieldRouted\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"monthlyRent\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"dueDay\",\"type\":\"uint256\"}],\"name\":\"createLeaseAsLandlord\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"landlord\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"monthlyRent\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"dueDay\",\"type\":\"uint256\"}],\"name\":\"createLeaseAsTenant\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"getApproved\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"landlord\",\"type\":\"address\"}],\"name\":\"getLandlordLeases\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"name\":\"getLease\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"landlord\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"monthlyRent\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"dueDay\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startDate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endDate\",\"type\":\"uint256\"},{\"internalType\":\"enum INomaTypes.LeaseStatus\",\"name\":\"status\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"totalPaid\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"paymentCount\",\"type\":\"uint256\"}],\"internalType\":\"struct INomaTypes.Lease\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"name\":\"getNextDueDate\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"}],\"name\":\"getTenantLeases\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"isApprovedForAll\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"name\":\"isLeaseActive\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"landlordLeases\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"leases\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"tenant\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"landlord\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"monthlyRent\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"dueDay\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startDate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endDate\",\"type\":\"uint256\"},{\"internalType\":\"enum INomaTypes.LeaseStatus\",\"name\":\"status\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"totalPaid\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"paymentCount\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ownerOf\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"paymentContract\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"recordPayment\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"setApprovalForAll\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_paymentContract\",\"type\":\"address\"}],\"name\":\"setPaymentContract\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"tenantLeases\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"name\":\"terminateLease\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"tokenURI\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Each lease is minted as an NFT owned by the tenant  \\u250c\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2510 \\u2502                      LEASE NFT                               \\u2502 \\u2502  \\u250c\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2510   \\u2502 \\u2502  \\u2502 Lease ID: #1234                                      \\u2502   \\u2502 \\u2502  \\u2502 Tenant: 0x...abc                                     \\u2502   \\u2502 \\u2502  \\u2502 Landlord: 0x...def                                   \\u2502   \\u2502 \\u2502  \\u2502 Monthly Rent: 1,500 USDC                             \\u2502   \\u2502 \\u2502  \\u2502 Due Day: 1st of month                                \\u2502   \\u2502 \\u2502  \\u2502 Status: Active                                       \\u2502   \\u2502 \\u2502  \\u2502 Payments: 6 | Reputation: Trusted                    \\u2502   \\u2502 \\u2502  \\u2514\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2518   \\u2502 \\u2514\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2518\",\"errors\":{\"ERC721IncorrectOwner(address,uint256,address)\":[{\"details\":\"Indicates an error related to the ownership over a particular token. Used in transfers.\",\"params\":{\"owner\":\"Address of the current owner of a token.\",\"sender\":\"Address whose tokens are being transferred.\",\"tokenId\":\"Identifier number of a token.\"}}],\"ERC721InsufficientApproval(address,uint256)\":[{\"details\":\"Indicates a failure with the `operator`\\u2019s approval. Used in transfers.\",\"params\":{\"operator\":\"Address that may be allowed to operate on tokens without being their owner.\",\"tokenId\":\"Identifier number of a token.\"}}],\"ERC721InvalidApprover(address)\":[{\"details\":\"Indicates a failure with the `approver` of a token to be approved. Used in approvals.\",\"params\":{\"approver\":\"Address initiating an approval operation.\"}}],\"ERC721InvalidOperator(address)\":[{\"details\":\"Indicates a failure with the `operator` to be approved. Used in approvals.\",\"params\":{\"operator\":\"Address that may be allowed to operate on tokens without being their owner.\"}}],\"ERC721InvalidOwner(address)\":[{\"details\":\"Indicates that an address can't be an owner. For example, `address(0)` is a forbidden owner in EIP-20. Used in balance queries.\",\"params\":{\"owner\":\"Address of the current owner of a token.\"}}],\"ERC721InvalidReceiver(address)\":[{\"details\":\"Indicates a failure with the token `receiver`. Used in transfers.\",\"params\":{\"receiver\":\"Address to which tokens are being transferred.\"}}],\"ERC721InvalidSender(address)\":[{\"details\":\"Indicates a failure with the token `sender`. Used in transfers.\",\"params\":{\"sender\":\"Address whose tokens are being transferred.\"}}],\"ERC721NonexistentToken(uint256)\":[{\"details\":\"Indicates a `tokenId` whose `owner` is the zero address.\",\"params\":{\"tokenId\":\"Identifier number of a token.\"}}],\"OwnableInvalidOwner(address)\":[{\"details\":\"The owner is not a valid owner account. (eg. `address(0)`)\"}],\"OwnableUnauthorizedAccount(address)\":[{\"details\":\"The caller account is not authorized to perform an operation.\"}]},\"events\":{\"Approval(address,address,uint256)\":{\"details\":\"Emitted when `owner` enables `approved` to manage the `tokenId` token.\"},\"ApprovalForAll(address,address,bool)\":{\"details\":\"Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets.\"},\"BatchMetadataUpdate(uint256,uint256)\":{\"details\":\"This event emits when the metadata of a range of tokens is changed. So that the third-party platforms such as NFT market could timely update the images and related attributes of the NFTs.\"},\"MetadataUpdate(uint256)\":{\"details\":\"This event emits when the metadata of a token is changed. So that the third-party platforms such as NFT market could timely update the images and related attributes of the NFT.\"},\"Transfer(address,address,uint256)\":{\"details\":\"Emitted when `tokenId` token is transferred from `from` to `to`.\"}},\"kind\":\"dev\",\"methods\":{\"approve(address,uint256)\":{\"details\":\"See {IERC721-approve}.\"},\"balanceOf(address)\":{\"details\":\"See {IERC721-balanceOf}.\"},\"createLeaseAsLandlord(address,uint256,uint256)\":{\"params\":{\"dueDay\":\"Day of month rent is due (1-28)\",\"monthlyRent\":\"Monthly rent amount in USDC (6 decimals)\",\"tenant\":\"Address of the tenant\"},\"returns\":{\"leaseId\":\"The ID of the created lease\"}},\"createLeaseAsTenant(address,uint256,uint256)\":{\"params\":{\"dueDay\":\"Day of month rent is due (1-28)\",\"landlord\":\"Address of the landlord\",\"monthlyRent\":\"Monthly rent amount in USDC (6 decimals)\"},\"returns\":{\"leaseId\":\"The ID of the created lease\"}},\"getApproved(uint256)\":{\"details\":\"See {IERC721-getApproved}.\"},\"getLandlordLeases(address)\":{\"params\":{\"landlord\":\"The landlord address\"},\"returns\":{\"_0\":\"Array of lease IDs\"}},\"getLease(uint256)\":{\"params\":{\"leaseId\":\"The lease ID\"},\"returns\":{\"_0\":\"The lease data\"}},\"getNextDueDate(uint256)\":{\"params\":{\"leaseId\":\"The lease ID\"},\"returns\":{\"_0\":\"The next due date timestamp\"}},\"getTenantLeases(address)\":{\"params\":{\"tenant\":\"The tenant address\"},\"returns\":{\"_0\":\"Array of lease IDs\"}},\"isApprovedForAll(address,address)\":{\"details\":\"See {IERC721-isApprovedForAll}.\"},\"isLeaseActive(uint256)\":{\"params\":{\"leaseId\":\"The lease ID\"},\"returns\":{\"_0\":\"True if lease is active\"}},\"name()\":{\"details\":\"See {IERC721Metadata-name}.\"},\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"ownerOf(uint256)\":{\"details\":\"See {IERC721-ownerOf}.\"},\"recordPayment(uint256,uint256)\":{\"params\":{\"amount\":\"Amount paid\",\"leaseId\":\"The lease to update\"}},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner.\"},\"safeTransferFrom(address,address,uint256)\":{\"details\":\"See {IERC721-safeTransferFrom}.\"},\"safeTransferFrom(address,address,uint256,bytes)\":{\"details\":\"See {IERC721-safeTransferFrom}.\"},\"setApprovalForAll(address,bool)\":{\"details\":\"See {IERC721-setApprovalForAll}.\"},\"setPaymentContract(address)\":{\"params\":{\"_paymentContract\":\"Address of the NomaPayment contract\"}},\"symbol()\":{\"details\":\"See {IERC721Metadata-symbol}.\"},\"terminateLease(uint256)\":{\"params\":{\"leaseId\":\"The lease to terminate\"}},\"transferFrom(address,address,uint256)\":{\"details\":\"See {IERC721-transferFrom}.\"},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"}},\"title\":\"LeaseNFT\",\"version\":1},\"userdoc\":{\"events\":{\"AIAgentTrigger(string,uint256,bytes)\":{\"notice\":\"Emitted for AI agent trigger points\"},\"LeaseCreated(uint256,address,address,uint256,uint256)\":{\"notice\":\"Emitted when a new lease is created\"},\"PaymentSettled(uint256,uint256,uint256,string)\":{\"notice\":\"Emitted when payment is settled on Arc\"},\"RentPaid(uint256,uint256,address,uint256,bool,uint256)\":{\"notice\":\"Emitted when rent is paid\"},\"ReputationUpdated(address,uint256,uint8)\":{\"notice\":\"Emitted when reputation is updated\"},\"YieldRouted(uint256,uint256,string)\":{\"notice\":\"Emitted when yield is routed\"}},\"kind\":\"user\",\"methods\":{\"createLeaseAsLandlord(address,uint256,uint256)\":{\"notice\":\"Create a new lease as a landlord\"},\"createLeaseAsTenant(address,uint256,uint256)\":{\"notice\":\"Create a new lease as a tenant\"},\"getLandlordLeases(address)\":{\"notice\":\"Get all leases for a landlord\"},\"getLease(uint256)\":{\"notice\":\"Get lease details\"},\"getNextDueDate(uint256)\":{\"notice\":\"Get the current due date for a lease\"},\"getTenantLeases(address)\":{\"notice\":\"Get all leases for a tenant\"},\"isLeaseActive(uint256)\":{\"notice\":\"Check if lease is active\"},\"landlordLeases(address,uint256)\":{\"notice\":\"Mapping from landlord address to their lease IDs\"},\"leases(uint256)\":{\"notice\":\"Mapping from lease ID to lease data\"},\"paymentContract()\":{\"notice\":\"Payment contract address (authorized to update leases)\"},\"recordPayment(uint256,uint256)\":{\"notice\":\"Update lease payment data (called by payment contract)\"},\"setPaymentContract(address)\":{\"notice\":\"Set the payment contract address\"},\"tenantLeases(address,uint256)\":{\"notice\":\"Mapping from tenant address to their lease IDs\"},\"terminateLease(uint256)\":{\"notice\":\"Terminate a lease\"}},\"notice\":\"NFT representation of rental leases for the NOMA protocol\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/LeaseNFT.sol\":\"LeaseNFT\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/access/Ownable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (access/Ownable.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {Context} from \\\"../utils/Context.sol\\\";\\n\\n/**\\n * @dev Contract module which provides a basic access control mechanism, where\\n * there is an account (an owner) that can be granted exclusive access to\\n * specific functions.\\n *\\n * The initial owner is set to the address provided by the deployer. This can\\n * later be changed with {transferOwnership}.\\n *\\n * This module is used through inheritance. It will make available the modifier\\n * `onlyOwner`, which can be applied to your functions to restrict their use to\\n * the owner.\\n */\\nabstract contract Ownable is Context {\\n    address private _owner;\\n\\n    /**\\n     * @dev The caller account is not authorized to perform an operation.\\n     */\\n    error OwnableUnauthorizedAccount(address account);\\n\\n    /**\\n     * @dev The owner is not a valid owner account. (eg. `address(0)`)\\n     */\\n    error OwnableInvalidOwner(address owner);\\n\\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\\n\\n    /**\\n     * @dev Initializes the contract setting the address provided by the deployer as the initial owner.\\n     */\\n    constructor(address initialOwner) {\\n        if (initialOwner == address(0)) {\\n            revert OwnableInvalidOwner(address(0));\\n        }\\n        _transferOwnership(initialOwner);\\n    }\\n\\n    /**\\n     * @dev Throws if called by any account other than the owner.\\n     */\\n    modifier onlyOwner() {\\n        _checkOwner();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Returns the address of the current owner.\\n     */\\n    function owner() public view virtual returns (address) {\\n        return _owner;\\n    }\\n\\n    /**\\n     * @dev Throws if the sender is not the owner.\\n     */\\n    function _checkOwner() internal view virtual {\\n        if (owner() != _msgSender()) {\\n            revert OwnableUnauthorizedAccount(_msgSender());\\n        }\\n    }\\n\\n    /**\\n     * @dev Leaves the contract without owner. It will not be possible to call\\n     * `onlyOwner` functions. Can only be called by the current owner.\\n     *\\n     * NOTE: Renouncing ownership will leave the contract without an owner,\\n     * thereby disabling any functionality that is only available to the owner.\\n     */\\n    function renounceOwnership() public virtual onlyOwner {\\n        _transferOwnership(address(0));\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Can only be called by the current owner.\\n     */\\n    function transferOwnership(address newOwner) public virtual onlyOwner {\\n        if (newOwner == address(0)) {\\n            revert OwnableInvalidOwner(address(0));\\n        }\\n        _transferOwnership(newOwner);\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Internal function without access restriction.\\n     */\\n    function _transferOwnership(address newOwner) internal virtual {\\n        address oldOwner = _owner;\\n        _owner = newOwner;\\n        emit OwnershipTransferred(oldOwner, newOwner);\\n    }\\n}\\n\",\"keccak256\":\"0xff6d0bb2e285473e5311d9d3caacb525ae3538a80758c10649a4d61029b017bb\",\"license\":\"MIT\"},\"@openzeppelin/contracts/interfaces/IERC165.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (interfaces/IERC165.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {IERC165} from \\\"../utils/introspection/IERC165.sol\\\";\\n\",\"keccak256\":\"0xde7e9fd9aee8d4f40772f96bb3b58836cbc6dfc0227014a061947f8821ea9724\",\"license\":\"MIT\"},\"@openzeppelin/contracts/interfaces/IERC4906.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (interfaces/IERC4906.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {IERC165} from \\\"./IERC165.sol\\\";\\nimport {IERC721} from \\\"./IERC721.sol\\\";\\n\\n/// @title EIP-721 Metadata Update Extension\\ninterface IERC4906 is IERC165, IERC721 {\\n    /// @dev This event emits when the metadata of a token is changed.\\n    /// So that the third-party platforms such as NFT market could\\n    /// timely update the images and related attributes of the NFT.\\n    event MetadataUpdate(uint256 _tokenId);\\n\\n    /// @dev This event emits when the metadata of a range of tokens is changed.\\n    /// So that the third-party platforms such as NFT market could\\n    /// timely update the images and related attributes of the NFTs.\\n    event BatchMetadataUpdate(uint256 _fromTokenId, uint256 _toTokenId);\\n}\\n\",\"keccak256\":\"0xb31b86c03f4677dcffa4655285d62433509513be9bafa0e04984565052d34e44\",\"license\":\"MIT\"},\"@openzeppelin/contracts/interfaces/IERC721.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (interfaces/IERC721.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {IERC721} from \\\"../token/ERC721/IERC721.sol\\\";\\n\",\"keccak256\":\"0xc4d7ebf63eb2f6bf3fee1b6c0ee775efa9f31b4843a5511d07eea147e212932d\",\"license\":\"MIT\"},\"@openzeppelin/contracts/interfaces/draft-IERC6093.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (interfaces/draft-IERC6093.sol)\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Standard ERC20 Errors\\n * Interface of the https://eips.ethereum.org/EIPS/eip-6093[ERC-6093] custom errors for ERC20 tokens.\\n */\\ninterface IERC20Errors {\\n    /**\\n     * @dev Indicates an error related to the current `balance` of a `sender`. Used in transfers.\\n     * @param sender Address whose tokens are being transferred.\\n     * @param balance Current balance for the interacting account.\\n     * @param needed Minimum amount required to perform a transfer.\\n     */\\n    error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed);\\n\\n    /**\\n     * @dev Indicates a failure with the token `sender`. Used in transfers.\\n     * @param sender Address whose tokens are being transferred.\\n     */\\n    error ERC20InvalidSender(address sender);\\n\\n    /**\\n     * @dev Indicates a failure with the token `receiver`. Used in transfers.\\n     * @param receiver Address to which tokens are being transferred.\\n     */\\n    error ERC20InvalidReceiver(address receiver);\\n\\n    /**\\n     * @dev Indicates a failure with the `spender`\\u2019s `allowance`. Used in transfers.\\n     * @param spender Address that may be allowed to operate on tokens without being their owner.\\n     * @param allowance Amount of tokens a `spender` is allowed to operate with.\\n     * @param needed Minimum amount required to perform a transfer.\\n     */\\n    error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed);\\n\\n    /**\\n     * @dev Indicates a failure with the `approver` of a token to be approved. Used in approvals.\\n     * @param approver Address initiating an approval operation.\\n     */\\n    error ERC20InvalidApprover(address approver);\\n\\n    /**\\n     * @dev Indicates a failure with the `spender` to be approved. Used in approvals.\\n     * @param spender Address that may be allowed to operate on tokens without being their owner.\\n     */\\n    error ERC20InvalidSpender(address spender);\\n}\\n\\n/**\\n * @dev Standard ERC721 Errors\\n * Interface of the https://eips.ethereum.org/EIPS/eip-6093[ERC-6093] custom errors for ERC721 tokens.\\n */\\ninterface IERC721Errors {\\n    /**\\n     * @dev Indicates that an address can't be an owner. For example, `address(0)` is a forbidden owner in EIP-20.\\n     * Used in balance queries.\\n     * @param owner Address of the current owner of a token.\\n     */\\n    error ERC721InvalidOwner(address owner);\\n\\n    /**\\n     * @dev Indicates a `tokenId` whose `owner` is the zero address.\\n     * @param tokenId Identifier number of a token.\\n     */\\n    error ERC721NonexistentToken(uint256 tokenId);\\n\\n    /**\\n     * @dev Indicates an error related to the ownership over a particular token. Used in transfers.\\n     * @param sender Address whose tokens are being transferred.\\n     * @param tokenId Identifier number of a token.\\n     * @param owner Address of the current owner of a token.\\n     */\\n    error ERC721IncorrectOwner(address sender, uint256 tokenId, address owner);\\n\\n    /**\\n     * @dev Indicates a failure with the token `sender`. Used in transfers.\\n     * @param sender Address whose tokens are being transferred.\\n     */\\n    error ERC721InvalidSender(address sender);\\n\\n    /**\\n     * @dev Indicates a failure with the token `receiver`. Used in transfers.\\n     * @param receiver Address to which tokens are being transferred.\\n     */\\n    error ERC721InvalidReceiver(address receiver);\\n\\n    /**\\n     * @dev Indicates a failure with the `operator`\\u2019s approval. Used in transfers.\\n     * @param operator Address that may be allowed to operate on tokens without being their owner.\\n     * @param tokenId Identifier number of a token.\\n     */\\n    error ERC721InsufficientApproval(address operator, uint256 tokenId);\\n\\n    /**\\n     * @dev Indicates a failure with the `approver` of a token to be approved. Used in approvals.\\n     * @param approver Address initiating an approval operation.\\n     */\\n    error ERC721InvalidApprover(address approver);\\n\\n    /**\\n     * @dev Indicates a failure with the `operator` to be approved. Used in approvals.\\n     * @param operator Address that may be allowed to operate on tokens without being their owner.\\n     */\\n    error ERC721InvalidOperator(address operator);\\n}\\n\\n/**\\n * @dev Standard ERC1155 Errors\\n * Interface of the https://eips.ethereum.org/EIPS/eip-6093[ERC-6093] custom errors for ERC1155 tokens.\\n */\\ninterface IERC1155Errors {\\n    /**\\n     * @dev Indicates an error related to the current `balance` of a `sender`. Used in transfers.\\n     * @param sender Address whose tokens are being transferred.\\n     * @param balance Current balance for the interacting account.\\n     * @param needed Minimum amount required to perform a transfer.\\n     * @param tokenId Identifier number of a token.\\n     */\\n    error ERC1155InsufficientBalance(address sender, uint256 balance, uint256 needed, uint256 tokenId);\\n\\n    /**\\n     * @dev Indicates a failure with the token `sender`. Used in transfers.\\n     * @param sender Address whose tokens are being transferred.\\n     */\\n    error ERC1155InvalidSender(address sender);\\n\\n    /**\\n     * @dev Indicates a failure with the token `receiver`. Used in transfers.\\n     * @param receiver Address to which tokens are being transferred.\\n     */\\n    error ERC1155InvalidReceiver(address receiver);\\n\\n    /**\\n     * @dev Indicates a failure with the `operator`\\u2019s approval. Used in transfers.\\n     * @param operator Address that may be allowed to operate on tokens without being their owner.\\n     * @param owner Address of the current owner of a token.\\n     */\\n    error ERC1155MissingApprovalForAll(address operator, address owner);\\n\\n    /**\\n     * @dev Indicates a failure with the `approver` of a token to be approved. Used in approvals.\\n     * @param approver Address initiating an approval operation.\\n     */\\n    error ERC1155InvalidApprover(address approver);\\n\\n    /**\\n     * @dev Indicates a failure with the `operator` to be approved. Used in approvals.\\n     * @param operator Address that may be allowed to operate on tokens without being their owner.\\n     */\\n    error ERC1155InvalidOperator(address operator);\\n\\n    /**\\n     * @dev Indicates an array length mismatch between ids and values in a safeBatchTransferFrom operation.\\n     * Used in batch transfers.\\n     * @param idsLength Length of the array of token identifiers\\n     * @param valuesLength Length of the array of token amounts\\n     */\\n    error ERC1155InvalidArrayLength(uint256 idsLength, uint256 valuesLength);\\n}\\n\",\"keccak256\":\"0x60c65f701957fdd6faea1acb0bb45825791d473693ed9ecb34726fdfaa849dd7\",\"license\":\"MIT\"},\"@openzeppelin/contracts/token/ERC721/ERC721.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (token/ERC721/ERC721.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {IERC721} from \\\"./IERC721.sol\\\";\\nimport {IERC721Receiver} from \\\"./IERC721Receiver.sol\\\";\\nimport {IERC721Metadata} from \\\"./extensions/IERC721Metadata.sol\\\";\\nimport {Context} from \\\"../../utils/Context.sol\\\";\\nimport {Strings} from \\\"../../utils/Strings.sol\\\";\\nimport {IERC165, ERC165} from \\\"../../utils/introspection/ERC165.sol\\\";\\nimport {IERC721Errors} from \\\"../../interfaces/draft-IERC6093.sol\\\";\\n\\n/**\\n * @dev Implementation of https://eips.ethereum.org/EIPS/eip-721[ERC721] Non-Fungible Token Standard, including\\n * the Metadata extension, but not including the Enumerable extension, which is available separately as\\n * {ERC721Enumerable}.\\n */\\nabstract contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC721Errors {\\n    using Strings for uint256;\\n\\n    // Token name\\n    string private _name;\\n\\n    // Token symbol\\n    string private _symbol;\\n\\n    mapping(uint256 tokenId => address) private _owners;\\n\\n    mapping(address owner => uint256) private _balances;\\n\\n    mapping(uint256 tokenId => address) private _tokenApprovals;\\n\\n    mapping(address owner => mapping(address operator => bool)) private _operatorApprovals;\\n\\n    /**\\n     * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.\\n     */\\n    constructor(string memory name_, string memory symbol_) {\\n        _name = name_;\\n        _symbol = symbol_;\\n    }\\n\\n    /**\\n     * @dev See {IERC165-supportsInterface}.\\n     */\\n    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {\\n        return\\n            interfaceId == type(IERC721).interfaceId ||\\n            interfaceId == type(IERC721Metadata).interfaceId ||\\n            super.supportsInterface(interfaceId);\\n    }\\n\\n    /**\\n     * @dev See {IERC721-balanceOf}.\\n     */\\n    function balanceOf(address owner) public view virtual returns (uint256) {\\n        if (owner == address(0)) {\\n            revert ERC721InvalidOwner(address(0));\\n        }\\n        return _balances[owner];\\n    }\\n\\n    /**\\n     * @dev See {IERC721-ownerOf}.\\n     */\\n    function ownerOf(uint256 tokenId) public view virtual returns (address) {\\n        return _requireOwned(tokenId);\\n    }\\n\\n    /**\\n     * @dev See {IERC721Metadata-name}.\\n     */\\n    function name() public view virtual returns (string memory) {\\n        return _name;\\n    }\\n\\n    /**\\n     * @dev See {IERC721Metadata-symbol}.\\n     */\\n    function symbol() public view virtual returns (string memory) {\\n        return _symbol;\\n    }\\n\\n    /**\\n     * @dev See {IERC721Metadata-tokenURI}.\\n     */\\n    function tokenURI(uint256 tokenId) public view virtual returns (string memory) {\\n        _requireOwned(tokenId);\\n\\n        string memory baseURI = _baseURI();\\n        return bytes(baseURI).length > 0 ? string.concat(baseURI, tokenId.toString()) : \\\"\\\";\\n    }\\n\\n    /**\\n     * @dev Base URI for computing {tokenURI}. If set, the resulting URI for each\\n     * token will be the concatenation of the `baseURI` and the `tokenId`. Empty\\n     * by default, can be overridden in child contracts.\\n     */\\n    function _baseURI() internal view virtual returns (string memory) {\\n        return \\\"\\\";\\n    }\\n\\n    /**\\n     * @dev See {IERC721-approve}.\\n     */\\n    function approve(address to, uint256 tokenId) public virtual {\\n        _approve(to, tokenId, _msgSender());\\n    }\\n\\n    /**\\n     * @dev See {IERC721-getApproved}.\\n     */\\n    function getApproved(uint256 tokenId) public view virtual returns (address) {\\n        _requireOwned(tokenId);\\n\\n        return _getApproved(tokenId);\\n    }\\n\\n    /**\\n     * @dev See {IERC721-setApprovalForAll}.\\n     */\\n    function setApprovalForAll(address operator, bool approved) public virtual {\\n        _setApprovalForAll(_msgSender(), operator, approved);\\n    }\\n\\n    /**\\n     * @dev See {IERC721-isApprovedForAll}.\\n     */\\n    function isApprovedForAll(address owner, address operator) public view virtual returns (bool) {\\n        return _operatorApprovals[owner][operator];\\n    }\\n\\n    /**\\n     * @dev See {IERC721-transferFrom}.\\n     */\\n    function transferFrom(address from, address to, uint256 tokenId) public virtual {\\n        if (to == address(0)) {\\n            revert ERC721InvalidReceiver(address(0));\\n        }\\n        // Setting an \\\"auth\\\" arguments enables the `_isAuthorized` check which verifies that the token exists\\n        // (from != 0). Therefore, it is not needed to verify that the return value is not 0 here.\\n        address previousOwner = _update(to, tokenId, _msgSender());\\n        if (previousOwner != from) {\\n            revert ERC721IncorrectOwner(from, tokenId, previousOwner);\\n        }\\n    }\\n\\n    /**\\n     * @dev See {IERC721-safeTransferFrom}.\\n     */\\n    function safeTransferFrom(address from, address to, uint256 tokenId) public {\\n        safeTransferFrom(from, to, tokenId, \\\"\\\");\\n    }\\n\\n    /**\\n     * @dev See {IERC721-safeTransferFrom}.\\n     */\\n    function safeTransferFrom(address from, address to, uint256 tokenId, bytes memory data) public virtual {\\n        transferFrom(from, to, tokenId);\\n        _checkOnERC721Received(from, to, tokenId, data);\\n    }\\n\\n    /**\\n     * @dev Returns the owner of the `tokenId`. Does NOT revert if token doesn't exist\\n     *\\n     * IMPORTANT: Any overrides to this function that add ownership of tokens not tracked by the\\n     * core ERC721 logic MUST be matched with the use of {_increaseBalance} to keep balances\\n     * consistent with ownership. The invariant to preserve is that for any address `a` the value returned by\\n     * `balanceOf(a)` must be equal to the number of tokens such that `_ownerOf(tokenId)` is `a`.\\n     */\\n    function _ownerOf(uint256 tokenId) internal view virtual returns (address) {\\n        return _owners[tokenId];\\n    }\\n\\n    /**\\n     * @dev Returns the approved address for `tokenId`. Returns 0 if `tokenId` is not minted.\\n     */\\n    function _getApproved(uint256 tokenId) internal view virtual returns (address) {\\n        return _tokenApprovals[tokenId];\\n    }\\n\\n    /**\\n     * @dev Returns whether `spender` is allowed to manage `owner`'s tokens, or `tokenId` in\\n     * particular (ignoring whether it is owned by `owner`).\\n     *\\n     * WARNING: This function assumes that `owner` is the actual owner of `tokenId` and does not verify this\\n     * assumption.\\n     */\\n    function _isAuthorized(address owner, address spender, uint256 tokenId) internal view virtual returns (bool) {\\n        return\\n            spender != address(0) &&\\n            (owner == spender || isApprovedForAll(owner, spender) || _getApproved(tokenId) == spender);\\n    }\\n\\n    /**\\n     * @dev Checks if `spender` can operate on `tokenId`, assuming the provided `owner` is the actual owner.\\n     * Reverts if `spender` does not have approval from the provided `owner` for the given token or for all its assets\\n     * the `spender` for the specific `tokenId`.\\n     *\\n     * WARNING: This function assumes that `owner` is the actual owner of `tokenId` and does not verify this\\n     * assumption.\\n     */\\n    function _checkAuthorized(address owner, address spender, uint256 tokenId) internal view virtual {\\n        if (!_isAuthorized(owner, spender, tokenId)) {\\n            if (owner == address(0)) {\\n                revert ERC721NonexistentToken(tokenId);\\n            } else {\\n                revert ERC721InsufficientApproval(spender, tokenId);\\n            }\\n        }\\n    }\\n\\n    /**\\n     * @dev Unsafe write access to the balances, used by extensions that \\\"mint\\\" tokens using an {ownerOf} override.\\n     *\\n     * NOTE: the value is limited to type(uint128).max. This protect against _balance overflow. It is unrealistic that\\n     * a uint256 would ever overflow from increments when these increments are bounded to uint128 values.\\n     *\\n     * WARNING: Increasing an account's balance using this function tends to be paired with an override of the\\n     * {_ownerOf} function to resolve the ownership of the corresponding tokens so that balances and ownership\\n     * remain consistent with one another.\\n     */\\n    function _increaseBalance(address account, uint128 value) internal virtual {\\n        unchecked {\\n            _balances[account] += value;\\n        }\\n    }\\n\\n    /**\\n     * @dev Transfers `tokenId` from its current owner to `to`, or alternatively mints (or burns) if the current owner\\n     * (or `to`) is the zero address. Returns the owner of the `tokenId` before the update.\\n     *\\n     * The `auth` argument is optional. If the value passed is non 0, then this function will check that\\n     * `auth` is either the owner of the token, or approved to operate on the token (by the owner).\\n     *\\n     * Emits a {Transfer} event.\\n     *\\n     * NOTE: If overriding this function in a way that tracks balances, see also {_increaseBalance}.\\n     */\\n    function _update(address to, uint256 tokenId, address auth) internal virtual returns (address) {\\n        address from = _ownerOf(tokenId);\\n\\n        // Perform (optional) operator check\\n        if (auth != address(0)) {\\n            _checkAuthorized(from, auth, tokenId);\\n        }\\n\\n        // Execute the update\\n        if (from != address(0)) {\\n            // Clear approval. No need to re-authorize or emit the Approval event\\n            _approve(address(0), tokenId, address(0), false);\\n\\n            unchecked {\\n                _balances[from] -= 1;\\n            }\\n        }\\n\\n        if (to != address(0)) {\\n            unchecked {\\n                _balances[to] += 1;\\n            }\\n        }\\n\\n        _owners[tokenId] = to;\\n\\n        emit Transfer(from, to, tokenId);\\n\\n        return from;\\n    }\\n\\n    /**\\n     * @dev Mints `tokenId` and transfers it to `to`.\\n     *\\n     * WARNING: Usage of this method is discouraged, use {_safeMint} whenever possible\\n     *\\n     * Requirements:\\n     *\\n     * - `tokenId` must not exist.\\n     * - `to` cannot be the zero address.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function _mint(address to, uint256 tokenId) internal {\\n        if (to == address(0)) {\\n            revert ERC721InvalidReceiver(address(0));\\n        }\\n        address previousOwner = _update(to, tokenId, address(0));\\n        if (previousOwner != address(0)) {\\n            revert ERC721InvalidSender(address(0));\\n        }\\n    }\\n\\n    /**\\n     * @dev Mints `tokenId`, transfers it to `to` and checks for `to` acceptance.\\n     *\\n     * Requirements:\\n     *\\n     * - `tokenId` must not exist.\\n     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function _safeMint(address to, uint256 tokenId) internal {\\n        _safeMint(to, tokenId, \\\"\\\");\\n    }\\n\\n    /**\\n     * @dev Same as {xref-ERC721-_safeMint-address-uint256-}[`_safeMint`], with an additional `data` parameter which is\\n     * forwarded in {IERC721Receiver-onERC721Received} to contract recipients.\\n     */\\n    function _safeMint(address to, uint256 tokenId, bytes memory data) internal virtual {\\n        _mint(to, tokenId);\\n        _checkOnERC721Received(address(0), to, tokenId, data);\\n    }\\n\\n    /**\\n     * @dev Destroys `tokenId`.\\n     * The approval is cleared when the token is burned.\\n     * This is an internal function that does not check if the sender is authorized to operate on the token.\\n     *\\n     * Requirements:\\n     *\\n     * - `tokenId` must exist.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function _burn(uint256 tokenId) internal {\\n        address previousOwner = _update(address(0), tokenId, address(0));\\n        if (previousOwner == address(0)) {\\n            revert ERC721NonexistentToken(tokenId);\\n        }\\n    }\\n\\n    /**\\n     * @dev Transfers `tokenId` from `from` to `to`.\\n     *  As opposed to {transferFrom}, this imposes no restrictions on msg.sender.\\n     *\\n     * Requirements:\\n     *\\n     * - `to` cannot be the zero address.\\n     * - `tokenId` token must be owned by `from`.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function _transfer(address from, address to, uint256 tokenId) internal {\\n        if (to == address(0)) {\\n            revert ERC721InvalidReceiver(address(0));\\n        }\\n        address previousOwner = _update(to, tokenId, address(0));\\n        if (previousOwner == address(0)) {\\n            revert ERC721NonexistentToken(tokenId);\\n        } else if (previousOwner != from) {\\n            revert ERC721IncorrectOwner(from, tokenId, previousOwner);\\n        }\\n    }\\n\\n    /**\\n     * @dev Safely transfers `tokenId` token from `from` to `to`, checking that contract recipients\\n     * are aware of the ERC721 standard to prevent tokens from being forever locked.\\n     *\\n     * `data` is additional data, it has no specified format and it is sent in call to `to`.\\n     *\\n     * This internal function is like {safeTransferFrom} in the sense that it invokes\\n     * {IERC721Receiver-onERC721Received} on the receiver, and can be used to e.g.\\n     * implement alternative mechanisms to perform token transfer, such as signature-based.\\n     *\\n     * Requirements:\\n     *\\n     * - `tokenId` token must exist and be owned by `from`.\\n     * - `to` cannot be the zero address.\\n     * - `from` cannot be the zero address.\\n     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function _safeTransfer(address from, address to, uint256 tokenId) internal {\\n        _safeTransfer(from, to, tokenId, \\\"\\\");\\n    }\\n\\n    /**\\n     * @dev Same as {xref-ERC721-_safeTransfer-address-address-uint256-}[`_safeTransfer`], with an additional `data` parameter which is\\n     * forwarded in {IERC721Receiver-onERC721Received} to contract recipients.\\n     */\\n    function _safeTransfer(address from, address to, uint256 tokenId, bytes memory data) internal virtual {\\n        _transfer(from, to, tokenId);\\n        _checkOnERC721Received(from, to, tokenId, data);\\n    }\\n\\n    /**\\n     * @dev Approve `to` to operate on `tokenId`\\n     *\\n     * The `auth` argument is optional. If the value passed is non 0, then this function will check that `auth` is\\n     * either the owner of the token, or approved to operate on all tokens held by this owner.\\n     *\\n     * Emits an {Approval} event.\\n     *\\n     * Overrides to this logic should be done to the variant with an additional `bool emitEvent` argument.\\n     */\\n    function _approve(address to, uint256 tokenId, address auth) internal {\\n        _approve(to, tokenId, auth, true);\\n    }\\n\\n    /**\\n     * @dev Variant of `_approve` with an optional flag to enable or disable the {Approval} event. The event is not\\n     * emitted in the context of transfers.\\n     */\\n    function _approve(address to, uint256 tokenId, address auth, bool emitEvent) internal virtual {\\n        // Avoid reading the owner unless necessary\\n        if (emitEvent || auth != address(0)) {\\n            address owner = _requireOwned(tokenId);\\n\\n            // We do not use _isAuthorized because single-token approvals should not be able to call approve\\n            if (auth != address(0) && owner != auth && !isApprovedForAll(owner, auth)) {\\n                revert ERC721InvalidApprover(auth);\\n            }\\n\\n            if (emitEvent) {\\n                emit Approval(owner, to, tokenId);\\n            }\\n        }\\n\\n        _tokenApprovals[tokenId] = to;\\n    }\\n\\n    /**\\n     * @dev Approve `operator` to operate on all of `owner` tokens\\n     *\\n     * Requirements:\\n     * - operator can't be the address zero.\\n     *\\n     * Emits an {ApprovalForAll} event.\\n     */\\n    function _setApprovalForAll(address owner, address operator, bool approved) internal virtual {\\n        if (operator == address(0)) {\\n            revert ERC721InvalidOperator(operator);\\n        }\\n        _operatorApprovals[owner][operator] = approved;\\n        emit ApprovalForAll(owner, operator, approved);\\n    }\\n\\n    /**\\n     * @dev Reverts if the `tokenId` doesn't have a current owner (it hasn't been minted, or it has been burned).\\n     * Returns the owner.\\n     *\\n     * Overrides to ownership logic should be done to {_ownerOf}.\\n     */\\n    function _requireOwned(uint256 tokenId) internal view returns (address) {\\n        address owner = _ownerOf(tokenId);\\n        if (owner == address(0)) {\\n            revert ERC721NonexistentToken(tokenId);\\n        }\\n        return owner;\\n    }\\n\\n    /**\\n     * @dev Private function to invoke {IERC721Receiver-onERC721Received} on a target address. This will revert if the\\n     * recipient doesn't accept the token transfer. The call is not executed if the target address is not a contract.\\n     *\\n     * @param from address representing the previous owner of the given token ID\\n     * @param to target address that will receive the tokens\\n     * @param tokenId uint256 ID of the token to be transferred\\n     * @param data bytes optional data to send along with the call\\n     */\\n    function _checkOnERC721Received(address from, address to, uint256 tokenId, bytes memory data) private {\\n        if (to.code.length > 0) {\\n            try IERC721Receiver(to).onERC721Received(_msgSender(), from, tokenId, data) returns (bytes4 retval) {\\n                if (retval != IERC721Receiver.onERC721Received.selector) {\\n                    revert ERC721InvalidReceiver(to);\\n                }\\n            } catch (bytes memory reason) {\\n                if (reason.length == 0) {\\n                    revert ERC721InvalidReceiver(to);\\n                } else {\\n                    /// @solidity memory-safe-assembly\\n                    assembly {\\n                        revert(add(32, reason), mload(reason))\\n                    }\\n                }\\n            }\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x13dd061770956c8489b80cfc89d9cdfc8ea2783d953691ea037a380731d52784\",\"license\":\"MIT\"},\"@openzeppelin/contracts/token/ERC721/IERC721.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (token/ERC721/IERC721.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {IERC165} from \\\"../../utils/introspection/IERC165.sol\\\";\\n\\n/**\\n * @dev Required interface of an ERC721 compliant contract.\\n */\\ninterface IERC721 is IERC165 {\\n    /**\\n     * @dev Emitted when `tokenId` token is transferred from `from` to `to`.\\n     */\\n    event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);\\n\\n    /**\\n     * @dev Emitted when `owner` enables `approved` to manage the `tokenId` token.\\n     */\\n    event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId);\\n\\n    /**\\n     * @dev Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets.\\n     */\\n    event ApprovalForAll(address indexed owner, address indexed operator, bool approved);\\n\\n    /**\\n     * @dev Returns the number of tokens in ``owner``'s account.\\n     */\\n    function balanceOf(address owner) external view returns (uint256 balance);\\n\\n    /**\\n     * @dev Returns the owner of the `tokenId` token.\\n     *\\n     * Requirements:\\n     *\\n     * - `tokenId` must exist.\\n     */\\n    function ownerOf(uint256 tokenId) external view returns (address owner);\\n\\n    /**\\n     * @dev Safely transfers `tokenId` token from `from` to `to`.\\n     *\\n     * Requirements:\\n     *\\n     * - `from` cannot be the zero address.\\n     * - `to` cannot be the zero address.\\n     * - `tokenId` token must exist and be owned by `from`.\\n     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.\\n     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon\\n     *   a safe transfer.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external;\\n\\n    /**\\n     * @dev Safely transfers `tokenId` token from `from` to `to`, checking first that contract recipients\\n     * are aware of the ERC721 protocol to prevent tokens from being forever locked.\\n     *\\n     * Requirements:\\n     *\\n     * - `from` cannot be the zero address.\\n     * - `to` cannot be the zero address.\\n     * - `tokenId` token must exist and be owned by `from`.\\n     * - If the caller is not `from`, it must have been allowed to move this token by either {approve} or\\n     *   {setApprovalForAll}.\\n     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon\\n     *   a safe transfer.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function safeTransferFrom(address from, address to, uint256 tokenId) external;\\n\\n    /**\\n     * @dev Transfers `tokenId` token from `from` to `to`.\\n     *\\n     * WARNING: Note that the caller is responsible to confirm that the recipient is capable of receiving ERC721\\n     * or else they may be permanently lost. Usage of {safeTransferFrom} prevents loss, though the caller must\\n     * understand this adds an external call which potentially creates a reentrancy vulnerability.\\n     *\\n     * Requirements:\\n     *\\n     * - `from` cannot be the zero address.\\n     * - `to` cannot be the zero address.\\n     * - `tokenId` token must be owned by `from`.\\n     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function transferFrom(address from, address to, uint256 tokenId) external;\\n\\n    /**\\n     * @dev Gives permission to `to` to transfer `tokenId` token to another account.\\n     * The approval is cleared when the token is transferred.\\n     *\\n     * Only a single account can be approved at a time, so approving the zero address clears previous approvals.\\n     *\\n     * Requirements:\\n     *\\n     * - The caller must own the token or be an approved operator.\\n     * - `tokenId` must exist.\\n     *\\n     * Emits an {Approval} event.\\n     */\\n    function approve(address to, uint256 tokenId) external;\\n\\n    /**\\n     * @dev Approve or remove `operator` as an operator for the caller.\\n     * Operators can call {transferFrom} or {safeTransferFrom} for any token owned by the caller.\\n     *\\n     * Requirements:\\n     *\\n     * - The `operator` cannot be the address zero.\\n     *\\n     * Emits an {ApprovalForAll} event.\\n     */\\n    function setApprovalForAll(address operator, bool approved) external;\\n\\n    /**\\n     * @dev Returns the account approved for `tokenId` token.\\n     *\\n     * Requirements:\\n     *\\n     * - `tokenId` must exist.\\n     */\\n    function getApproved(uint256 tokenId) external view returns (address operator);\\n\\n    /**\\n     * @dev Returns if the `operator` is allowed to manage all of the assets of `owner`.\\n     *\\n     * See {setApprovalForAll}\\n     */\\n    function isApprovedForAll(address owner, address operator) external view returns (bool);\\n}\\n\",\"keccak256\":\"0x5ef46daa3b58ef2702279d514780316efaa952915ee1aa3396f041ee2982b0b4\",\"license\":\"MIT\"},\"@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (token/ERC721/IERC721Receiver.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @title ERC721 token receiver interface\\n * @dev Interface for any contract that wants to support safeTransfers\\n * from ERC721 asset contracts.\\n */\\ninterface IERC721Receiver {\\n    /**\\n     * @dev Whenever an {IERC721} `tokenId` token is transferred to this contract via {IERC721-safeTransferFrom}\\n     * by `operator` from `from`, this function is called.\\n     *\\n     * It must return its Solidity selector to confirm the token transfer.\\n     * If any other value is returned or the interface is not implemented by the recipient, the transfer will be\\n     * reverted.\\n     *\\n     * The selector can be obtained in Solidity with `IERC721Receiver.onERC721Received.selector`.\\n     */\\n    function onERC721Received(\\n        address operator,\\n        address from,\\n        uint256 tokenId,\\n        bytes calldata data\\n    ) external returns (bytes4);\\n}\\n\",\"keccak256\":\"0x7f7a26306c79a65fb8b3b6c757cd74660c532cd8a02e165488e30027dd34ca49\",\"license\":\"MIT\"},\"@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (token/ERC721/extensions/ERC721URIStorage.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {ERC721} from \\\"../ERC721.sol\\\";\\nimport {Strings} from \\\"../../../utils/Strings.sol\\\";\\nimport {IERC4906} from \\\"../../../interfaces/IERC4906.sol\\\";\\nimport {IERC165} from \\\"../../../interfaces/IERC165.sol\\\";\\n\\n/**\\n * @dev ERC721 token with storage based token URI management.\\n */\\nabstract contract ERC721URIStorage is IERC4906, ERC721 {\\n    using Strings for uint256;\\n\\n    // Interface ID as defined in ERC-4906. This does not correspond to a traditional interface ID as ERC-4906 only\\n    // defines events and does not include any external function.\\n    bytes4 private constant ERC4906_INTERFACE_ID = bytes4(0x49064906);\\n\\n    // Optional mapping for token URIs\\n    mapping(uint256 tokenId => string) private _tokenURIs;\\n\\n    /**\\n     * @dev See {IERC165-supportsInterface}\\n     */\\n    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, IERC165) returns (bool) {\\n        return interfaceId == ERC4906_INTERFACE_ID || super.supportsInterface(interfaceId);\\n    }\\n\\n    /**\\n     * @dev See {IERC721Metadata-tokenURI}.\\n     */\\n    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {\\n        _requireOwned(tokenId);\\n\\n        string memory _tokenURI = _tokenURIs[tokenId];\\n        string memory base = _baseURI();\\n\\n        // If there is no base URI, return the token URI.\\n        if (bytes(base).length == 0) {\\n            return _tokenURI;\\n        }\\n        // If both are set, concatenate the baseURI and tokenURI (via string.concat).\\n        if (bytes(_tokenURI).length > 0) {\\n            return string.concat(base, _tokenURI);\\n        }\\n\\n        return super.tokenURI(tokenId);\\n    }\\n\\n    /**\\n     * @dev Sets `_tokenURI` as the tokenURI of `tokenId`.\\n     *\\n     * Emits {MetadataUpdate}.\\n     */\\n    function _setTokenURI(uint256 tokenId, string memory _tokenURI) internal virtual {\\n        _tokenURIs[tokenId] = _tokenURI;\\n        emit MetadataUpdate(tokenId);\\n    }\\n}\\n\",\"keccak256\":\"0xcc6f49e0c57072d6a18eef0d5fc22a4cc20462c18f0c365d2dd9a2c732fde670\",\"license\":\"MIT\"},\"@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (token/ERC721/extensions/IERC721Metadata.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {IERC721} from \\\"../IERC721.sol\\\";\\n\\n/**\\n * @title ERC-721 Non-Fungible Token Standard, optional metadata extension\\n * @dev See https://eips.ethereum.org/EIPS/eip-721\\n */\\ninterface IERC721Metadata is IERC721 {\\n    /**\\n     * @dev Returns the token collection name.\\n     */\\n    function name() external view returns (string memory);\\n\\n    /**\\n     * @dev Returns the token collection symbol.\\n     */\\n    function symbol() external view returns (string memory);\\n\\n    /**\\n     * @dev Returns the Uniform Resource Identifier (URI) for `tokenId` token.\\n     */\\n    function tokenURI(uint256 tokenId) external view returns (string memory);\\n}\\n\",\"keccak256\":\"0x37d1aaaa5a2908a09e9dcf56a26ddf762ecf295afb5964695937344fc6802ce1\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Context.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.1) (utils/Context.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Provides information about the current execution context, including the\\n * sender of the transaction and its data. While these are generally available\\n * via msg.sender and msg.data, they should not be accessed in such a direct\\n * manner, since when dealing with meta-transactions the account sending and\\n * paying for execution may not be the actual sender (as far as an application\\n * is concerned).\\n *\\n * This contract is only required for intermediate, library-like contracts.\\n */\\nabstract contract Context {\\n    function _msgSender() internal view virtual returns (address) {\\n        return msg.sender;\\n    }\\n\\n    function _msgData() internal view virtual returns (bytes calldata) {\\n        return msg.data;\\n    }\\n\\n    function _contextSuffixLength() internal view virtual returns (uint256) {\\n        return 0;\\n    }\\n}\\n\",\"keccak256\":\"0x493033a8d1b176a037b2cc6a04dad01a5c157722049bbecf632ca876224dd4b2\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Strings.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (utils/Strings.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {Math} from \\\"./math/Math.sol\\\";\\nimport {SignedMath} from \\\"./math/SignedMath.sol\\\";\\n\\n/**\\n * @dev String operations.\\n */\\nlibrary Strings {\\n    bytes16 private constant HEX_DIGITS = \\\"0123456789abcdef\\\";\\n    uint8 private constant ADDRESS_LENGTH = 20;\\n\\n    /**\\n     * @dev The `value` string doesn't fit in the specified `length`.\\n     */\\n    error StringsInsufficientHexLength(uint256 value, uint256 length);\\n\\n    /**\\n     * @dev Converts a `uint256` to its ASCII `string` decimal representation.\\n     */\\n    function toString(uint256 value) internal pure returns (string memory) {\\n        unchecked {\\n            uint256 length = Math.log10(value) + 1;\\n            string memory buffer = new string(length);\\n            uint256 ptr;\\n            /// @solidity memory-safe-assembly\\n            assembly {\\n                ptr := add(buffer, add(32, length))\\n            }\\n            while (true) {\\n                ptr--;\\n                /// @solidity memory-safe-assembly\\n                assembly {\\n                    mstore8(ptr, byte(mod(value, 10), HEX_DIGITS))\\n                }\\n                value /= 10;\\n                if (value == 0) break;\\n            }\\n            return buffer;\\n        }\\n    }\\n\\n    /**\\n     * @dev Converts a `int256` to its ASCII `string` decimal representation.\\n     */\\n    function toStringSigned(int256 value) internal pure returns (string memory) {\\n        return string.concat(value < 0 ? \\\"-\\\" : \\\"\\\", toString(SignedMath.abs(value)));\\n    }\\n\\n    /**\\n     * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation.\\n     */\\n    function toHexString(uint256 value) internal pure returns (string memory) {\\n        unchecked {\\n            return toHexString(value, Math.log256(value) + 1);\\n        }\\n    }\\n\\n    /**\\n     * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation with fixed length.\\n     */\\n    function toHexString(uint256 value, uint256 length) internal pure returns (string memory) {\\n        uint256 localValue = value;\\n        bytes memory buffer = new bytes(2 * length + 2);\\n        buffer[0] = \\\"0\\\";\\n        buffer[1] = \\\"x\\\";\\n        for (uint256 i = 2 * length + 1; i > 1; --i) {\\n            buffer[i] = HEX_DIGITS[localValue & 0xf];\\n            localValue >>= 4;\\n        }\\n        if (localValue != 0) {\\n            revert StringsInsufficientHexLength(value, length);\\n        }\\n        return string(buffer);\\n    }\\n\\n    /**\\n     * @dev Converts an `address` with fixed length of 20 bytes to its not checksummed ASCII `string` hexadecimal\\n     * representation.\\n     */\\n    function toHexString(address addr) internal pure returns (string memory) {\\n        return toHexString(uint256(uint160(addr)), ADDRESS_LENGTH);\\n    }\\n\\n    /**\\n     * @dev Returns true if the two strings are equal.\\n     */\\n    function equal(string memory a, string memory b) internal pure returns (bool) {\\n        return bytes(a).length == bytes(b).length && keccak256(bytes(a)) == keccak256(bytes(b));\\n    }\\n}\\n\",\"keccak256\":\"0x55f102ea785d8399c0e58d1108e2d289506dde18abc6db1b7f68c1f9f9bc5792\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/introspection/ERC165.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (utils/introspection/ERC165.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {IERC165} from \\\"./IERC165.sol\\\";\\n\\n/**\\n * @dev Implementation of the {IERC165} interface.\\n *\\n * Contracts that want to implement ERC165 should inherit from this contract and override {supportsInterface} to check\\n * for the additional interface id that will be supported. For example:\\n *\\n * ```solidity\\n * function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {\\n *     return interfaceId == type(MyInterface).interfaceId || super.supportsInterface(interfaceId);\\n * }\\n * ```\\n */\\nabstract contract ERC165 is IERC165 {\\n    /**\\n     * @dev See {IERC165-supportsInterface}.\\n     */\\n    function supportsInterface(bytes4 interfaceId) public view virtual returns (bool) {\\n        return interfaceId == type(IERC165).interfaceId;\\n    }\\n}\\n\",\"keccak256\":\"0x9e8778b14317ba9e256c30a76fd6c32b960af621987f56069e1e819c77c6a133\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/introspection/IERC165.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (utils/introspection/IERC165.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Interface of the ERC165 standard, as defined in the\\n * https://eips.ethereum.org/EIPS/eip-165[EIP].\\n *\\n * Implementers can declare support of contract interfaces, which can then be\\n * queried by others ({ERC165Checker}).\\n *\\n * For an implementation, see {ERC165}.\\n */\\ninterface IERC165 {\\n    /**\\n     * @dev Returns true if this contract implements the interface defined by\\n     * `interfaceId`. See the corresponding\\n     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]\\n     * to learn more about how these ids are created.\\n     *\\n     * This function call must use less than 30 000 gas.\\n     */\\n    function supportsInterface(bytes4 interfaceId) external view returns (bool);\\n}\\n\",\"keccak256\":\"0x4296879f55019b23e135000eb36896057e7101fb7fb859c5ef690cf14643757b\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/math/Math.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (utils/math/Math.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Standard math utilities missing in the Solidity language.\\n */\\nlibrary Math {\\n    /**\\n     * @dev Muldiv operation overflow.\\n     */\\n    error MathOverflowedMulDiv();\\n\\n    enum Rounding {\\n        Floor, // Toward negative infinity\\n        Ceil, // Toward positive infinity\\n        Trunc, // Toward zero\\n        Expand // Away from zero\\n    }\\n\\n    /**\\n     * @dev Returns the addition of two unsigned integers, with an overflow flag.\\n     */\\n    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            uint256 c = a + b;\\n            if (c < a) return (false, 0);\\n            return (true, c);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the subtraction of two unsigned integers, with an overflow flag.\\n     */\\n    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            if (b > a) return (false, 0);\\n            return (true, a - b);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the multiplication of two unsigned integers, with an overflow flag.\\n     */\\n    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            // Gas optimization: this is cheaper than requiring 'a' not being zero, but the\\n            // benefit is lost if 'b' is also tested.\\n            // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522\\n            if (a == 0) return (true, 0);\\n            uint256 c = a * b;\\n            if (c / a != b) return (false, 0);\\n            return (true, c);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the division of two unsigned integers, with a division by zero flag.\\n     */\\n    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            if (b == 0) return (false, 0);\\n            return (true, a / b);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the remainder of dividing two unsigned integers, with a division by zero flag.\\n     */\\n    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            if (b == 0) return (false, 0);\\n            return (true, a % b);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the largest of two numbers.\\n     */\\n    function max(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a > b ? a : b;\\n    }\\n\\n    /**\\n     * @dev Returns the smallest of two numbers.\\n     */\\n    function min(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a < b ? a : b;\\n    }\\n\\n    /**\\n     * @dev Returns the average of two numbers. The result is rounded towards\\n     * zero.\\n     */\\n    function average(uint256 a, uint256 b) internal pure returns (uint256) {\\n        // (a + b) / 2 can overflow.\\n        return (a & b) + (a ^ b) / 2;\\n    }\\n\\n    /**\\n     * @dev Returns the ceiling of the division of two numbers.\\n     *\\n     * This differs from standard division with `/` in that it rounds towards infinity instead\\n     * of rounding towards zero.\\n     */\\n    function ceilDiv(uint256 a, uint256 b) internal pure returns (uint256) {\\n        if (b == 0) {\\n            // Guarantee the same behavior as in a regular Solidity division.\\n            return a / b;\\n        }\\n\\n        // (a + b - 1) / b can overflow on addition, so we distribute.\\n        return a == 0 ? 0 : (a - 1) / b + 1;\\n    }\\n\\n    /**\\n     * @notice Calculates floor(x * y / denominator) with full precision. Throws if result overflows a uint256 or\\n     * denominator == 0.\\n     * @dev Original credit to Remco Bloemen under MIT license (https://xn--2-umb.com/21/muldiv) with further edits by\\n     * Uniswap Labs also under MIT license.\\n     */\\n    function mulDiv(uint256 x, uint256 y, uint256 denominator) internal pure returns (uint256 result) {\\n        unchecked {\\n            // 512-bit multiply [prod1 prod0] = x * y. Compute the product mod 2^256 and mod 2^256 - 1, then use\\n            // use the Chinese Remainder Theorem to reconstruct the 512 bit result. The result is stored in two 256\\n            // variables such that product = prod1 * 2^256 + prod0.\\n            uint256 prod0 = x * y; // Least significant 256 bits of the product\\n            uint256 prod1; // Most significant 256 bits of the product\\n            assembly {\\n                let mm := mulmod(x, y, not(0))\\n                prod1 := sub(sub(mm, prod0), lt(mm, prod0))\\n            }\\n\\n            // Handle non-overflow cases, 256 by 256 division.\\n            if (prod1 == 0) {\\n                // Solidity will revert if denominator == 0, unlike the div opcode on its own.\\n                // The surrounding unchecked block does not change this fact.\\n                // See https://docs.soliditylang.org/en/latest/control-structures.html#checked-or-unchecked-arithmetic.\\n                return prod0 / denominator;\\n            }\\n\\n            // Make sure the result is less than 2^256. Also prevents denominator == 0.\\n            if (denominator <= prod1) {\\n                revert MathOverflowedMulDiv();\\n            }\\n\\n            ///////////////////////////////////////////////\\n            // 512 by 256 division.\\n            ///////////////////////////////////////////////\\n\\n            // Make division exact by subtracting the remainder from [prod1 prod0].\\n            uint256 remainder;\\n            assembly {\\n                // Compute remainder using mulmod.\\n                remainder := mulmod(x, y, denominator)\\n\\n                // Subtract 256 bit number from 512 bit number.\\n                prod1 := sub(prod1, gt(remainder, prod0))\\n                prod0 := sub(prod0, remainder)\\n            }\\n\\n            // Factor powers of two out of denominator and compute largest power of two divisor of denominator.\\n            // Always >= 1. See https://cs.stackexchange.com/q/138556/92363.\\n\\n            uint256 twos = denominator & (0 - denominator);\\n            assembly {\\n                // Divide denominator by twos.\\n                denominator := div(denominator, twos)\\n\\n                // Divide [prod1 prod0] by twos.\\n                prod0 := div(prod0, twos)\\n\\n                // Flip twos such that it is 2^256 / twos. If twos is zero, then it becomes one.\\n                twos := add(div(sub(0, twos), twos), 1)\\n            }\\n\\n            // Shift in bits from prod1 into prod0.\\n            prod0 |= prod1 * twos;\\n\\n            // Invert denominator mod 2^256. Now that denominator is an odd number, it has an inverse modulo 2^256 such\\n            // that denominator * inv = 1 mod 2^256. Compute the inverse by starting with a seed that is correct for\\n            // four bits. That is, denominator * inv = 1 mod 2^4.\\n            uint256 inverse = (3 * denominator) ^ 2;\\n\\n            // Use the Newton-Raphson iteration to improve the precision. Thanks to Hensel's lifting lemma, this also\\n            // works in modular arithmetic, doubling the correct bits in each step.\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^8\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^16\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^32\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^64\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^128\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^256\\n\\n            // Because the division is now exact we can divide by multiplying with the modular inverse of denominator.\\n            // This will give us the correct result modulo 2^256. Since the preconditions guarantee that the outcome is\\n            // less than 2^256, this is the final result. We don't need to compute the high bits of the result and prod1\\n            // is no longer required.\\n            result = prod0 * inverse;\\n            return result;\\n        }\\n    }\\n\\n    /**\\n     * @notice Calculates x * y / denominator with full precision, following the selected rounding direction.\\n     */\\n    function mulDiv(uint256 x, uint256 y, uint256 denominator, Rounding rounding) internal pure returns (uint256) {\\n        uint256 result = mulDiv(x, y, denominator);\\n        if (unsignedRoundsUp(rounding) && mulmod(x, y, denominator) > 0) {\\n            result += 1;\\n        }\\n        return result;\\n    }\\n\\n    /**\\n     * @dev Returns the square root of a number. If the number is not a perfect square, the value is rounded\\n     * towards zero.\\n     *\\n     * Inspired by Henry S. Warren, Jr.'s \\\"Hacker's Delight\\\" (Chapter 11).\\n     */\\n    function sqrt(uint256 a) internal pure returns (uint256) {\\n        if (a == 0) {\\n            return 0;\\n        }\\n\\n        // For our first guess, we get the biggest power of 2 which is smaller than the square root of the target.\\n        //\\n        // We know that the \\\"msb\\\" (most significant bit) of our target number `a` is a power of 2 such that we have\\n        // `msb(a) <= a < 2*msb(a)`. This value can be written `msb(a)=2**k` with `k=log2(a)`.\\n        //\\n        // This can be rewritten `2**log2(a) <= a < 2**(log2(a) + 1)`\\n        // \\u2192 `sqrt(2**k) <= sqrt(a) < sqrt(2**(k+1))`\\n        // \\u2192 `2**(k/2) <= sqrt(a) < 2**((k+1)/2) <= 2**(k/2 + 1)`\\n        //\\n        // Consequently, `2**(log2(a) / 2)` is a good first approximation of `sqrt(a)` with at least 1 correct bit.\\n        uint256 result = 1 << (log2(a) >> 1);\\n\\n        // At this point `result` is an estimation with one bit of precision. We know the true value is a uint128,\\n        // since it is the square root of a uint256. Newton's method converges quadratically (precision doubles at\\n        // every iteration). We thus need at most 7 iteration to turn our partial result with one bit of precision\\n        // into the expected uint128 result.\\n        unchecked {\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            return min(result, a / result);\\n        }\\n    }\\n\\n    /**\\n     * @notice Calculates sqrt(a), following the selected rounding direction.\\n     */\\n    function sqrt(uint256 a, Rounding rounding) internal pure returns (uint256) {\\n        unchecked {\\n            uint256 result = sqrt(a);\\n            return result + (unsignedRoundsUp(rounding) && result * result < a ? 1 : 0);\\n        }\\n    }\\n\\n    /**\\n     * @dev Return the log in base 2 of a positive value rounded towards zero.\\n     * Returns 0 if given 0.\\n     */\\n    function log2(uint256 value) internal pure returns (uint256) {\\n        uint256 result = 0;\\n        unchecked {\\n            if (value >> 128 > 0) {\\n                value >>= 128;\\n                result += 128;\\n            }\\n            if (value >> 64 > 0) {\\n                value >>= 64;\\n                result += 64;\\n            }\\n            if (value >> 32 > 0) {\\n                value >>= 32;\\n                result += 32;\\n            }\\n            if (value >> 16 > 0) {\\n                value >>= 16;\\n                result += 16;\\n            }\\n            if (value >> 8 > 0) {\\n                value >>= 8;\\n                result += 8;\\n            }\\n            if (value >> 4 > 0) {\\n                value >>= 4;\\n                result += 4;\\n            }\\n            if (value >> 2 > 0) {\\n                value >>= 2;\\n                result += 2;\\n            }\\n            if (value >> 1 > 0) {\\n                result += 1;\\n            }\\n        }\\n        return result;\\n    }\\n\\n    /**\\n     * @dev Return the log in base 2, following the selected rounding direction, of a positive value.\\n     * Returns 0 if given 0.\\n     */\\n    function log2(uint256 value, Rounding rounding) internal pure returns (uint256) {\\n        unchecked {\\n            uint256 result = log2(value);\\n            return result + (unsignedRoundsUp(rounding) && 1 << result < value ? 1 : 0);\\n        }\\n    }\\n\\n    /**\\n     * @dev Return the log in base 10 of a positive value rounded towards zero.\\n     * Returns 0 if given 0.\\n     */\\n    function log10(uint256 value) internal pure returns (uint256) {\\n        uint256 result = 0;\\n        unchecked {\\n            if (value >= 10 ** 64) {\\n                value /= 10 ** 64;\\n                result += 64;\\n            }\\n            if (value >= 10 ** 32) {\\n                value /= 10 ** 32;\\n                result += 32;\\n            }\\n            if (value >= 10 ** 16) {\\n                value /= 10 ** 16;\\n                result += 16;\\n            }\\n            if (value >= 10 ** 8) {\\n                value /= 10 ** 8;\\n                result += 8;\\n            }\\n            if (value >= 10 ** 4) {\\n                value /= 10 ** 4;\\n                result += 4;\\n            }\\n            if (value >= 10 ** 2) {\\n                value /= 10 ** 2;\\n                result += 2;\\n            }\\n            if (value >= 10 ** 1) {\\n                result += 1;\\n            }\\n        }\\n        return result;\\n    }\\n\\n    /**\\n     * @dev Return the log in base 10, following the selected rounding direction, of a positive value.\\n     * Returns 0 if given 0.\\n     */\\n    function log10(uint256 value, Rounding rounding) internal pure returns (uint256) {\\n        unchecked {\\n            uint256 result = log10(value);\\n            return result + (unsignedRoundsUp(rounding) && 10 ** result < value ? 1 : 0);\\n        }\\n    }\\n\\n    /**\\n     * @dev Return the log in base 256 of a positive value rounded towards zero.\\n     * Returns 0 if given 0.\\n     *\\n     * Adding one to the result gives the number of pairs of hex symbols needed to represent `value` as a hex string.\\n     */\\n    function log256(uint256 value) internal pure returns (uint256) {\\n        uint256 result = 0;\\n        unchecked {\\n            if (value >> 128 > 0) {\\n                value >>= 128;\\n                result += 16;\\n            }\\n            if (value >> 64 > 0) {\\n                value >>= 64;\\n                result += 8;\\n            }\\n            if (value >> 32 > 0) {\\n                value >>= 32;\\n                result += 4;\\n            }\\n            if (value >> 16 > 0) {\\n                value >>= 16;\\n                result += 2;\\n            }\\n            if (value >> 8 > 0) {\\n                result += 1;\\n            }\\n        }\\n        return result;\\n    }\\n\\n    /**\\n     * @dev Return the log in base 256, following the selected rounding direction, of a positive value.\\n     * Returns 0 if given 0.\\n     */\\n    function log256(uint256 value, Rounding rounding) internal pure returns (uint256) {\\n        unchecked {\\n            uint256 result = log256(value);\\n            return result + (unsignedRoundsUp(rounding) && 1 << (result << 3) < value ? 1 : 0);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns whether a provided rounding mode is considered rounding up for unsigned integers.\\n     */\\n    function unsignedRoundsUp(Rounding rounding) internal pure returns (bool) {\\n        return uint8(rounding) % 2 == 1;\\n    }\\n}\\n\",\"keccak256\":\"0x005ec64c6313f0555d59e278f9a7a5ab2db5bdc72a027f255a37c327af1ec02d\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/math/SignedMath.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (utils/math/SignedMath.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Standard signed math utilities missing in the Solidity language.\\n */\\nlibrary SignedMath {\\n    /**\\n     * @dev Returns the largest of two signed numbers.\\n     */\\n    function max(int256 a, int256 b) internal pure returns (int256) {\\n        return a > b ? a : b;\\n    }\\n\\n    /**\\n     * @dev Returns the smallest of two signed numbers.\\n     */\\n    function min(int256 a, int256 b) internal pure returns (int256) {\\n        return a < b ? a : b;\\n    }\\n\\n    /**\\n     * @dev Returns the average of two signed numbers without overflow.\\n     * The result is rounded towards zero.\\n     */\\n    function average(int256 a, int256 b) internal pure returns (int256) {\\n        // Formula from the book \\\"Hacker's Delight\\\"\\n        int256 x = (a & b) + ((a ^ b) >> 1);\\n        return x + (int256(uint256(x) >> 255) & (a ^ b));\\n    }\\n\\n    /**\\n     * @dev Returns the absolute unsigned value of a signed value.\\n     */\\n    function abs(int256 n) internal pure returns (uint256) {\\n        unchecked {\\n            // must be unchecked in order to support `n = type(int256).min`\\n            return uint256(n >= 0 ? n : -n);\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x5f7e4076e175393767754387c962926577f1660dd9b810187b9002407656be72\",\"license\":\"MIT\"},\"contracts/LeaseNFT.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.20;\\n\\nimport \\\"@openzeppelin/contracts/token/ERC721/ERC721.sol\\\";\\nimport \\\"@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol\\\";\\nimport \\\"@openzeppelin/contracts/access/Ownable.sol\\\";\\nimport \\\"./interfaces/INomaTypes.sol\\\";\\n\\n/**\\n * @title LeaseNFT\\n * @notice NFT representation of rental leases for the NOMA protocol\\n * @dev Each lease is minted as an NFT owned by the tenant\\n * \\n * \\u250c\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2510\\n * \\u2502                      LEASE NFT                               \\u2502\\n * \\u2502  \\u250c\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2510   \\u2502\\n * \\u2502  \\u2502 Lease ID: #1234                                      \\u2502   \\u2502\\n * \\u2502  \\u2502 Tenant: 0x...abc                                     \\u2502   \\u2502\\n * \\u2502  \\u2502 Landlord: 0x...def                                   \\u2502   \\u2502\\n * \\u2502  \\u2502 Monthly Rent: 1,500 USDC                             \\u2502   \\u2502\\n * \\u2502  \\u2502 Due Day: 1st of month                                \\u2502   \\u2502\\n * \\u2502  \\u2502 Status: Active                                       \\u2502   \\u2502\\n * \\u2502  \\u2502 Payments: 6 | Reputation: Trusted                    \\u2502   \\u2502\\n * \\u2502  \\u2514\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2518   \\u2502\\n * \\u2514\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2518\\n */\\ncontract LeaseNFT is ERC721, ERC721URIStorage, Ownable, INomaTypes {\\n    // ============ State Variables ============\\n\\n    /// @notice Counter for lease IDs\\n    uint256 private _leaseIdCounter;\\n\\n    /// @notice Mapping from lease ID to lease data\\n    mapping(uint256 => Lease) public leases;\\n\\n    /// @notice Mapping from tenant address to their lease IDs\\n    mapping(address => uint256[]) public tenantLeases;\\n\\n    /// @notice Mapping from landlord address to their lease IDs\\n    mapping(address => uint256[]) public landlordLeases;\\n\\n    /// @notice Payment contract address (authorized to update leases)\\n    address public paymentContract;\\n\\n    // ============ Errors ============\\n\\n    error Unauthorized();\\n    error InvalidDueDay();\\n    error InvalidRentAmount();\\n    error LeaseNotActive();\\n    error InvalidAddress();\\n\\n    // ============ Modifiers ============\\n\\n    modifier onlyPaymentContract() {\\n        if (msg.sender != paymentContract) revert Unauthorized();\\n        _;\\n    }\\n\\n    modifier onlyLeaseParty(uint256 leaseId) {\\n        Lease storage lease = leases[leaseId];\\n        if (msg.sender != lease.tenant && msg.sender != lease.landlord) {\\n            revert Unauthorized();\\n        }\\n        _;\\n    }\\n\\n    // ============ Constructor ============\\n\\n    constructor() ERC721(\\\"NOMA Lease\\\", \\\"NOMA-LEASE\\\") Ownable(msg.sender) {\\n        _leaseIdCounter = 1; // Start from 1\\n    }\\n\\n    // ============ Admin Functions ============\\n\\n    /**\\n     * @notice Set the payment contract address\\n     * @param _paymentContract Address of the NomaPayment contract\\n     */\\n    function setPaymentContract(address _paymentContract) external onlyOwner {\\n        if (_paymentContract == address(0)) revert InvalidAddress();\\n        paymentContract = _paymentContract;\\n    }\\n\\n    // ============ Lease Management ============\\n\\n    /**\\n     * @notice Create a new lease as a tenant\\n     * @param landlord Address of the landlord\\n     * @param monthlyRent Monthly rent amount in USDC (6 decimals)\\n     * @param dueDay Day of month rent is due (1-28)\\n     * @return leaseId The ID of the created lease\\n     */\\n    function createLeaseAsTenant(\\n        address landlord,\\n        uint256 monthlyRent,\\n        uint256 dueDay\\n    ) external returns (uint256 leaseId) {\\n        return _createLease(msg.sender, landlord, monthlyRent, dueDay);\\n    }\\n\\n    /**\\n     * @notice Create a new lease as a landlord\\n     * @param tenant Address of the tenant\\n     * @param monthlyRent Monthly rent amount in USDC (6 decimals)\\n     * @param dueDay Day of month rent is due (1-28)\\n     * @return leaseId The ID of the created lease\\n     */\\n    function createLeaseAsLandlord(\\n        address tenant,\\n        uint256 monthlyRent,\\n        uint256 dueDay\\n    ) external returns (uint256 leaseId) {\\n        return _createLease(tenant, msg.sender, monthlyRent, dueDay);\\n    }\\n\\n    /**\\n     * @notice Internal function to create a lease\\n     */\\n    function _createLease(\\n        address tenant,\\n        address landlord,\\n        uint256 monthlyRent,\\n        uint256 dueDay\\n    ) internal returns (uint256 leaseId) {\\n        if (tenant == address(0) || landlord == address(0)) revert InvalidAddress();\\n        if (dueDay < 1 || dueDay > 28) revert InvalidDueDay();\\n        if (monthlyRent == 0) revert InvalidRentAmount();\\n\\n        leaseId = _leaseIdCounter++;\\n\\n        leases[leaseId] = Lease({\\n            leaseId: leaseId,\\n            tenant: tenant,\\n            landlord: landlord,\\n            monthlyRent: monthlyRent,\\n            dueDay: dueDay,\\n            startDate: block.timestamp,\\n            endDate: 0, // Indefinite for MVP\\n            status: LeaseStatus.Active,\\n            totalPaid: 0,\\n            paymentCount: 0\\n        });\\n\\n        tenantLeases[tenant].push(leaseId);\\n        landlordLeases[landlord].push(leaseId);\\n\\n        // Mint NFT to tenant\\n        _safeMint(tenant, leaseId);\\n\\n        emit LeaseCreated(leaseId, tenant, landlord, monthlyRent, dueDay);\\n\\n        // AI Agent trigger for new lease\\n        emit AIAgentTrigger(\\n            \\\"NEW_LEASE\\\",\\n            leaseId,\\n            abi.encode(tenant, landlord, monthlyRent)\\n        );\\n    }\\n\\n    /**\\n     * @notice Update lease payment data (called by payment contract)\\n     * @param leaseId The lease to update\\n     * @param amount Amount paid\\n     */\\n    function recordPayment(\\n        uint256 leaseId,\\n        uint256 amount\\n    ) external onlyPaymentContract {\\n        Lease storage lease = leases[leaseId];\\n        if (lease.status != LeaseStatus.Active) revert LeaseNotActive();\\n\\n        lease.totalPaid += amount;\\n        lease.paymentCount += 1;\\n    }\\n\\n    /**\\n     * @notice Terminate a lease\\n     * @param leaseId The lease to terminate\\n     */\\n    function terminateLease(uint256 leaseId) external onlyLeaseParty(leaseId) {\\n        Lease storage lease = leases[leaseId];\\n        if (lease.status != LeaseStatus.Active) revert LeaseNotActive();\\n\\n        lease.status = LeaseStatus.Terminated;\\n        lease.endDate = block.timestamp;\\n\\n        // AI Agent trigger for lease termination\\n        emit AIAgentTrigger(\\n            \\\"LEASE_TERMINATED\\\",\\n            leaseId,\\n            abi.encode(lease.tenant, lease.totalPaid, lease.paymentCount)\\n        );\\n    }\\n\\n    // ============ View Functions ============\\n\\n    /**\\n     * @notice Get lease details\\n     * @param leaseId The lease ID\\n     * @return The lease data\\n     */\\n    function getLease(uint256 leaseId) external view returns (Lease memory) {\\n        return leases[leaseId];\\n    }\\n\\n    /**\\n     * @notice Get all leases for a tenant\\n     * @param tenant The tenant address\\n     * @return Array of lease IDs\\n     */\\n    function getTenantLeases(address tenant) external view returns (uint256[] memory) {\\n        return tenantLeases[tenant];\\n    }\\n\\n    /**\\n     * @notice Get all leases for a landlord\\n     * @param landlord The landlord address\\n     * @return Array of lease IDs\\n     */\\n    function getLandlordLeases(address landlord) external view returns (uint256[] memory) {\\n        return landlordLeases[landlord];\\n    }\\n\\n    /**\\n     * @notice Check if lease is active\\n     * @param leaseId The lease ID\\n     * @return True if lease is active\\n     */\\n    function isLeaseActive(uint256 leaseId) external view returns (bool) {\\n        return leases[leaseId].status == LeaseStatus.Active;\\n    }\\n\\n    /**\\n     * @notice Get the current due date for a lease\\n     * @param leaseId The lease ID\\n     * @return The next due date timestamp\\n     */\\n    function getNextDueDate(uint256 leaseId) external view returns (uint256) {\\n        Lease storage lease = leases[leaseId];\\n        \\n        // Calculate next due date based on current time and due day\\n        uint256 currentMonth = (block.timestamp / 30 days);\\n        uint256 dueDate = (currentMonth * 30 days) + (lease.dueDay * 1 days);\\n        \\n        // If we're past this month's due date, return next month's\\n        if (block.timestamp > dueDate) {\\n            dueDate += 30 days;\\n        }\\n        \\n        return dueDate;\\n    }\\n\\n    // ============ ERC721 Overrides ============\\n\\n    function tokenURI(uint256 tokenId)\\n        public\\n        view\\n        override(ERC721, ERC721URIStorage)\\n        returns (string memory)\\n    {\\n        return super.tokenURI(tokenId);\\n    }\\n\\n    function supportsInterface(bytes4 interfaceId)\\n        public\\n        view\\n        override(ERC721, ERC721URIStorage)\\n        returns (bool)\\n    {\\n        return super.supportsInterface(interfaceId);\\n    }\\n}\\n\",\"keccak256\":\"0xf6bf77b31403a0c9b4d3cb4017df25bfa347b22de3aeadf52e30c7006fac9cc8\",\"license\":\"MIT\"},\"contracts/interfaces/INomaTypes.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.20;\\n\\n/**\\n * @title INomaTypes\\n * @notice Common types and interfaces for the NOMA protocol\\n * @dev Used across LeaseNFT, NomaVault, NomaPayment, and ReputationRegistry\\n */\\ninterface INomaTypes {\\n    // ============ Enums ============\\n\\n    /// @notice Status of a lease\\n    enum LeaseStatus {\\n        Active,      // Lease is active and accepting payments\\n        Completed,   // Lease term completed\\n        Terminated   // Lease terminated early\\n    }\\n\\n    /// @notice Status of a rent payment\\n    enum PaymentStatus {\\n        Pending,     // Payment expected but not received\\n        Paid,        // Payment received and settled\\n        Late,        // Payment received after due date\\n        Missed       // Payment window passed without payment\\n    }\\n\\n    /// @notice Reputation tier for tenants\\n    enum ReputationTier {\\n        New,         // 0-2 payments\\n        Basic,       // 3-5 payments\\n        Trusted,     // 6-11 payments\\n        Premium      // 12+ payments\\n    }\\n\\n    // ============ Structs ============\\n\\n    /// @notice Lease information stored on-chain\\n    struct Lease {\\n        uint256 leaseId;           // Unique lease identifier\\n        address tenant;            // Tenant wallet address\\n        address landlord;          // Landlord wallet address\\n        uint256 monthlyRent;       // Monthly rent amount in USDC (6 decimals)\\n        uint256 dueDay;            // Day of month rent is due (1-28)\\n        uint256 startDate;         // Lease start timestamp\\n        uint256 endDate;           // Lease end timestamp (0 = indefinite)\\n        LeaseStatus status;        // Current lease status\\n        uint256 totalPaid;         // Total rent paid to date\\n        uint256 paymentCount;      // Number of payments made\\n    }\\n\\n    /// @notice Individual rent payment record\\n    struct RentPayment {\\n        uint256 paymentId;         // Unique payment identifier\\n        uint256 leaseId;           // Associated lease ID\\n        uint256 amount;            // Amount paid in USDC\\n        uint256 dueDate;           // When payment was due\\n        uint256 paidDate;          // When payment was made\\n        PaymentStatus status;      // Payment status\\n        bool isEarly;              // Paid before due date\\n        uint256 yieldEarned;       // Yield earned from early payment\\n    }\\n\\n    /// @notice Tenant reputation data\\n    struct Reputation {\\n        address tenant;            // Tenant wallet\\n        uint256 totalPayments;     // Total payments made\\n        uint256 onTimePayments;    // Payments made on/before due date\\n        uint256 earlyPayments;     // Payments made early\\n        uint256 latePayments;      // Late payments\\n        uint256 missedPayments;    // Missed payments\\n        uint256 totalYieldEarned;  // Total yield from early payments\\n        ReputationTier tier;       // Current reputation tier\\n        uint256 score;             // Numeric score (0-1000)\\n    }\\n\\n    // ============ Events ============\\n\\n    /// @notice Emitted when a new lease is created\\n    event LeaseCreated(\\n        uint256 indexed leaseId,\\n        address indexed tenant,\\n        address indexed landlord,\\n        uint256 monthlyRent,\\n        uint256 dueDay\\n    );\\n\\n    /// @notice Emitted when rent is paid\\n    event RentPaid(\\n        uint256 indexed leaseId,\\n        uint256 indexed paymentId,\\n        address indexed tenant,\\n        uint256 amount,\\n        bool isEarly,\\n        uint256 yieldEarned\\n    );\\n\\n    /// @notice Emitted when payment is settled on Arc\\n    event PaymentSettled(\\n        uint256 indexed paymentId,\\n        uint256 indexed leaseId,\\n        uint256 amount,\\n        string settlementChain\\n    );\\n\\n    /// @notice Emitted when reputation is updated\\n    event ReputationUpdated(\\n        address indexed tenant,\\n        uint256 newScore,\\n        ReputationTier newTier\\n    );\\n\\n    /// @notice Emitted when yield is routed\\n    event YieldRouted(\\n        uint256 indexed leaseId,\\n        uint256 amount,\\n        string strategy\\n    );\\n\\n    /// @notice Emitted for AI agent trigger points\\n    event AIAgentTrigger(\\n        string indexed triggerType,\\n        uint256 indexed leaseId,\\n        bytes data\\n    );\\n}\\n\",\"keccak256\":\"0xc25e5b820d743865f1e3d1bc7008d29ad79acef180954b9d634a623603fe6582\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x60806040523480156200001157600080fd5b50336040518060400160405280600a8152602001694e4f4d41204c6561736560b01b8152506040518060400160405280600a8152602001694e4f4d412d4c4541534560b01b81525081600090816200006a9190620001b9565b506001620000798282620001b9565b5050506001600160a01b038116620000ab57604051631e4fbdf760e01b81526000600482015260240160405180910390fd5b620000b681620000c2565b50600160085562000285565b600780546001600160a01b038381166001600160a01b0319831681179093556040519116919082907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a35050565b634e487b7160e01b600052604160045260246000fd5b600181811c908216806200013f57607f821691505b6020821081036200016057634e487b7160e01b600052602260045260246000fd5b50919050565b601f821115620001b457600081815260208120601f850160051c810160208610156200018f5750805b601f850160051c820191505b81811015620001b0578281556001016200019b565b5050505b505050565b81516001600160401b03811115620001d557620001d562000114565b620001ed81620001e684546200012a565b8462000166565b602080601f8311600181146200022557600084156200020c5750858301515b600019600386901b1c1916600185901b178555620001b0565b600085815260208120601f198616915b82811015620002565788860151825594840194600190910190840162000235565b5085821015620002755787850151600019600388901b60f8161c191681555b5050505050600190811b01905550565b611f0880620002956000396000f3fe608060405234801561001057600080fd5b50600436106101da5760003560e01c806386809a2811610104578063a22cb465116100a2578063e985e9c511610071578063e985e9c514610482578063f08b6a0314610495578063f2fde38b146104a8578063f7f75a97146104bb57600080fd5b8063a22cb46514610436578063b88d4fde14610449578063be35336a1461045c578063c87b56dd1461046f57600080fd5b80638da5cb5b116100de5780638da5cb5b146103ea57806395d89b41146103fb5780639c91dd56146104035780639f44657c1461041657600080fd5b806386809a281461033d5780638927a106146103505780638abb20cc146103d757600080fd5b8063404f90ae1161017c578063588e00a51161014b578063588e00a5146102fc5780636352211e1461030f57806370a0823114610322578063715018a61461033557600080fd5b8063404f90ae146102a257806342842e0e146102b5578063550252ac146102c857806357976894146102e957600080fd5b8063081812fc116101b8578063081812fc1461023c578063095ea7b3146102675780630b879bc21461027c57806323b872dd1461028f57600080fd5b806301ffc9a7146101df57806306fdde031461020757806307a783191461021c575b600080fd5b6101f26101ed366004611932565b6104ce565b60405190151581526020015b60405180910390f35b61020f6104df565b6040516101fe919061199f565b61022f61022a3660046119ce565b610571565b6040516101fe91906119e9565b61024f61024a366004611a2d565b6105dd565b6040516001600160a01b0390911681526020016101fe565b61027a610275366004611a46565b610606565b005b61027a61028a366004611a70565b610615565b61027a61029d366004611a92565b6106bf565b6101f26102b0366004611a2d565b61074f565b61027a6102c3366004611a92565b61077f565b6102db6102d6366004611a46565b61079f565b6040519081526020016101fe565b6102db6102f7366004611a46565b6107d0565b61027a61030a366004611a2d565b6107ec565b61024f61031d366004611a2d565b610943565b6102db6103303660046119ce565b61094e565b61027a610996565b6102db61034b366004611a2d565b6109aa565b6103c161035e366004611a2d565b6009602081905260009182526040909120805460018201546002830154600384015460048501546005860154600687015460078801546008890154989099015496986001600160a01b03968716989590961696939592949193909260ff1691908a565b6040516101fe9a99989796959493929190611b06565b61027a6103e53660046119ce565b610a16565b6007546001600160a01b031661024f565b61020f610a67565b600c5461024f906001600160a01b031681565b610429610424366004611a2d565b610a76565b6040516101fe9190611b68565b61027a610444366004611c00565b610b3a565b61027a610457366004611c52565b610b45565b6102db61046a366004611d2e565b610b5c565b61020f61047d366004611a2d565b610b6a565b6101f2610490366004611d61565b610b75565b61022f6104a33660046119ce565b610ba3565b61027a6104b63660046119ce565b610c0d565b6102db6104c9366004611d2e565b610c4b565b60006104d982610c59565b92915050565b6060600080546104ee90611d94565b80601f016020809104026020016040519081016040528092919081815260200182805461051a90611d94565b80156105675780601f1061053c57610100808354040283529160200191610567565b820191906000526020600020905b81548152906001019060200180831161054a57829003601f168201915b5050505050905090565b6001600160a01b0381166000908152600a60209081526040918290208054835181840281018401909452808452606093928301828280156105d157602002820191906000526020600020905b8154815260200190600101908083116105bd575b50505050509050919050565b60006105e882610c7e565b506000828152600460205260409020546001600160a01b03166104d9565b610611828233610cb7565b5050565b600c546001600160a01b0316331461063f576040516282b42960e81b815260040160405180910390fd5b600082815260096020526040812090600782015460ff16600281111561066757610667611ace565b146106855760405163864f9b8560e01b815260040160405180910390fd5b818160080160008282546106999190611de4565b9250508190555060018160090160008282546106b59190611de4565b9091555050505050565b6001600160a01b0382166106ee57604051633250574960e11b8152600060048201526024015b60405180910390fd5b60006106fb838333610cc4565b9050836001600160a01b0316816001600160a01b031614610749576040516364283d7b60e01b81526001600160a01b03808616600483015260248201849052821660448201526064016106e5565b50505050565b60008060008381526009602052604090206007015460ff16600281111561077857610778611ace565b1492915050565b61079a83838360405180602001604052806000815250610b45565b505050565b600b60205281600052604060002081815481106107bb57600080fd5b90600052602060002001600091509150505481565b600a60205281600052604060002081815481106107bb57600080fd5b600081815260096020526040902060018101548291906001600160a01b03163314801590610827575060028101546001600160a01b03163314155b15610844576040516282b42960e81b815260040160405180910390fd5b600083815260096020526040812090600782015460ff16600281111561086c5761086c611ace565b1461088a5760405163864f9b8560e01b815260040160405180910390fd5b60078101805460ff191660021790554260068201556040516f13115054d157d511549352539055115160821b81528490601001604080519182900382206001850154600886015460098701546001600160a01b039092166020860152928401929092526060830191909152907f24dae94385c9aa4ee70d42172eb2ccbc9f8e6f09eedd940918dcd46e5563abf99060800160408051601f19818403018152908290526109359161199f565b60405180910390a350505050565b60006104d982610c7e565b60006001600160a01b03821661097a576040516322718ad960e21b8152600060048201526024016106e5565b506001600160a01b031660009081526003602052604090205490565b61099e610dbd565b6109a86000610dea565b565b6000818152600960205260408120816109c662278d0042611df7565b905060008260040154620151806109dd9190611e19565b6109ea8362278d00611e19565b6109f49190611de4565b905080421115610a0e57610a0b62278d0082611de4565b90505b949350505050565b610a1e610dbd565b6001600160a01b038116610a455760405163e6c4247b60e01b815260040160405180910390fd5b600c80546001600160a01b0319166001600160a01b0392909216919091179055565b6060600180546104ee90611d94565b610a7e6118a6565b6000828152600960209081526040918290208251610140810184528154815260018201546001600160a01b0390811693820193909352600280830154909316938101939093526003810154606084015260048101546080840152600581015460a0840152600681015460c08401526007810154909160e084019160ff1690811115610b0b57610b0b611ace565b6002811115610b1c57610b1c611ace565b81526008820154602082015260099091015460409091015292915050565b610611338383610e3c565b610b508484846106bf565b61074984848484610edb565b6000610a0e33858585611004565b60606104d98261130a565b6001600160a01b03918216600090815260056020908152604080832093909416825291909152205460ff1690565b6001600160a01b0381166000908152600b60209081526040918290208054835181840281018401909452808452606093928301828280156105d157602002820191906000526020600020908154815260200190600101908083116105bd5750505050509050919050565b610c15610dbd565b6001600160a01b038116610c3f57604051631e4fbdf760e01b8152600060048201526024016106e5565b610c4881610dea565b50565b6000610a0e84338585611004565b60006001600160e01b03198216632483248360e11b14806104d957506104d982611413565b6000818152600260205260408120546001600160a01b0316806104d957604051637e27328960e01b8152600481018490526024016106e5565b61079a8383836001611463565b6000828152600260205260408120546001600160a01b0390811690831615610cf157610cf1818486611569565b6001600160a01b03811615610d2f57610d0e600085600080611463565b6001600160a01b038116600090815260036020526040902080546000190190555b6001600160a01b03851615610d5e576001600160a01b0385166000908152600360205260409020805460010190555b60008481526002602052604080822080546001600160a01b0319166001600160a01b0389811691821790925591518793918516917fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef91a4949350505050565b6007546001600160a01b031633146109a85760405163118cdaa760e01b81523360048201526024016106e5565b600780546001600160a01b038381166001600160a01b0319831681179093556040519116919082907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a35050565b6001600160a01b038216610e6e57604051630b61174360e31b81526001600160a01b03831660048201526024016106e5565b6001600160a01b03838116600081815260056020908152604080832094871680845294825291829020805460ff191686151590811790915591519182527f17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31910160405180910390a3505050565b6001600160a01b0383163b1561074957604051630a85bd0160e11b81526001600160a01b0384169063150b7a0290610f1d903390889087908790600401611e30565b6020604051808303816000875af1925050508015610f58575060408051601f3d908101601f19168201909252610f5591810190611e6d565b60015b610fc1573d808015610f86576040519150601f19603f3d011682016040523d82523d6000602084013e610f8b565b606091505b508051600003610fb957604051633250574960e11b81526001600160a01b03851660048201526024016106e5565b805181602001fd5b6001600160e01b03198116630a85bd0160e11b14610ffd57604051633250574960e11b81526001600160a01b03851660048201526024016106e5565b5050505050565b60006001600160a01b038516158061102357506001600160a01b038416155b156110415760405163e6c4247b60e01b815260040160405180910390fd5b60018210806110505750601c82115b1561106e576040516301d32a6760e21b815260040160405180910390fd5b8260000361108f5760405163413551b160e11b815260040160405180910390fd5b6008805490600061109f83611e8a565b919050559050604051806101400160405280828152602001866001600160a01b03168152602001856001600160a01b03168152602001848152602001838152602001428152602001600081526020016000600281111561110157611101611ace565b815260006020808301829052604092830182905284825260098152908290208351815590830151600180830180546001600160a01b039384166001600160a01b0319918216179091559385015160028085018054929094169190951617909155606084015160038301556080840151600483015560a0840151600583015560c0840151600683015560e084015160078301805493949193909260ff199091169184908111156111b2576111b2611ace565b02179055506101008201516008820155610120909101516009909101556001600160a01b038086166000908152600a60209081526040808320805460018181018355918552838520018690559388168352600b8252822080549384018155825290200181905561122285826115cd565b836001600160a01b0316856001600160a01b0316827fcfc95e662eaa26d0f497338b82a72f20874a868726aeb89cacb6ef31ac36d11c8686604051611271929190918252602082015260400190565b60405180910390a4604051684e45575f4c4541534560b81b81528190600901604080519182900382206001600160a01b03808a16602085015288169183019190915260608201869052907f24dae94385c9aa4ee70d42172eb2ccbc9f8e6f09eedd940918dcd46e5563abf99060800160408051601f19818403018152908290526112fa9161199f565b60405180910390a3949350505050565b606061131582610c7e565b506000828152600660205260408120805461132f90611d94565b80601f016020809104026020016040519081016040528092919081815260200182805461135b90611d94565b80156113a85780601f1061137d576101008083540402835291602001916113a8565b820191906000526020600020905b81548152906001019060200180831161138b57829003601f168201915b5050505050905060006113c660408051602081019091526000815290565b905080516000036113d8575092915050565b81511561140a5780826040516020016113f2929190611ea3565b60405160208183030381529060405292505050919050565b610a0e846115e7565b60006001600160e01b031982166380ac58cd60e01b148061144457506001600160e01b03198216635b5e139f60e01b145b806104d957506301ffc9a760e01b6001600160e01b03198316146104d9565b808061147757506001600160a01b03821615155b1561153957600061148784610c7e565b90506001600160a01b038316158015906114b35750826001600160a01b0316816001600160a01b031614155b80156114c657506114c48184610b75565b155b156114ef5760405163a9fbf51f60e01b81526001600160a01b03841660048201526024016106e5565b81156115375783856001600160a01b0316826001600160a01b03167f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b92560405160405180910390a45b505b5050600090815260046020526040902080546001600160a01b0319166001600160a01b0392909216919091179055565b61157483838361165c565b61079a576001600160a01b0383166115a257604051637e27328960e01b8152600481018290526024016106e5565b60405163177e802f60e01b81526001600160a01b0383166004820152602481018290526044016106e5565b6106118282604051806020016040528060008152506116bf565b60606115f282610c7e565b50600061160a60408051602081019091526000815290565b9050600081511161162a5760405180602001604052806000815250611655565b80611634846116d6565b604051602001611645929190611ea3565b6040516020818303038152906040525b9392505050565b60006001600160a01b03831615801590610a0e5750826001600160a01b0316846001600160a01b0316148061169657506116968484610b75565b80610a0e5750506000908152600460205260409020546001600160a01b03908116911614919050565b6116c98383611769565b61079a6000848484610edb565b606060006116e3836117ce565b600101905060008167ffffffffffffffff81111561170357611703611c3c565b6040519080825280601f01601f19166020018201604052801561172d576020820181803683370190505b5090508181016020015b600019016f181899199a1a9b1b9c1cb0b131b232b360811b600a86061a8153600a850494508461173757509392505050565b6001600160a01b03821661179357604051633250574960e11b8152600060048201526024016106e5565b60006117a183836000610cc4565b90506001600160a01b0381161561079a576040516339e3563760e11b8152600060048201526024016106e5565b60008072184f03e93ff9f4daa797ed6e38ed64bf6a1f0160401b831061180d5772184f03e93ff9f4daa797ed6e38ed64bf6a1f0160401b830492506040015b6d04ee2d6d415b85acef81000000008310611839576d04ee2d6d415b85acef8100000000830492506020015b662386f26fc10000831061185757662386f26fc10000830492506010015b6305f5e100831061186f576305f5e100830492506008015b612710831061188357612710830492506004015b60648310611895576064830492506002015b600a83106104d95760010192915050565b6040518061014001604052806000815260200160006001600160a01b0316815260200160006001600160a01b03168152602001600081526020016000815260200160008152602001600081526020016000600281111561190857611908611ace565b815260200160008152602001600081525090565b6001600160e01b031981168114610c4857600080fd5b60006020828403121561194457600080fd5b81356116558161191c565b60005b8381101561196a578181015183820152602001611952565b50506000910152565b6000815180845261198b81602086016020860161194f565b601f01601f19169290920160200192915050565b6020815260006116556020830184611973565b80356001600160a01b03811681146119c957600080fd5b919050565b6000602082840312156119e057600080fd5b611655826119b2565b6020808252825182820181905260009190848201906040850190845b81811015611a2157835183529284019291840191600101611a05565b50909695505050505050565b600060208284031215611a3f57600080fd5b5035919050565b60008060408385031215611a5957600080fd5b611a62836119b2565b946020939093013593505050565b60008060408385031215611a8357600080fd5b50508035926020909101359150565b600080600060608486031215611aa757600080fd5b611ab0846119b2565b9250611abe602085016119b2565b9150604084013590509250925092565b634e487b7160e01b600052602160045260246000fd5b60038110611b0257634e487b7160e01b600052602160045260246000fd5b9052565b8a81526001600160a01b038a8116602083015289166040820152606081018890526080810187905260a0810186905260c081018590526101408101611b4e60e0830186611ae4565b610100820193909352610120015298975050505050505050565b81518152602080830151610140830191611b8c908401826001600160a01b03169052565b506040830151611ba760408401826001600160a01b03169052565b50606083015160608301526080830151608083015260a083015160a083015260c083015160c083015260e0830151611be260e0840182611ae4565b50610100838101519083015261012092830151929091019190915290565b60008060408385031215611c1357600080fd5b611c1c836119b2565b915060208301358015158114611c3157600080fd5b809150509250929050565b634e487b7160e01b600052604160045260246000fd5b60008060008060808587031215611c6857600080fd5b611c71856119b2565b9350611c7f602086016119b2565b925060408501359150606085013567ffffffffffffffff80821115611ca357600080fd5b818701915087601f830112611cb757600080fd5b813581811115611cc957611cc9611c3c565b604051601f8201601f19908116603f01168101908382118183101715611cf157611cf1611c3c565b816040528281528a6020848701011115611d0a57600080fd5b82602086016020830137600060208483010152809550505050505092959194509250565b600080600060608486031215611d4357600080fd5b611d4c846119b2565b95602085013595506040909401359392505050565b60008060408385031215611d7457600080fd5b611d7d836119b2565b9150611d8b602084016119b2565b90509250929050565b600181811c90821680611da857607f821691505b602082108103611dc857634e487b7160e01b600052602260045260246000fd5b50919050565b634e487b7160e01b600052601160045260246000fd5b808201808211156104d9576104d9611dce565b600082611e1457634e487b7160e01b600052601260045260246000fd5b500490565b80820281158282048414176104d9576104d9611dce565b6001600160a01b0385811682528416602082015260408101839052608060608201819052600090611e6390830184611973565b9695505050505050565b600060208284031215611e7f57600080fd5b81516116558161191c565b600060018201611e9c57611e9c611dce565b5060010190565b60008351611eb581846020880161194f565b835190830190611ec981836020880161194f565b0194935050505056fea26469706673582212207edd51a253c10cdc5a4ff10ad804bb3aa5a4d4eb15cce7c1491a8a5da80522b864736f6c63430008140033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106101da5760003560e01c806386809a2811610104578063a22cb465116100a2578063e985e9c511610071578063e985e9c514610482578063f08b6a0314610495578063f2fde38b146104a8578063f7f75a97146104bb57600080fd5b8063a22cb46514610436578063b88d4fde14610449578063be35336a1461045c578063c87b56dd1461046f57600080fd5b80638da5cb5b116100de5780638da5cb5b146103ea57806395d89b41146103fb5780639c91dd56146104035780639f44657c1461041657600080fd5b806386809a281461033d5780638927a106146103505780638abb20cc146103d757600080fd5b8063404f90ae1161017c578063588e00a51161014b578063588e00a5146102fc5780636352211e1461030f57806370a0823114610322578063715018a61461033557600080fd5b8063404f90ae146102a257806342842e0e146102b5578063550252ac146102c857806357976894146102e957600080fd5b8063081812fc116101b8578063081812fc1461023c578063095ea7b3146102675780630b879bc21461027c57806323b872dd1461028f57600080fd5b806301ffc9a7146101df57806306fdde031461020757806307a783191461021c575b600080fd5b6101f26101ed366004611932565b6104ce565b60405190151581526020015b60405180910390f35b61020f6104df565b6040516101fe919061199f565b61022f61022a3660046119ce565b610571565b6040516101fe91906119e9565b61024f61024a366004611a2d565b6105dd565b6040516001600160a01b0390911681526020016101fe565b61027a610275366004611a46565b610606565b005b61027a61028a366004611a70565b610615565b61027a61029d366004611a92565b6106bf565b6101f26102b0366004611a2d565b61074f565b61027a6102c3366004611a92565b61077f565b6102db6102d6366004611a46565b61079f565b6040519081526020016101fe565b6102db6102f7366004611a46565b6107d0565b61027a61030a366004611a2d565b6107ec565b61024f61031d366004611a2d565b610943565b6102db6103303660046119ce565b61094e565b61027a610996565b6102db61034b366004611a2d565b6109aa565b6103c161035e366004611a2d565b6009602081905260009182526040909120805460018201546002830154600384015460048501546005860154600687015460078801546008890154989099015496986001600160a01b03968716989590961696939592949193909260ff1691908a565b6040516101fe9a99989796959493929190611b06565b61027a6103e53660046119ce565b610a16565b6007546001600160a01b031661024f565b61020f610a67565b600c5461024f906001600160a01b031681565b610429610424366004611a2d565b610a76565b6040516101fe9190611b68565b61027a610444366004611c00565b610b3a565b61027a610457366004611c52565b610b45565b6102db61046a366004611d2e565b610b5c565b61020f61047d366004611a2d565b610b6a565b6101f2610490366004611d61565b610b75565b61022f6104a33660046119ce565b610ba3565b61027a6104b63660046119ce565b610c0d565b6102db6104c9366004611d2e565b610c4b565b60006104d982610c59565b92915050565b6060600080546104ee90611d94565b80601f016020809104026020016040519081016040528092919081815260200182805461051a90611d94565b80156105675780601f1061053c57610100808354040283529160200191610567565b820191906000526020600020905b81548152906001019060200180831161054a57829003601f168201915b5050505050905090565b6001600160a01b0381166000908152600a60209081526040918290208054835181840281018401909452808452606093928301828280156105d157602002820191906000526020600020905b8154815260200190600101908083116105bd575b50505050509050919050565b60006105e882610c7e565b506000828152600460205260409020546001600160a01b03166104d9565b610611828233610cb7565b5050565b600c546001600160a01b0316331461063f576040516282b42960e81b815260040160405180910390fd5b600082815260096020526040812090600782015460ff16600281111561066757610667611ace565b146106855760405163864f9b8560e01b815260040160405180910390fd5b818160080160008282546106999190611de4565b9250508190555060018160090160008282546106b59190611de4565b9091555050505050565b6001600160a01b0382166106ee57604051633250574960e11b8152600060048201526024015b60405180910390fd5b60006106fb838333610cc4565b9050836001600160a01b0316816001600160a01b031614610749576040516364283d7b60e01b81526001600160a01b03808616600483015260248201849052821660448201526064016106e5565b50505050565b60008060008381526009602052604090206007015460ff16600281111561077857610778611ace565b1492915050565b61079a83838360405180602001604052806000815250610b45565b505050565b600b60205281600052604060002081815481106107bb57600080fd5b90600052602060002001600091509150505481565b600a60205281600052604060002081815481106107bb57600080fd5b600081815260096020526040902060018101548291906001600160a01b03163314801590610827575060028101546001600160a01b03163314155b15610844576040516282b42960e81b815260040160405180910390fd5b600083815260096020526040812090600782015460ff16600281111561086c5761086c611ace565b1461088a5760405163864f9b8560e01b815260040160405180910390fd5b60078101805460ff191660021790554260068201556040516f13115054d157d511549352539055115160821b81528490601001604080519182900382206001850154600886015460098701546001600160a01b039092166020860152928401929092526060830191909152907f24dae94385c9aa4ee70d42172eb2ccbc9f8e6f09eedd940918dcd46e5563abf99060800160408051601f19818403018152908290526109359161199f565b60405180910390a350505050565b60006104d982610c7e565b60006001600160a01b03821661097a576040516322718ad960e21b8152600060048201526024016106e5565b506001600160a01b031660009081526003602052604090205490565b61099e610dbd565b6109a86000610dea565b565b6000818152600960205260408120816109c662278d0042611df7565b905060008260040154620151806109dd9190611e19565b6109ea8362278d00611e19565b6109f49190611de4565b905080421115610a0e57610a0b62278d0082611de4565b90505b949350505050565b610a1e610dbd565b6001600160a01b038116610a455760405163e6c4247b60e01b815260040160405180910390fd5b600c80546001600160a01b0319166001600160a01b0392909216919091179055565b6060600180546104ee90611d94565b610a7e6118a6565b6000828152600960209081526040918290208251610140810184528154815260018201546001600160a01b0390811693820193909352600280830154909316938101939093526003810154606084015260048101546080840152600581015460a0840152600681015460c08401526007810154909160e084019160ff1690811115610b0b57610b0b611ace565b6002811115610b1c57610b1c611ace565b81526008820154602082015260099091015460409091015292915050565b610611338383610e3c565b610b508484846106bf565b61074984848484610edb565b6000610a0e33858585611004565b60606104d98261130a565b6001600160a01b03918216600090815260056020908152604080832093909416825291909152205460ff1690565b6001600160a01b0381166000908152600b60209081526040918290208054835181840281018401909452808452606093928301828280156105d157602002820191906000526020600020908154815260200190600101908083116105bd5750505050509050919050565b610c15610dbd565b6001600160a01b038116610c3f57604051631e4fbdf760e01b8152600060048201526024016106e5565b610c4881610dea565b50565b6000610a0e84338585611004565b60006001600160e01b03198216632483248360e11b14806104d957506104d982611413565b6000818152600260205260408120546001600160a01b0316806104d957604051637e27328960e01b8152600481018490526024016106e5565b61079a8383836001611463565b6000828152600260205260408120546001600160a01b0390811690831615610cf157610cf1818486611569565b6001600160a01b03811615610d2f57610d0e600085600080611463565b6001600160a01b038116600090815260036020526040902080546000190190555b6001600160a01b03851615610d5e576001600160a01b0385166000908152600360205260409020805460010190555b60008481526002602052604080822080546001600160a01b0319166001600160a01b0389811691821790925591518793918516917fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef91a4949350505050565b6007546001600160a01b031633146109a85760405163118cdaa760e01b81523360048201526024016106e5565b600780546001600160a01b038381166001600160a01b0319831681179093556040519116919082907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a35050565b6001600160a01b038216610e6e57604051630b61174360e31b81526001600160a01b03831660048201526024016106e5565b6001600160a01b03838116600081815260056020908152604080832094871680845294825291829020805460ff191686151590811790915591519182527f17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31910160405180910390a3505050565b6001600160a01b0383163b1561074957604051630a85bd0160e11b81526001600160a01b0384169063150b7a0290610f1d903390889087908790600401611e30565b6020604051808303816000875af1925050508015610f58575060408051601f3d908101601f19168201909252610f5591810190611e6d565b60015b610fc1573d808015610f86576040519150601f19603f3d011682016040523d82523d6000602084013e610f8b565b606091505b508051600003610fb957604051633250574960e11b81526001600160a01b03851660048201526024016106e5565b805181602001fd5b6001600160e01b03198116630a85bd0160e11b14610ffd57604051633250574960e11b81526001600160a01b03851660048201526024016106e5565b5050505050565b60006001600160a01b038516158061102357506001600160a01b038416155b156110415760405163e6c4247b60e01b815260040160405180910390fd5b60018210806110505750601c82115b1561106e576040516301d32a6760e21b815260040160405180910390fd5b8260000361108f5760405163413551b160e11b815260040160405180910390fd5b6008805490600061109f83611e8a565b919050559050604051806101400160405280828152602001866001600160a01b03168152602001856001600160a01b03168152602001848152602001838152602001428152602001600081526020016000600281111561110157611101611ace565b815260006020808301829052604092830182905284825260098152908290208351815590830151600180830180546001600160a01b039384166001600160a01b0319918216179091559385015160028085018054929094169190951617909155606084015160038301556080840151600483015560a0840151600583015560c0840151600683015560e084015160078301805493949193909260ff199091169184908111156111b2576111b2611ace565b02179055506101008201516008820155610120909101516009909101556001600160a01b038086166000908152600a60209081526040808320805460018181018355918552838520018690559388168352600b8252822080549384018155825290200181905561122285826115cd565b836001600160a01b0316856001600160a01b0316827fcfc95e662eaa26d0f497338b82a72f20874a868726aeb89cacb6ef31ac36d11c8686604051611271929190918252602082015260400190565b60405180910390a4604051684e45575f4c4541534560b81b81528190600901604080519182900382206001600160a01b03808a16602085015288169183019190915260608201869052907f24dae94385c9aa4ee70d42172eb2ccbc9f8e6f09eedd940918dcd46e5563abf99060800160408051601f19818403018152908290526112fa9161199f565b60405180910390a3949350505050565b606061131582610c7e565b506000828152600660205260408120805461132f90611d94565b80601f016020809104026020016040519081016040528092919081815260200182805461135b90611d94565b80156113a85780601f1061137d576101008083540402835291602001916113a8565b820191906000526020600020905b81548152906001019060200180831161138b57829003601f168201915b5050505050905060006113c660408051602081019091526000815290565b905080516000036113d8575092915050565b81511561140a5780826040516020016113f2929190611ea3565b60405160208183030381529060405292505050919050565b610a0e846115e7565b60006001600160e01b031982166380ac58cd60e01b148061144457506001600160e01b03198216635b5e139f60e01b145b806104d957506301ffc9a760e01b6001600160e01b03198316146104d9565b808061147757506001600160a01b03821615155b1561153957600061148784610c7e565b90506001600160a01b038316158015906114b35750826001600160a01b0316816001600160a01b031614155b80156114c657506114c48184610b75565b155b156114ef5760405163a9fbf51f60e01b81526001600160a01b03841660048201526024016106e5565b81156115375783856001600160a01b0316826001600160a01b03167f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b92560405160405180910390a45b505b5050600090815260046020526040902080546001600160a01b0319166001600160a01b0392909216919091179055565b61157483838361165c565b61079a576001600160a01b0383166115a257604051637e27328960e01b8152600481018290526024016106e5565b60405163177e802f60e01b81526001600160a01b0383166004820152602481018290526044016106e5565b6106118282604051806020016040528060008152506116bf565b60606115f282610c7e565b50600061160a60408051602081019091526000815290565b9050600081511161162a5760405180602001604052806000815250611655565b80611634846116d6565b604051602001611645929190611ea3565b6040516020818303038152906040525b9392505050565b60006001600160a01b03831615801590610a0e5750826001600160a01b0316846001600160a01b0316148061169657506116968484610b75565b80610a0e5750506000908152600460205260409020546001600160a01b03908116911614919050565b6116c98383611769565b61079a6000848484610edb565b606060006116e3836117ce565b600101905060008167ffffffffffffffff81111561170357611703611c3c565b6040519080825280601f01601f19166020018201604052801561172d576020820181803683370190505b5090508181016020015b600019016f181899199a1a9b1b9c1cb0b131b232b360811b600a86061a8153600a850494508461173757509392505050565b6001600160a01b03821661179357604051633250574960e11b8152600060048201526024016106e5565b60006117a183836000610cc4565b90506001600160a01b0381161561079a576040516339e3563760e11b8152600060048201526024016106e5565b60008072184f03e93ff9f4daa797ed6e38ed64bf6a1f0160401b831061180d5772184f03e93ff9f4daa797ed6e38ed64bf6a1f0160401b830492506040015b6d04ee2d6d415b85acef81000000008310611839576d04ee2d6d415b85acef8100000000830492506020015b662386f26fc10000831061185757662386f26fc10000830492506010015b6305f5e100831061186f576305f5e100830492506008015b612710831061188357612710830492506004015b60648310611895576064830492506002015b600a83106104d95760010192915050565b6040518061014001604052806000815260200160006001600160a01b0316815260200160006001600160a01b03168152602001600081526020016000815260200160008152602001600081526020016000600281111561190857611908611ace565b815260200160008152602001600081525090565b6001600160e01b031981168114610c4857600080fd5b60006020828403121561194457600080fd5b81356116558161191c565b60005b8381101561196a578181015183820152602001611952565b50506000910152565b6000815180845261198b81602086016020860161194f565b601f01601f19169290920160200192915050565b6020815260006116556020830184611973565b80356001600160a01b03811681146119c957600080fd5b919050565b6000602082840312156119e057600080fd5b611655826119b2565b6020808252825182820181905260009190848201906040850190845b81811015611a2157835183529284019291840191600101611a05565b50909695505050505050565b600060208284031215611a3f57600080fd5b5035919050565b60008060408385031215611a5957600080fd5b611a62836119b2565b946020939093013593505050565b60008060408385031215611a8357600080fd5b50508035926020909101359150565b600080600060608486031215611aa757600080fd5b611ab0846119b2565b9250611abe602085016119b2565b9150604084013590509250925092565b634e487b7160e01b600052602160045260246000fd5b60038110611b0257634e487b7160e01b600052602160045260246000fd5b9052565b8a81526001600160a01b038a8116602083015289166040820152606081018890526080810187905260a0810186905260c081018590526101408101611b4e60e0830186611ae4565b610100820193909352610120015298975050505050505050565b81518152602080830151610140830191611b8c908401826001600160a01b03169052565b506040830151611ba760408401826001600160a01b03169052565b50606083015160608301526080830151608083015260a083015160a083015260c083015160c083015260e0830151611be260e0840182611ae4565b50610100838101519083015261012092830151929091019190915290565b60008060408385031215611c1357600080fd5b611c1c836119b2565b915060208301358015158114611c3157600080fd5b809150509250929050565b634e487b7160e01b600052604160045260246000fd5b60008060008060808587031215611c6857600080fd5b611c71856119b2565b9350611c7f602086016119b2565b925060408501359150606085013567ffffffffffffffff80821115611ca357600080fd5b818701915087601f830112611cb757600080fd5b813581811115611cc957611cc9611c3c565b604051601f8201601f19908116603f01168101908382118183101715611cf157611cf1611c3c565b816040528281528a6020848701011115611d0a57600080fd5b82602086016020830137600060208483010152809550505050505092959194509250565b600080600060608486031215611d4357600080fd5b611d4c846119b2565b95602085013595506040909401359392505050565b60008060408385031215611d7457600080fd5b611d7d836119b2565b9150611d8b602084016119b2565b90509250929050565b600181811c90821680611da857607f821691505b602082108103611dc857634e487b7160e01b600052602260045260246000fd5b50919050565b634e487b7160e01b600052601160045260246000fd5b808201808211156104d9576104d9611dce565b600082611e1457634e487b7160e01b600052601260045260246000fd5b500490565b80820281158282048414176104d9576104d9611dce565b6001600160a01b0385811682528416602082015260408101839052608060608201819052600090611e6390830184611973565b9695505050505050565b600060208284031215611e7f57600080fd5b81516116558161191c565b600060018201611e9c57611e9c611dce565b5060010190565b60008351611eb581846020880161194f565b835190830190611ec981836020880161194f565b0194935050505056fea26469706673582212207edd51a253c10cdc5a4ff10ad804bb3aa5a4d4eb15cce7c1491a8a5da80522b864736f6c63430008140033",
+  "devdoc": {
+    "details": "Each lease is minted as an NFT owned by the tenant  ┌─────────────────────────────────────────────────────────────┐ │                      LEASE NFT                               │ │  ┌─────────────────────────────────────────────────────┐   │ │  │ Lease ID: #1234                                      │   │ │  │ Tenant: 0x...abc                                     │   │ │  │ Landlord: 0x...def                                   │   │ │  │ Monthly Rent: 1,500 USDC                             │   │ │  │ Due Day: 1st of month                                │   │ │  │ Status: Active                                       │   │ │  │ Payments: 6 | Reputation: Trusted                    │   │ │  └─────────────────────────────────────────────────────┘   │ └─────────────────────────────────────────────────────────────┘",
+    "errors": {
+      "ERC721IncorrectOwner(address,uint256,address)": [
+        {
+          "details": "Indicates an error related to the ownership over a particular token. Used in transfers.",
+          "params": {
+            "owner": "Address of the current owner of a token.",
+            "sender": "Address whose tokens are being transferred.",
+            "tokenId": "Identifier number of a token."
+          }
+        }
+      ],
+      "ERC721InsufficientApproval(address,uint256)": [
+        {
+          "details": "Indicates a failure with the `operator`’s approval. Used in transfers.",
+          "params": {
+            "operator": "Address that may be allowed to operate on tokens without being their owner.",
+            "tokenId": "Identifier number of a token."
+          }
+        }
+      ],
+      "ERC721InvalidApprover(address)": [
+        {
+          "details": "Indicates a failure with the `approver` of a token to be approved. Used in approvals.",
+          "params": {
+            "approver": "Address initiating an approval operation."
+          }
+        }
+      ],
+      "ERC721InvalidOperator(address)": [
+        {
+          "details": "Indicates a failure with the `operator` to be approved. Used in approvals.",
+          "params": {
+            "operator": "Address that may be allowed to operate on tokens without being their owner."
+          }
+        }
+      ],
+      "ERC721InvalidOwner(address)": [
+        {
+          "details": "Indicates that an address can't be an owner. For example, `address(0)` is a forbidden owner in EIP-20. Used in balance queries.",
+          "params": {
+            "owner": "Address of the current owner of a token."
+          }
+        }
+      ],
+      "ERC721InvalidReceiver(address)": [
+        {
+          "details": "Indicates a failure with the token `receiver`. Used in transfers.",
+          "params": {
+            "receiver": "Address to which tokens are being transferred."
+          }
+        }
+      ],
+      "ERC721InvalidSender(address)": [
+        {
+          "details": "Indicates a failure with the token `sender`. Used in transfers.",
+          "params": {
+            "sender": "Address whose tokens are being transferred."
+          }
+        }
+      ],
+      "ERC721NonexistentToken(uint256)": [
+        {
+          "details": "Indicates a `tokenId` whose `owner` is the zero address.",
+          "params": {
+            "tokenId": "Identifier number of a token."
+          }
+        }
+      ],
+      "OwnableInvalidOwner(address)": [
+        {
+          "details": "The owner is not a valid owner account. (eg. `address(0)`)"
+        }
+      ],
+      "OwnableUnauthorizedAccount(address)": [
+        {
+          "details": "The caller account is not authorized to perform an operation."
+        }
+      ]
+    },
+    "events": {
+      "Approval(address,address,uint256)": {
+        "details": "Emitted when `owner` enables `approved` to manage the `tokenId` token."
+      },
+      "ApprovalForAll(address,address,bool)": {
+        "details": "Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets."
+      },
+      "BatchMetadataUpdate(uint256,uint256)": {
+        "details": "This event emits when the metadata of a range of tokens is changed. So that the third-party platforms such as NFT market could timely update the images and related attributes of the NFTs."
+      },
+      "MetadataUpdate(uint256)": {
+        "details": "This event emits when the metadata of a token is changed. So that the third-party platforms such as NFT market could timely update the images and related attributes of the NFT."
+      },
+      "Transfer(address,address,uint256)": {
+        "details": "Emitted when `tokenId` token is transferred from `from` to `to`."
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "approve(address,uint256)": {
+        "details": "See {IERC721-approve}."
+      },
+      "balanceOf(address)": {
+        "details": "See {IERC721-balanceOf}."
+      },
+      "createLeaseAsLandlord(address,uint256,uint256)": {
+        "params": {
+          "dueDay": "Day of month rent is due (1-28)",
+          "monthlyRent": "Monthly rent amount in USDC (6 decimals)",
+          "tenant": "Address of the tenant"
+        },
+        "returns": {
+          "leaseId": "The ID of the created lease"
+        }
+      },
+      "createLeaseAsTenant(address,uint256,uint256)": {
+        "params": {
+          "dueDay": "Day of month rent is due (1-28)",
+          "landlord": "Address of the landlord",
+          "monthlyRent": "Monthly rent amount in USDC (6 decimals)"
+        },
+        "returns": {
+          "leaseId": "The ID of the created lease"
+        }
+      },
+      "getApproved(uint256)": {
+        "details": "See {IERC721-getApproved}."
+      },
+      "getLandlordLeases(address)": {
+        "params": {
+          "landlord": "The landlord address"
+        },
+        "returns": {
+          "_0": "Array of lease IDs"
+        }
+      },
+      "getLease(uint256)": {
+        "params": {
+          "leaseId": "The lease ID"
+        },
+        "returns": {
+          "_0": "The lease data"
+        }
+      },
+      "getNextDueDate(uint256)": {
+        "params": {
+          "leaseId": "The lease ID"
+        },
+        "returns": {
+          "_0": "The next due date timestamp"
+        }
+      },
+      "getTenantLeases(address)": {
+        "params": {
+          "tenant": "The tenant address"
+        },
+        "returns": {
+          "_0": "Array of lease IDs"
+        }
+      },
+      "isApprovedForAll(address,address)": {
+        "details": "See {IERC721-isApprovedForAll}."
+      },
+      "isLeaseActive(uint256)": {
+        "params": {
+          "leaseId": "The lease ID"
+        },
+        "returns": {
+          "_0": "True if lease is active"
+        }
+      },
+      "name()": {
+        "details": "See {IERC721Metadata-name}."
+      },
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "ownerOf(uint256)": {
+        "details": "See {IERC721-ownerOf}."
+      },
+      "recordPayment(uint256,uint256)": {
+        "params": {
+          "amount": "Amount paid",
+          "leaseId": "The lease to update"
+        }
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
+      },
+      "safeTransferFrom(address,address,uint256)": {
+        "details": "See {IERC721-safeTransferFrom}."
+      },
+      "safeTransferFrom(address,address,uint256,bytes)": {
+        "details": "See {IERC721-safeTransferFrom}."
+      },
+      "setApprovalForAll(address,bool)": {
+        "details": "See {IERC721-setApprovalForAll}."
+      },
+      "setPaymentContract(address)": {
+        "params": {
+          "_paymentContract": "Address of the NomaPayment contract"
+        }
+      },
+      "symbol()": {
+        "details": "See {IERC721Metadata-symbol}."
+      },
+      "terminateLease(uint256)": {
+        "params": {
+          "leaseId": "The lease to terminate"
+        }
+      },
+      "transferFrom(address,address,uint256)": {
+        "details": "See {IERC721-transferFrom}."
+      },
+      "transferOwnership(address)": {
+        "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      }
+    },
+    "title": "LeaseNFT",
+    "version": 1
+  },
+  "userdoc": {
+    "events": {
+      "AIAgentTrigger(string,uint256,bytes)": {
+        "notice": "Emitted for AI agent trigger points"
+      },
+      "LeaseCreated(uint256,address,address,uint256,uint256)": {
+        "notice": "Emitted when a new lease is created"
+      },
+      "PaymentSettled(uint256,uint256,uint256,string)": {
+        "notice": "Emitted when payment is settled on Arc"
+      },
+      "RentPaid(uint256,uint256,address,uint256,bool,uint256)": {
+        "notice": "Emitted when rent is paid"
+      },
+      "ReputationUpdated(address,uint256,uint8)": {
+        "notice": "Emitted when reputation is updated"
+      },
+      "YieldRouted(uint256,uint256,string)": {
+        "notice": "Emitted when yield is routed"
+      }
+    },
+    "kind": "user",
+    "methods": {
+      "createLeaseAsLandlord(address,uint256,uint256)": {
+        "notice": "Create a new lease as a landlord"
+      },
+      "createLeaseAsTenant(address,uint256,uint256)": {
+        "notice": "Create a new lease as a tenant"
+      },
+      "getLandlordLeases(address)": {
+        "notice": "Get all leases for a landlord"
+      },
+      "getLease(uint256)": {
+        "notice": "Get lease details"
+      },
+      "getNextDueDate(uint256)": {
+        "notice": "Get the current due date for a lease"
+      },
+      "getTenantLeases(address)": {
+        "notice": "Get all leases for a tenant"
+      },
+      "isLeaseActive(uint256)": {
+        "notice": "Check if lease is active"
+      },
+      "landlordLeases(address,uint256)": {
+        "notice": "Mapping from landlord address to their lease IDs"
+      },
+      "leases(uint256)": {
+        "notice": "Mapping from lease ID to lease data"
+      },
+      "paymentContract()": {
+        "notice": "Payment contract address (authorized to update leases)"
+      },
+      "recordPayment(uint256,uint256)": {
+        "notice": "Update lease payment data (called by payment contract)"
+      },
+      "setPaymentContract(address)": {
+        "notice": "Set the payment contract address"
+      },
+      "tenantLeases(address,uint256)": {
+        "notice": "Mapping from tenant address to their lease IDs"
+      },
+      "terminateLease(uint256)": {
+        "notice": "Terminate a lease"
+      }
+    },
+    "notice": "NFT representation of rental leases for the NOMA protocol",
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 1294,
+        "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+        "label": "_name",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_string_storage"
+      },
+      {
+        "astId": 1296,
+        "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+        "label": "_symbol",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_string_storage"
+      },
+      {
+        "astId": 1300,
+        "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+        "label": "_owners",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_mapping(t_uint256,t_address)"
+      },
+      {
+        "astId": 1304,
+        "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+        "label": "_balances",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_mapping(t_address,t_uint256)"
+      },
+      {
+        "astId": 1308,
+        "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+        "label": "_tokenApprovals",
+        "offset": 0,
+        "slot": "4",
+        "type": "t_mapping(t_uint256,t_address)"
+      },
+      {
+        "astId": 1314,
+        "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+        "label": "_operatorApprovals",
+        "offset": 0,
+        "slot": "5",
+        "type": "t_mapping(t_address,t_mapping(t_address,t_bool))"
+      },
+      {
+        "astId": 2433,
+        "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+        "label": "_tokenURIs",
+        "offset": 0,
+        "slot": "6",
+        "type": "t_mapping(t_uint256,t_string_storage)"
+      },
+      {
+        "astId": 8,
+        "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+        "label": "_owner",
+        "offset": 0,
+        "slot": "7",
+        "type": "t_address"
+      },
+      {
+        "astId": 4379,
+        "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+        "label": "_leaseIdCounter",
+        "offset": 0,
+        "slot": "8",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 4385,
+        "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+        "label": "leases",
+        "offset": 0,
+        "slot": "9",
+        "type": "t_mapping(t_uint256,t_struct(Lease)6894_storage)"
+      },
+      {
+        "astId": 4391,
+        "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+        "label": "tenantLeases",
+        "offset": 0,
+        "slot": "10",
+        "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)"
+      },
+      {
+        "astId": 4397,
+        "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+        "label": "landlordLeases",
+        "offset": 0,
+        "slot": "11",
+        "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)"
+      },
+      {
+        "astId": 4400,
+        "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+        "label": "paymentContract",
+        "offset": 0,
+        "slot": "12",
+        "type": "t_address"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_array(t_uint256)dyn_storage": {
+        "base": "t_uint256",
+        "encoding": "dynamic_array",
+        "label": "uint256[]",
+        "numberOfBytes": "32"
+      },
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_enum(LeaseStatus)6859": {
+        "encoding": "inplace",
+        "label": "enum INomaTypes.LeaseStatus",
+        "numberOfBytes": "1"
+      },
+      "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => uint256[])",
+        "numberOfBytes": "32",
+        "value": "t_array(t_uint256)dyn_storage"
+      },
+      "t_mapping(t_address,t_bool)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => bool)",
+        "numberOfBytes": "32",
+        "value": "t_bool"
+      },
+      "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => mapping(address => bool))",
+        "numberOfBytes": "32",
+        "value": "t_mapping(t_address,t_bool)"
+      },
+      "t_mapping(t_address,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_mapping(t_uint256,t_address)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => address)",
+        "numberOfBytes": "32",
+        "value": "t_address"
+      },
+      "t_mapping(t_uint256,t_string_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => string)",
+        "numberOfBytes": "32",
+        "value": "t_string_storage"
+      },
+      "t_mapping(t_uint256,t_struct(Lease)6894_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct INomaTypes.Lease)",
+        "numberOfBytes": "32",
+        "value": "t_struct(Lease)6894_storage"
+      },
+      "t_string_storage": {
+        "encoding": "bytes",
+        "label": "string",
+        "numberOfBytes": "32"
+      },
+      "t_struct(Lease)6894_storage": {
+        "encoding": "inplace",
+        "label": "struct INomaTypes.Lease",
+        "members": [
+          {
+            "astId": 6874,
+            "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+            "label": "leaseId",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 6876,
+            "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+            "label": "tenant",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_address"
+          },
+          {
+            "astId": 6878,
+            "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+            "label": "landlord",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_address"
+          },
+          {
+            "astId": 6880,
+            "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+            "label": "monthlyRent",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 6882,
+            "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+            "label": "dueDay",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 6884,
+            "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+            "label": "startDate",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 6886,
+            "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+            "label": "endDate",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 6889,
+            "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+            "label": "status",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_enum(LeaseStatus)6859"
+          },
+          {
+            "astId": 6891,
+            "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+            "label": "totalPaid",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 6893,
+            "contract": "contracts/LeaseNFT.sol:LeaseNFT",
+            "label": "paymentCount",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_uint256"
+          }
+        ],
+        "numberOfBytes": "320"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}
