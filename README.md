@@ -1,83 +1,218 @@
-# 🏗 Scaffold-ETH 2
+# 🏠 NOMA
 
-<h4 align="center">
-  <a href="https://docs.scaffoldeth.io">Documentation</a> |
-  <a href="https://scaffoldeth.io">Website</a>
-</h4>
+> **"Turn rent into yield and reputation."**
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+NOMA is a decentralized protocol that transforms rent payments into productive assets. Built for **HackMoney 2026**.
 
-> [!NOTE]
-> 🤖 Scaffold-ETH 2 is AI-ready! It has everything agents need to build on Ethereum. Check `.agents/`, `.claude/`, `.opencode` or `.cursor/` for more info.
+---
 
-⚙️ Built using NextJS, RainbowKit, Hardhat, Wagmi, Viem, and Typescript.
-
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
-
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
-
-## Requirements
-
-Before you begin, you need to install the following tools:
-
-- [Node (>= v20.18.3)](https://nodejs.org/en/download/)
-- Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
-- [Git](https://git-scm.com/downloads)
-
-## Quickstart
-
-To get started with Scaffold-ETH 2, follow the steps below:
-
-1. Install dependencies if it was skipped in CLI:
+## 🎯 Core Promise
 
 ```
-cd my-dapp-example
-yarn install
+Pay rent → Earn yield → Build reputation → Unlock financial access
 ```
 
-2. Run a local network in the first terminal:
+---
+
+## 📋 MVP Flow
 
 ```
-yarn chain
+┌────────────┐    ┌────────────┐    ┌────────────┐    ┌────────────┐
+│  1. PAY    │───▶│  2. USDC   │───▶│  3. ARC    │───▶│ 4. UPDATE  │
+│   RENT     │    │  CONVERT   │    │  SETTLE    │    │   STATUS   │
+└────────────┘    └────────────┘    └────────────┘    └────────────┘
+     │                 │                 │                 │
+     ▼                 ▼                 ▼                 ▼
+  Tenant           Circle            NomaVault        LeaseNFT
+  pays any         Gateway           deposits         records
+  token            handles           USDC             payment
+                                                          │
+                                                          ▼
+                              ┌────────────────────────────────────┐
+                              │  UI: "Paid & settled in USDC on Arc" │
+                              └────────────────────────────────────┘
 ```
 
-This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `packages/hardhat/hardhat.config.ts`.
+---
 
-3. On a second terminal, deploy the test contract:
-
-```
-yarn deploy
-```
-
-This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/hardhat/deploy` to deploy the contract to the network. You can also customize the deploy script.
-
-4. On a third terminal, start your NextJS app:
+## 🏗 Project Structure
 
 ```
-yarn start
+NOMA/
+├── contracts/                    # Smart contracts (Hardhat)
+│   ├── src/
+│   │   ├── LeaseNFT.sol         # Lease NFT representation
+│   │   ├── NomaPayment.sol      # Payment processing hub
+│   │   ├── NomaVault.sol        # USDC vault & yield
+│   │   ├── ReputationRegistry.sol # Tenant reputation
+│   │   ├── interfaces/          # Contract interfaces
+│   │   └── mocks/               # Test mocks (USDC, Circle)
+│   ├── scripts/
+│   │   ├── deploy.js            # Deployment script
+│   │   └── demo.js              # Demo flow script
+│   ├── test/
+│   │   └── Noma.test.js         # Contract tests
+│   ├── hardhat.config.js
+│   └── README.md                # Detailed contract docs
+│
+└── 🧠 NOMA_FINAL_MVP_USER_FLOW.txt  # User flow specification
 ```
 
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+---
 
-Run smart contract test with `yarn hardhat:test`
+## 🚀 Quick Start
 
-- Edit your smart contracts in `packages/hardhat/contracts`
-- Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-- Edit your deployment scripts in `packages/hardhat/deploy`
+### 1. Install Dependencies
 
+```bash
+cd contracts
+npm install
+```
 
-## Documentation
+### 2. Compile Contracts
 
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
+```bash
+npm run compile
+```
 
-To know more about its features, check out our [website](https://scaffoldeth.io).
+### 3. Run Tests
 
-## Contributing to Scaffold-ETH 2
+```bash
+npm run test
+```
 
-We welcome contributions to Scaffold-ETH 2!
+### 4. Deploy Locally
 
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+```bash
+# Terminal 1: Start local node
+npm run node
+
+# Terminal 2: Deploy
+npm run deploy:local
+```
+
+### 5. Run Demo
+
+```bash
+npx hardhat run scripts/demo.js --network localhost
+```
+
+---
+
+## 📦 Smart Contracts
+
+| Contract | Description |
+|----------|-------------|
+| **LeaseNFT** | NFT representation of rental leases |
+| **NomaPayment** | Core payment processing hub |
+| **NomaVault** | USDC deposits and yield generation |
+| **ReputationRegistry** | On-chain tenant credit score |
+
+See [`contracts/README.md`](./contracts/README.md) for detailed documentation.
+
+---
+
+## 🔑 Key Features
+
+### For Tenants
+- 💰 **Earn Yield**: Pay early, earn rewards
+- ⭐ **Build Reputation**: On-chain credit history
+- 🔓 **Unlock Access**: Reputation enables lending
+
+### For Landlords
+- ✅ **Guaranteed Payments**: Programmable cashflow
+- 📊 **Transparency**: On-chain payment records
+- 🤝 **Trust**: Tenant reputation visible
+
+---
+
+## 🏆 Hackathon Checkpoints
+
+- [x] Define AI/agent trigger points (logic only)
+- [x] Define on-chain events needed for demo
+- [x] Define contract architecture (diagram)
+- [x] Choose yield primitive (mock for MVP)
+- [x] Write README (contracts + logic)
+- [x] Implement rent payment contract
+- [x] Implement yield routing logic (minimal)
+- [x] Emit events for frontend display
+- [x] Write minimal contract tests
+- [x] **Deploy to Sepolia testnet** ✅
+- [x] **Capture testnet addresses** ✅
+- [x] **Contract configuration complete** ✅
+- [ ] Support demo debugging
+- [ ] Optional: Verify contracts on Etherscan
+
+---
+
+## 🌐 Networks
+
+| Network | Status | Contracts |
+|---------|--------|-----------|
+| Local (Hardhat) | ✅ Ready | [Deploy locally](./contracts/README.md#deployment) |
+| **Sepolia Testnet** | ✅ **DEPLOYED** | [View Addresses](#-sepolia-deployment) |
+| Arc Testnet | 🔜 Pending | Coming soon |
+| Arc Mainnet | 🔜 Pending | Coming soon |
+
+---
+
+## 🚀 Sepolia Deployment
+
+**Deployed on:** February 4, 2026  
+**Network:** Sepolia Testnet (Chain ID: 11155111)
+
+| Contract | Address | Explorer |
+|----------|---------|----------|
+| MockUSDC | `0xc7f13f249BB6F0DBBC3370f27328F067fb8AE19b` | [View](https://sepolia.etherscan.io/address/0xc7f13f249BB6F0DBBC3370f27328F067fb8AE19b) |
+| LeaseNFT | `0x8f0237b2076887988b796C6054A9a5a6Cf5cA058` | [View](https://sepolia.etherscan.io/address/0x8f0237b2076887988b796C6054A9a5a6Cf5cA058) |
+| NomaVault | `0xc8a37Bd0B65862e9e38F7568621e4349d84De007` | [View](https://sepolia.etherscan.io/address/0xc8a37Bd0B65862e9e38F7568621e4349d84De007) |
+| ReputationRegistry | `0x54063F6114cCDD076f60a5AB3729a8C89B0264ad` | [View](https://sepolia.etherscan.io/address/0x54063F6114cCDD076f60a5AB3729a8C89B0264ad) |
+| NomaPayment | `0xdF07D598dFb950A4bE8C43a2B72f84150aC9bBc4` | [View](https://sepolia.etherscan.io/address/0xdF07D598dFb950A4bE8C43a2B72f84150aC9bBc4) |
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for full deployment details and usage guide.
+
+---
+
+## 📡 Key Events
+
+```solidity
+event RentPaid(leaseId, paymentId, tenant, amount, isEarly, yieldEarned);
+event PaymentSettled(paymentId, leaseId, amount, "Arc");
+event ReputationUpdated(tenant, newScore, newTier);
+event AIAgentTrigger(triggerType, leaseId, data);
+```
+
+---
+
+## 🤖 AI Agent Triggers
+
+| Trigger | When |
+|---------|------|
+| `NEW_LEASE` | Lease created |
+| `PAYMENT_RECEIVED` | Rent paid |
+| `YIELD_ROUTING` | Yield generated |
+| `REPUTATION_MILESTONE` | Tier change |
+| `MISSED_PAYMENT` | Payment missed |
+
+---
+
+## 🔗 Circle Integration
+
+- **Circle Wallets**: User wallet management
+- **Circle Gateway**: Cross-chain USDC movement
+- **USDC**: Settlement currency
+
+---
+
+## 📄 License
+
+MIT License - HackMoney 2026
+
+---
+
+<p align="center">
+  <strong>NOMA</strong><br>
+  <em>Make rent productive.</em><br>
+  <br>
+  Built for HackMoney 2026 🏆
+</p>
