@@ -62,7 +62,7 @@ export const Footer = () => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <BuidlGuidlLogo className="w-3 h-5 pb-1" />
+                <BuidlGuidlLogo />
                 <span className="link">BuidlGuidl</span>
               </a>
             </div>

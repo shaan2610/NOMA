@@ -3,93 +3,141 @@
 import Link from "next/link";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
-import { CurrencyDollarIcon, DocumentPlusIcon, HomeIcon } from "@heroicons/react/24/outline";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
 
   return (
     <>
-      <div className="flex items-center flex-col grow pt-10">
-        <div className="px-5 text-center max-w-4xl">
-          <h1 className="text-center mb-8">
-            <span className="block text-6xl font-bold mb-4">🏠 NOMA</span>
-            <span className="block text-2xl italic text-primary">&quot;Turn rent into yield and reputation&quot;</span>
-          </h1>
+      <div className="flex items-center justify-center min-h-screen bg-base-300 px-4">
+        <div className="max-w-6xl w-full">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-5xl font-bold text-white mb-4">
+              {connectedAddress ? "Choose Your Role" : "Welcome to NOMA"}
+            </h1>
+            <p className="text-lg text-gray-300 mb-4">
+              {connectedAddress
+                ? "Welcome! Select how you'll use NOMA to get started"
+                : "Please connect your wallet to start using NOMA"}
+            </p>
+          </div>
 
-          <div className="card bg-base-200 shadow-xl mb-8">
-            <div className="card-body">
-              <h2 className="card-title justify-center text-2xl">Core Promise</h2>
-              <div className="text-lg font-mono">
-                Pay rent → Earn yield → Build reputation → Unlock financial access
+          {/* Role Cards - Only show if connected */}
+          {connectedAddress && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              {/* Tenant Card */}
+              <div className="card bg-white shadow-xl hover:shadow-2xl transition-shadow">
+                <div className="card-body p-8">
+                  {/* Icon */}
+                  <div className="flex gap-3 mb-6">
+                    <div className="bg-purple-100 rounded-xl p-3 w-fit">
+                      <span className="text-3xl">🏠</span>
+                    </div>
+                    <div className="bg-purple-100 rounded-xl p-3 w-fit">
+                      <span className="text-3xl">🧑</span>
+                    </div>
+                  </div>
+
+                  {/* Title */}
+                  <h2 className="text-2xl font-bold mb-3 text-black">I&apos;m a Tenant</h2>
+
+                  {/* Description */}
+                  <p className="text-gray-600 mb-6">
+                    I pay rent and want to earn yield while building my credit score and rental reputation.
+                  </p>
+
+                  {/* Features */}
+                  <ul className="space-y-3 mb-6">
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 mt-1">●</span>
+                      <span className="text-sm text-gray-700">Earn 3-7% yield on rent payments</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 mt-1">●</span>
+                      <span className="text-sm text-gray-700">Build verifiable credit score</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 mt-1">●</span>
+                      <span className="text-sm text-gray-700">Permanent payment history on-chain</span>
+                    </li>
+                  </ul>
+
+                  {/* Button */}
+                  <Link
+                    href="/dashboard/tenant"
+                    className="flex items-center justify-between text-purple-600 hover:text-purple-700 font-semibold transition-colors group"
+                  >
+                    <span>Continue as Tenant</span>
+                    <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* Landlord Card */}
+              <div className="card bg-white shadow-xl hover:shadow-2xl transition-shadow">
+                <div className="card-body p-8">
+                  {/* Icon */}
+                  <div className="flex gap-3 mb-6">
+                    <div className="bg-blue-100 rounded-xl p-3 w-fit">
+                      <span className="text-3xl">🏢</span>
+                    </div>
+                    <div className="bg-blue-100 rounded-xl p-3 w-fit">
+                      <span className="text-3xl">🏛️</span>
+                    </div>
+                  </div>
+
+                  {/* Title */}
+                  <h2 className="text-2xl font-bold mb-3 text-black">I&apos;m a Landlord</h2>
+
+                  {/* Description */}
+                  <p className="text-gray-600 mb-6">
+                    I receive rent and want automated, secure, on-chain payments from my tenants.
+                  </p>
+
+                  {/* Features */}
+                  <ul className="space-y-3 mb-6">
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 mt-1">●</span>
+                      <span className="text-sm text-gray-700">Automated rent collection</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 mt-1">●</span>
+                      <span className="text-sm text-gray-700">Earn 3-7% yield on security deposits</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 mt-1">●</span>
+                      <span className="text-sm text-gray-700">Verify tenant credit score & history</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 mt-1">●</span>
+                      <span className="text-sm text-gray-700">Transparent payment tracking</span>
+                    </li>
+                  </ul>
+
+                  {/* Button */}
+                  <Link
+                    href="/create-lease"
+                    className="flex items-center justify-between text-blue-600 hover:text-blue-700 font-semibold transition-colors group"
+                  >
+                    <span>Continue as Landlord</span>
+                    <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
-          <p className="text-lg mb-4">
-            {connectedAddress
-              ? "Welcome! Choose an option below to get started:"
-              : "Please connect your wallet to start using NOMA"}
-          </p>
-        </div>
-
-        <div className="grow bg-base-300 w-full mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-8 flex-col md:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl hover:shadow-xl transition-shadow">
-              <HomeIcon className="h-12 w-12 fill-secondary mb-4" />
-              <h3 className="text-xl font-bold mb-2">Dashboard</h3>
-              <p className="mb-4">View your leases, reputation score, and payment history</p>
-              <Link href="/dashboard" passHref className="btn btn-primary">
-                Go to Dashboard
-              </Link>
+          {/* Footer Note */}
+          {connectedAddress && (
+            <div className="text-center">
+              <p className="text-sm text-gray-400 flex items-center justify-center gap-2">
+                <span>💡</span>
+                You can manage multiple properties and roles from the same wallet
+              </p>
             </div>
-
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl hover:shadow-xl transition-shadow">
-              <DocumentPlusIcon className="h-12 w-12 fill-secondary mb-4" />
-              <h3 className="text-xl font-bold mb-2">Create Lease</h3>
-              <p className="mb-4">Landlords: Create a new lease agreement as an NFT</p>
-              <Link href="/create-lease" passHref className="btn btn-primary">
-                Create Lease
-              </Link>
-            </div>
-
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl hover:shadow-xl transition-shadow">
-              <CurrencyDollarIcon className="h-12 w-12 fill-secondary mb-4" />
-              <h3 className="text-xl font-bold mb-2">Pay Rent</h3>
-              <p className="mb-4">Tenants: Pay your rent and earn yield for early payments</p>
-              <Link href="/pay-rent" passHref className="btn btn-primary">
-                Pay Rent
-              </Link>
-            </div>
-          </div>
-
-          <div className="mt-12 max-w-4xl mx-auto">
-            <div className="alert alert-info">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                className="stroke-current shrink-0 w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <div>
-                <h3 className="font-bold">How NOMA Works:</h3>
-                <p className="text-sm">
-                  1. Landlords create leases as NFTs <br />
-                  2. Tenants pay rent in any token (auto-converted to USDC via Circle) <br />
-                  3. Payments are deposited to NomaVault and earn yield <br />
-                  4. Early payments boost tenant reputation and earn extra yield <br />
-                  5. Good reputation unlocks better financial opportunities
-                </p>
-              </div>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </>

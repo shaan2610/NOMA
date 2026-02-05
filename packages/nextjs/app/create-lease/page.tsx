@@ -24,9 +24,12 @@ export default function CreateLease() {
     }
 
     try {
+      // Convert USDC amount to proper format with 6 decimals
+      const monthlyRentWithDecimals = BigInt(Math.floor(Number(formData.monthlyRent) * 1e6));
+
       await createLease({
         functionName: "createLeaseAsLandlord",
-        args: [formData.tenant as `0x${string}`, BigInt(formData.monthlyRent), BigInt(formData.dueDay)],
+        args: [formData.tenant as `0x${string}`, monthlyRentWithDecimals, BigInt(formData.dueDay)],
       });
       alert("Lease created successfully!");
       // Reset form
@@ -85,14 +88,16 @@ export default function CreateLease() {
               <input
                 type="number"
                 name="monthlyRent"
-                placeholder="1000"
+                placeholder="1500"
+                step="0.01"
+                min="0"
                 className="input input-bordered w-full"
                 value={formData.monthlyRent}
                 onChange={handleChange}
                 required
               />
               <label className="label">
-                <span className="label-text-alt">Amount in USDC (6 decimals)</span>
+                <span className="label-text-alt">Enter amount in USDC (e.g., 1500 for 1500 USDC)</span>
               </label>
             </div>
 

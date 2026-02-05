@@ -3,6 +3,7 @@
 import React, { useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BuidlGuidlLogo } from "./assets/BuidlGuidlLogo";
 import { hardhat } from "viem/chains";
 import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
@@ -20,8 +21,8 @@ export const menuLinks: HeaderMenuLink[] = [
     href: "/",
   },
   {
-    label: "Dashboard",
-    href: "/dashboard",
+    label: "Tenant Dashboard",
+    href: "/dashboard/tenant",
   },
   {
     label: "Create Lease",
@@ -93,13 +94,7 @@ export const Header = () => {
           </ul>
         </details>
         <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
-          <div className="flex relative w-10 h-10">
-            <div className="text-4xl">🏠</div>
-          </div>
-          <div className="flex flex-col">
-            <span className="font-bold leading-tight text-xl">NOMA</span>
-            <span className="text-xs">Turn rent into yield</span>
-          </div>
+          <BuidlGuidlLogo />
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
           <HeaderMenuLinks />
