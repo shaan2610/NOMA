@@ -319,7 +319,7 @@ const Dashboard: NextPage = () => {
               </div>
 
               <Link 
-                href="/pay-rent" 
+                href={`/pay-rent?leaseId=${selectedLeaseId}`}
                 className="btn w-full bg-purple-600 hover:bg-purple-700 border-none text-white rounded-lg"
               >
                 Pay Rent Now →
@@ -608,7 +608,7 @@ const Dashboard: NextPage = () => {
                 <div className="text-center py-8 text-gray-500">
                   <p className="text-lg mb-2">No payment history yet</p>
                   <p className="text-sm">Make your first rent payment to start building your reputation!</p>
-                  <Link href="/pay-rent" className="btn btn-primary btn-sm mt-4">
+                  <Link href={`/pay-rent?leaseId=${selectedLeaseId}`} className="btn btn-primary btn-sm mt-4">
                     Make First Payment
                   </Link>
                 </div>

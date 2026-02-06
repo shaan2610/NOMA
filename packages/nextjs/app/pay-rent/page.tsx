@@ -1,12 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { useAccount } from "wagmi";
 import { useDeployedContractInfo, useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 export default function PayRent() {
   const { address } = useAccount();
+  const searchParams = useSearchParams();
+  const leaseIdFromUrl = searchParams.get("leaseId");
+  
   const [leaseId, setLeaseId] = useState("1");
+
+  // Set leaseId from URL parameter when component mounts
+  useEffect(() => {
+    if (leaseIdFromUrl) {
+      setLeaseId(leaseIdFromUrl);
+    }
+  }, [leaseIdFromUrl]);
 
   // Read lease data
   const { data: lease } = useScaffoldReadContract({
