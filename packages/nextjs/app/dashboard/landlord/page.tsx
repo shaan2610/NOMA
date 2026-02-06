@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useAccount } from "wagmi";
 import Link from "next/link";
-import { useScaffoldReadContract, useLandlordLeases } from "~~/hooks/scaffold-eth";
+import { useAccount } from "wagmi";
+import { useLandlordLeases, useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 export default function LandlordDashboard() {
   const { address } = useAccount();
@@ -82,11 +82,13 @@ export default function LandlordDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-4xl font-bold mb-2">Landlord Dashboard</h1>
-              <p className="text-gray-400">Manage your properties, security deposits, and verify tenant payment history.</p>
+              <p className="text-gray-400">
+                Manage your properties, security deposits, and verify tenant payment history.
+              </p>
             </div>
             <div className="flex items-center gap-3">
-              <Link 
-                href="/create-lease/landlord" 
+              <Link
+                href="/create-lease/landlord"
                 className="btn btn-sm btn-outline btn-primary text-white hover:bg-primary hover:border-primary"
               >
                 + Create New Lease
@@ -94,7 +96,7 @@ export default function LandlordDashboard() {
               {totalProperties > 0 && (
                 <div className="text-right">
                   <div className="badge badge-lg badge-primary text-white font-bold">
-                    🏠 {totalProperties} {totalProperties === 1 ? 'Property' : 'Properties'}
+                    🏠 {totalProperties} {totalProperties === 1 ? "Property" : "Properties"}
                   </div>
                 </div>
               )}
@@ -153,7 +155,12 @@ export default function LandlordDashboard() {
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
                   <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                    />
                   </svg>
                 </div>
                 <span className="text-sm text-gray-600 font-medium">Total Yield Earned</span>
@@ -186,9 +193,7 @@ export default function LandlordDashboard() {
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-bold">Security Deposits Earning Yield</h2>
             {leasesWithFinancials.length > 6 && (
-              <span className="text-sm text-gray-400">
-                Showing 6 of {leasesWithFinancials.length} properties
-              </span>
+              <span className="text-sm text-gray-400">Showing 6 of {leasesWithFinancials.length} properties</span>
             )}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -197,7 +202,12 @@ export default function LandlordDashboard() {
               <div className="col-span-2 text-center py-12 bg-white rounded-2xl shadow-xl">
                 <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                    />
                   </svg>
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-2">No Properties Yet</h3>
@@ -205,66 +215,82 @@ export default function LandlordDashboard() {
               </div>
             ) : (
               leasesWithFinancials.slice(0, 6).map((leaseFinancial, index) => {
-              const lease = allLeases[index];
-              if (!lease) return null;
+                const lease = allLeases[index];
+                if (!lease) return null;
 
-              return (
-                <div key={leaseFinancial.leaseId.toString()} className="bg-white rounded-2xl shadow-xl p-6">
-                  <div className="flex justify-between items-start mb-4">
-                    <span className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-600 text-sm font-bold rounded-lg">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                      </svg>
-                      EARNING {calculateAPY(leaseFinancial.deposit, leaseFinancial.yield)}%
-                    </span>
-                    <span className="text-gray-500 text-sm">Lease #{leaseFinancial.leaseId.toString()}</span>
+                return (
+                  <div key={leaseFinancial.leaseId.toString()} className="bg-white rounded-2xl shadow-xl p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <span className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-600 text-sm font-bold rounded-lg">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                          />
+                        </svg>
+                        EARNING {calculateAPY(leaseFinancial.deposit, leaseFinancial.yield)}%
+                      </span>
+                      <span className="text-gray-500 text-sm">Lease #{leaseFinancial.leaseId.toString()}</span>
+                    </div>
+
+                    <div className="mb-6">
+                      <p className="text-3xl font-bold text-black mb-1">{formatUSDC(leaseFinancial.deposit)} USDC</p>
+                      <p className="text-sm text-gray-600">Security Deposit</p>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+                      <div>
+                        <p className="text-gray-600 mb-1">Tenant</p>
+                        <p className="text-black font-medium">
+                          {lease.tenant.slice(0, 6)}...{lease.tenant.slice(-4)}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-gray-600 mb-1">Lease Ends</p>
+                        <p className="text-black font-medium">{formatDate(lease.endDate)}</p>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+                      <div>
+                        <p className="text-gray-600 mb-1">Yield Rate</p>
+                        <p className="text-green-600 font-bold">
+                          🔼 {calculateAPY(leaseFinancial.deposit, leaseFinancial.yield)}% APY
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-gray-600 mb-1">Earned So Far</p>
+                        <p className="text-green-600 font-bold">+{formatUSDC(leaseFinancial.yield)} USDC</p>
+                      </div>
+                    </div>
+
+                    <div className="mb-6">
+                      <p className="text-sm text-gray-600 mb-2">Tenant Credit Score</p>
+                      <div className="w-full bg-gray-200 rounded-full h-2.5">
+                        <div
+                          className="bg-green-500 h-2.5 rounded-full"
+                          style={{ width: `${Math.min(100, Number(lease.paymentCount) * 10)}%` }}
+                        ></div>
+                      </div>
+                      <div className="flex justify-end items-center gap-1 mt-1">
+                        <p className="text-sm text-green-600 font-bold">
+                          {Number(lease.paymentCount) >= 10
+                            ? "Excellent"
+                            : Number(lease.paymentCount) >= 5
+                              ? "Good"
+                              : "Building"}
+                        </p>
+                      </div>
+                    </div>
+
+                    <button className="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition-colors">
+                      View Tenant History
+                    </button>
                   </div>
-
-                  <div className="mb-6">
-                    <p className="text-3xl font-bold text-black mb-1">{formatUSDC(leaseFinancial.deposit)} USDC</p>
-                    <p className="text-sm text-gray-600">Security Deposit</p>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-                    <div>
-                      <p className="text-gray-600 mb-1">Tenant</p>
-                      <p className="text-black font-medium">{lease.tenant.slice(0, 6)}...{lease.tenant.slice(-4)}</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-600 mb-1">Lease Ends</p>
-                      <p className="text-black font-medium">{formatDate(lease.endDate)}</p>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-                    <div>
-                      <p className="text-gray-600 mb-1">Yield Rate</p>
-                      <p className="text-green-600 font-bold">🔼 {calculateAPY(leaseFinancial.deposit, leaseFinancial.yield)}% APY</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-600 mb-1">Earned So Far</p>
-                      <p className="text-green-600 font-bold">+{formatUSDC(leaseFinancial.yield)} USDC</p>
-                    </div>
-                  </div>
-
-                  <div className="mb-6">
-                    <p className="text-sm text-gray-600 mb-2">Tenant Credit Score</p>
-                    <div className="w-full bg-gray-200 rounded-full h-2.5">
-                      <div className="bg-green-500 h-2.5 rounded-full" style={{ width: `${Math.min(100, (Number(lease.paymentCount) * 10))}%` }}></div>
-                    </div>
-                    <div className="flex justify-end items-center gap-1 mt-1">
-                      <p className="text-sm text-green-600 font-bold">
-                        {Number(lease.paymentCount) >= 10 ? "Excellent" : Number(lease.paymentCount) >= 5 ? "Good" : "Building"}
-                      </p>
-                    </div>
-                  </div>
-
-                  <button className="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition-colors">
-                    View Tenant History
-                  </button>
-                </div>
-              );
-            })
+                );
+              })
             )}
           </div>
         </div>
@@ -290,9 +316,7 @@ export default function LandlordDashboard() {
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-bold">Incoming Rent Payments</h2>
             {allLeases.length > 6 && (
-              <span className="text-sm text-gray-400">
-                Showing 6 of {allLeases.length} properties
-              </span>
+              <span className="text-sm text-gray-400">Showing 6 of {allLeases.length} properties</span>
             )}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -301,7 +325,12 @@ export default function LandlordDashboard() {
               <div className="col-span-2 text-center py-12 bg-white rounded-2xl shadow-xl">
                 <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-2">No Active Leases</h3>
@@ -309,39 +338,46 @@ export default function LandlordDashboard() {
               </div>
             ) : (
               allLeases.slice(0, 6).map((lease, index) => {
-              const leaseId = landlordLeaseIds?.[index];
-              if (!leaseId) return null;
+                const leaseId = landlordLeaseIds?.[index];
+                if (!leaseId) return null;
 
-              return (
-                <div key={leaseId.toString()} className="bg-white rounded-2xl shadow-xl p-6">
-                  <div className="flex justify-between items-start mb-4">
-                    <span className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-600 text-sm font-bold rounded-lg">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                      </svg>
-                      {lease.status === 0 ? "ACTIVE" : "LOCKED"}
-                    </span>
-                    <span className="text-gray-500 text-sm">{formatDate(lease.startDate)}</span>
-                  </div>
-
-                  <div className="mb-4">
-                    <p className="text-3xl font-bold text-black mb-1">{formatUSDC(lease.monthlyRent)} USDC</p>
-                    <p className="text-sm text-gray-600">From: {lease.tenant.slice(0, 6)}...{lease.tenant.slice(-4)} (Lease #{leaseId.toString()})</p>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <p className="text-gray-600 mb-1">Next Due Date</p>
-                      <p className="text-black font-medium">Day {Number(lease.dueDay)} of month</p>
+                return (
+                  <div key={leaseId.toString()} className="bg-white rounded-2xl shadow-xl p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <span className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-600 text-sm font-bold rounded-lg">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                          />
+                        </svg>
+                        {lease.status === 0 ? "ACTIVE" : "LOCKED"}
+                      </span>
+                      <span className="text-gray-500 text-sm">{formatDate(lease.startDate)}</span>
                     </div>
-                    <div>
-                      <p className="text-gray-600 mb-1">Total Paid</p>
-                      <p className="text-black font-medium">{formatUSDC(lease.totalPaid)} USDC</p>
+
+                    <div className="mb-4">
+                      <p className="text-3xl font-bold text-black mb-1">{formatUSDC(lease.monthlyRent)} USDC</p>
+                      <p className="text-sm text-gray-600">
+                        From: {lease.tenant.slice(0, 6)}...{lease.tenant.slice(-4)} (Lease #{leaseId.toString()})
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <p className="text-gray-600 mb-1">Next Due Date</p>
+                        <p className="text-black font-medium">Day {Number(lease.dueDay)} of month</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-600 mb-1">Total Paid</p>
+                        <p className="text-black font-medium">{formatUSDC(lease.totalPaid)} USDC</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })
+                );
+              })
             )}
           </div>
         </div>
@@ -388,12 +424,7 @@ export default function LandlordDashboard() {
                   <div className="bg-green-50 rounded-2xl p-6">
                     <div className="flex items-center gap-2 mb-4">
                       <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                        <svg
-                          className="w-5 h-5 text-green-600"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
+                        <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -583,22 +614,27 @@ export default function LandlordDashboard() {
                       </div>
                       <div>
                         <p className="font-bold text-black text-sm">
-                          {payment.paidDate 
-                            ? new Date(Number(payment.paidDate) * 1000).toLocaleString("en-US", { month: "long", year: "numeric" }) 
-                            : "Month"} Rent
+                          {payment.paidDate
+                            ? new Date(Number(payment.paidDate) * 1000).toLocaleString("en-US", {
+                                month: "long",
+                                year: "numeric",
+                              })
+                            : "Month"}{" "}
+                          Rent
                         </p>
                         <p className="text-xs text-gray-500">
                           Paid on {payment.paidDate ? formatDate(payment.paidDate) : "N/A"}
                           {payment.isEarly && " • 🎉 Early payment"}
                         </p>
                         <p className="text-xs text-gray-400">
-                          Payment ID: #{payment.paymentId?.toString()}{" "}
-                          • Lease #{payment.leaseId?.toString()}
+                          Payment ID: #{payment.paymentId?.toString()} • Lease #{payment.leaseId?.toString()}
                         </p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-black text-sm">{payment.amount ? formatUSDC(payment.amount) : "0"} USDC</p>
+                      <p className="font-bold text-black text-sm">
+                        {payment.amount ? formatUSDC(payment.amount) : "0"} USDC
+                      </p>
                       {payment.yieldEarned && Number(payment.yieldEarned) > 0 && (
                         <p className="text-xs text-green-600">+{formatUSDC(payment.yieldEarned)} USDC earned</p>
                       )}

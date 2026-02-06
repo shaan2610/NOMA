@@ -296,41 +296,42 @@ export function useLandlordLeases(landlordAddress: string | undefined) {
     leaseData9,
   ]
     .map(transformLeaseData)
-    .filter((lease) => lease !== undefined);
+    .filter(lease => lease !== undefined);
 
   // Create array of lease IDs with their deposits and yields
-  const leasesWithFinancials = landlordLeaseIds?.map((leaseId, index) => {
-    const deposits = [
-      leaseDeposit0,
-      leaseDeposit1,
-      leaseDeposit2,
-      leaseDeposit3,
-      leaseDeposit4,
-      leaseDeposit5,
-      leaseDeposit6,
-      leaseDeposit7,
-      leaseDeposit8,
-      leaseDeposit9,
-    ];
-    const yields = [
-      leaseYield0,
-      leaseYield1,
-      leaseYield2,
-      leaseYield3,
-      leaseYield4,
-      leaseYield5,
-      leaseYield6,
-      leaseYield7,
-      leaseYield8,
-      leaseYield9,
-    ];
+  const leasesWithFinancials =
+    landlordLeaseIds?.map((leaseId, index) => {
+      const deposits = [
+        leaseDeposit0,
+        leaseDeposit1,
+        leaseDeposit2,
+        leaseDeposit3,
+        leaseDeposit4,
+        leaseDeposit5,
+        leaseDeposit6,
+        leaseDeposit7,
+        leaseDeposit8,
+        leaseDeposit9,
+      ];
+      const yields = [
+        leaseYield0,
+        leaseYield1,
+        leaseYield2,
+        leaseYield3,
+        leaseYield4,
+        leaseYield5,
+        leaseYield6,
+        leaseYield7,
+        leaseYield8,
+        leaseYield9,
+      ];
 
-    return {
-      leaseId,
-      deposit: deposits[index] || 0n,
-      yield: yields[index] || 0n,
-    };
-  }) || [];
+      return {
+        leaseId,
+        deposit: deposits[index] || 0n,
+        yield: yields[index] || 0n,
+      };
+    }) || [];
 
   // Combine all payment histories
   const allPaymentHistory = [

@@ -1,17 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRightIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
+import { useSearchParams } from "next/navigation";
 import { useAccount } from "wagmi";
+import { ArrowRightIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
 import { useDeployedContractInfo, useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
-export default function PayRent() {
+function PayRentContent() {
   const { address } = useAccount();
   const searchParams = useSearchParams();
   const leaseIdFromUrl = searchParams.get("leaseId");
-  
+
   const [leaseId, setLeaseId] = useState("1");
   const [showModal, setShowModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -161,10 +161,10 @@ export default function PayRent() {
         functionName: "payRent",
         args: [BigInt(leaseId)],
       });
-      
+
       // Payment successful - show success screen
       setShowSuccess(true);
-      
+
       // Refetch allowance and balance after payment
       setTimeout(() => {
         refetchAllowance();
@@ -176,11 +176,6 @@ export default function PayRent() {
       setShowModal(false);
       setShowSuccess(false);
     }
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-    setShowSuccess(false);
   };
 
   const needsApproval = !allowance || allowance < (lease?.monthlyRent || 0n);
@@ -196,9 +191,7 @@ export default function PayRent() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">Pay Your Rent</h1>
-          <p className="text-gray-300">
-            Complete your monthly rent payment and earn rewards while building credit.
-          </p>
+          <p className="text-gray-300">Complete your monthly rent payment and earn rewards while building credit.</p>
         </div>
 
         {!address && (
@@ -223,9 +216,7 @@ export default function PayRent() {
                   </div>
                 </div>
                 <h3 className="font-bold text-sm mb-2 text-black">Deposit USDC</h3>
-                <p className="text-xs text-gray-600">
-                  Send your rent payment securely on-chain to the smart contract
-                </p>
+                <p className="text-xs text-gray-600">Send your rent payment securely on-chain to the smart contract</p>
               </div>
 
               {/* Arrow */}
@@ -261,9 +252,7 @@ export default function PayRent() {
                   </div>
                 </div>
                 <h3 className="font-bold text-sm mb-2 text-black">Earn Yield</h3>
-                <p className="text-xs text-gray-600">
-                  Earn yield while rent is locked. Pay early to earn more!
-                </p>
+                <p className="text-xs text-gray-600">Earn yield while rent is locked. Pay early to earn more!</p>
               </div>
 
               {/* Arrow */}
@@ -280,17 +269,15 @@ export default function PayRent() {
                   </div>
                 </div>
                 <h3 className="font-bold text-sm mb-2 text-black">Auto Release</h3>
-                <p className="text-xs text-gray-600">
-                  Landlord receives rent automatically on release date
-                </p>
+                <p className="text-xs text-gray-600">Landlord receives rent automatically on release date</p>
               </div>
             </div>
 
             {/* Pro Tip */}
             <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
               <p className="text-sm text-purple-900">
-                <span className="font-bold">💡 Pro Tip:</span> Your payment builds credit score, creates
-                verifiable rental history, and earns you passive income through yield rewards.
+                <span className="font-bold">💡 Pro Tip:</span> Your payment builds credit score, creates verifiable
+                rental history, and earns you passive income through yield rewards.
               </p>
             </div>
           </div>
@@ -300,7 +287,7 @@ export default function PayRent() {
         <div className="card bg-white shadow-xl mb-6">
           <div className="card-body p-8">
             <h2 className="text-xl font-bold mb-4 text-black">Select Your Lease</h2>
-            
+
             {/* Lease ID Input */}
             <div className="form-control mb-4">
               <label className="label">
@@ -324,11 +311,15 @@ export default function PayRent() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="text-gray-600 mb-1">Landlord</p>
-                    <p className="font-mono font-semibold text-black">{lease.landlord.slice(0, 6)}...{lease.landlord.slice(-4)}</p>
+                    <p className="font-mono font-semibold text-black">
+                      {lease.landlord.slice(0, 6)}...{lease.landlord.slice(-4)}
+                    </p>
                   </div>
                   <div>
                     <p className="text-gray-600 mb-1">Tenant</p>
-                    <p className="font-mono font-semibold text-black">{lease.tenant.slice(0, 6)}...{lease.tenant.slice(-4)}</p>
+                    <p className="font-mono font-semibold text-black">
+                      {lease.tenant.slice(0, 6)}...{lease.tenant.slice(-4)}
+                    </p>
                   </div>
                   <div>
                     <p className="text-gray-600 mb-1">Monthly Rent</p>
@@ -362,7 +353,9 @@ export default function PayRent() {
 
             {/* Allowance Status */}
             {lease && address && (
-              <div className={`mt-4 p-4 rounded-lg ${needsApproval ? "bg-yellow-50 border border-yellow-200" : "bg-green-50 border border-green-200"}`}>
+              <div
+                className={`mt-4 p-4 rounded-lg ${needsApproval ? "bg-yellow-50 border border-yellow-200" : "bg-green-50 border border-green-200"}`}
+              >
                 <p className={`text-sm font-semibold ${needsApproval ? "text-yellow-900" : "text-green-900"}`}>
                   {needsApproval
                     ? "⚠️ USDC approval required before payment"
@@ -373,15 +366,20 @@ export default function PayRent() {
 
             {/* USDC Balance Status */}
             {lease && address && usdcBalance !== undefined && (
-              <div className={`mt-4 p-4 rounded-lg ${usdcBalance < lease.monthlyRent ? "bg-red-50 border border-red-200" : "bg-blue-50 border border-blue-200"}`}>
+              <div
+                className={`mt-4 p-4 rounded-lg ${usdcBalance < lease.monthlyRent ? "bg-red-50 border border-red-200" : "bg-blue-50 border border-blue-200"}`}
+              >
                 <div className="flex justify-between items-center">
                   <div>
-                    <p className={`text-sm font-semibold ${usdcBalance < lease.monthlyRent ? "text-red-900" : "text-blue-900"}`}>
+                    <p
+                      className={`text-sm font-semibold ${usdcBalance < lease.monthlyRent ? "text-red-900" : "text-blue-900"}`}
+                    >
                       💰 Your USDC Balance: {(Number(usdcBalance) / 1e6).toLocaleString()} USDC
                     </p>
                     {usdcBalance < lease.monthlyRent && (
                       <p className="text-xs text-red-800 mt-1">
-                        ⚠️ Insufficient balance! Need {(Number(lease.monthlyRent) / 1e6).toLocaleString()} USDC to pay rent.
+                        ⚠️ Insufficient balance! Need {(Number(lease.monthlyRent) / 1e6).toLocaleString()} USDC to pay
+                        rent.
                       </p>
                     )}
                   </div>
@@ -457,14 +455,18 @@ export default function PayRent() {
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600">Rent Amount</span>
-                  <span className="font-bold text-black">{(Number(lease.monthlyRent) / 1e6).toLocaleString()} USDC</span>
+                  <span className="font-bold text-black">
+                    {(Number(lease.monthlyRent) / 1e6).toLocaleString()} USDC
+                  </span>
                 </div>
 
                 <div className="divider my-2"></div>
 
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600">Lease Period</span>
-                  <span className="font-bold text-black">{formatDate(lease.startDate)} - {formatDate(lease.endDate)}</span>
+                  <span className="font-bold text-black">
+                    {formatDate(lease.startDate)} - {formatDate(lease.endDate)}
+                  </span>
                 </div>
 
                 <div className="divider my-2"></div>
@@ -473,7 +475,9 @@ export default function PayRent() {
                   <>
                     <div className="flex justify-between items-center">
                       <span className="text-gray-600">Projected Yield</span>
-                      <span className="font-bold text-success">+{(Number(estimatedYield) / 1e6).toLocaleString()} USDC</span>
+                      <span className="font-bold text-success">
+                        +{(Number(estimatedYield) / 1e6).toLocaleString()} USDC
+                      </span>
                     </div>
                     <div className="divider my-2"></div>
                   </>
@@ -495,8 +499,8 @@ export default function PayRent() {
               {/* Info Box */}
               <div className="bg-green-50 border border-green-200 rounded-lg p-4 mt-6">
                 <p className="text-sm text-green-900">
-                  Your rent payment will be locked until the end of the period, earning you yield while
-                  building your rental history.
+                  Your rent payment will be locked until the end of the period, earning you yield while building your
+                  rental history.
                 </p>
               </div>
             </div>
@@ -528,9 +532,7 @@ export default function PayRent() {
                 <div className="space-y-4 mb-8">
                   <div className="flex items-center gap-3 justify-center">
                     <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-                    <span className="text-blue-600 font-semibold">
-                      Waiting for blockchain confirmation...
-                    </span>
+                    <span className="text-blue-600 font-semibold">Waiting for blockchain confirmation...</span>
                   </div>
                 </div>
 
@@ -562,11 +564,9 @@ export default function PayRent() {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-2xl font-bold text-center mb-3">
-                  Rent Payment Successful! 🎉
-                </h3>
+                <h3 className="text-2xl font-bold text-center mb-3">Rent Payment Successful! 🎉</h3>
                 <p className="text-center text-base-content/70 mb-8">
-                  Your rent has been locked and is now earning yield. Here's what this means for you:
+                  Your rent has been locked and is now earning yield. Here&apos;s what this means for you:
                 </p>
 
                 {/* Benefits Cards */}
@@ -578,8 +578,8 @@ export default function PayRent() {
                       <div>
                         <h4 className="font-bold text-purple-900 mb-1">Building Your Credit Score</h4>
                         <p className="text-sm text-purple-800">
-                          This on-time payment is permanently recorded on-chain, strengthening your
-                          creditworthiness for future rentals and loans.
+                          This on-time payment is permanently recorded on-chain, strengthening your creditworthiness for
+                          future rentals and loans.
                         </p>
                       </div>
                     </div>
@@ -592,8 +592,8 @@ export default function PayRent() {
                       <div>
                         <h4 className="font-bold text-blue-900 mb-1">Reputation Boost</h4>
                         <p className="text-sm text-blue-800">
-                          Your verified payment history makes you a more attractive tenant, giving you better
-                          options for future rentals.
+                          Your verified payment history makes you a more attractive tenant, giving you better options
+                          for future rentals.
                         </p>
                       </div>
                     </div>
@@ -607,9 +607,18 @@ export default function PayRent() {
                         <h4 className="font-bold text-green-900 mb-1">Earning Yield</h4>
                         <p className="text-sm text-green-800">
                           {estimatedYield && estimatedYield > 0n ? (
-                            <>You'll earn <span className="font-bold text-success">+{(Number(estimatedYield) / 1e6).toLocaleString()} USDC</span> on this payment. Pay early next time to maximize your earnings!</>
+                            <>
+                              You&apos;ll earn{" "}
+                              <span className="font-bold text-success">
+                                +{(Number(estimatedYield) / 1e6).toLocaleString()} USDC
+                              </span>{" "}
+                              on this payment. Pay early next time to maximize your earnings!
+                            </>
                           ) : (
-                            <>You're earning yield on your rent payment while it's locked. Pay early to maximize earnings!</>
+                            <>
+                              You&apos;re earning yield on your rent payment while it&apos;s locked. Pay early to
+                              maximize earnings!
+                            </>
                           )}
                         </p>
                       </div>
@@ -623,7 +632,9 @@ export default function PayRent() {
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span className="text-gray-600">Rent Amount</span>
-                        <span className="font-bold text-gray-900">{(Number(lease.monthlyRent) / 1e6).toLocaleString()} USDC</span>
+                        <span className="font-bold text-gray-900">
+                          {(Number(lease.monthlyRent) / 1e6).toLocaleString()} USDC
+                        </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Lock Period</span>
@@ -632,7 +643,9 @@ export default function PayRent() {
                       {estimatedYield && estimatedYield > 0n && (
                         <div className="flex justify-between">
                           <span className="text-gray-600">Expected Yield</span>
-                          <span className="font-bold text-green-600">+{(Number(estimatedYield) / 1e6).toLocaleString()} USDC</span>
+                          <span className="font-bold text-green-600">
+                            +{(Number(estimatedYield) / 1e6).toLocaleString()} USDC
+                          </span>
                         </div>
                       )}
                     </div>
@@ -654,5 +667,13 @@ export default function PayRent() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function PayRent() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+      <PayRentContent />
+    </Suspense>
   );
 }

@@ -62,8 +62,8 @@ export default function CreateLease() {
               <h1 className="text-3xl font-bold text-white mb-1">Create New Lease (Tenant)</h1>
               <p className="text-sm text-gray-400">Propose a new lease agreement to your landlord</p>
             </div>
-            <Link 
-              href="/dashboard/tenant" 
+            <Link
+              href="/dashboard/tenant"
               className="btn btn-sm btn-outline btn-primary text-white hover:bg-primary hover:border-primary"
             >
               ← Back to Dashboard
@@ -72,7 +72,19 @@ export default function CreateLease() {
 
           {!address && (
             <div className="alert alert-warning rounded-2xl">
-              <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="stroke-current shrink-0 h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                />
+              </svg>
               <span>Please connect your wallet to create a lease</span>
             </div>
           )}
@@ -82,7 +94,7 @@ export default function CreateLease() {
         <div className="card bg-white shadow-xl rounded-2xl mb-6">
           <div className="card-body p-8">
             <h2 className="text-2xl font-bold text-black mb-6">Lease Details</h2>
-            
+
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Landlord Address */}
               <div className="form-control">
@@ -99,7 +111,9 @@ export default function CreateLease() {
                   required
                 />
                 <label className="label">
-                  <span className="label-text-alt text-gray-500">Enter your landlord&apos;s Ethereum wallet address</span>
+                  <span className="label-text-alt text-gray-500">
+                    Enter your landlord&apos;s Ethereum wallet address
+                  </span>
                 </label>
               </div>
 
@@ -125,7 +139,9 @@ export default function CreateLease() {
                   </span>
                 </div>
                 <label className="label">
-                  <span className="label-text-alt text-gray-500">Enter the agreed monthly rent amount (e.g., 1500 for $1,500)</span>
+                  <span className="label-text-alt text-gray-500">
+                    Enter the agreed monthly rent amount (e.g., 1500 for $1,500)
+                  </span>
                 </label>
               </div>
 
@@ -151,9 +167,9 @@ export default function CreateLease() {
               </div>
 
               {/* Submit Button */}
-              <button 
-                type="submit" 
-                className="btn w-full bg-purple-600 hover:bg-purple-700 border-none text-white rounded-lg h-14 text-lg" 
+              <button
+                type="submit"
+                className="btn w-full bg-purple-600 hover:bg-purple-700 border-none text-white rounded-lg h-14 text-lg"
                 disabled={isMining || !address}
               >
                 {isMining ? (
@@ -193,30 +209,42 @@ export default function CreateLease() {
                 <h3 className="text-lg font-bold text-black mb-3">How it works (Tenant)</h3>
                 <div className="space-y-2 text-sm text-gray-700">
                   <div className="flex items-start gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-bold text-xs">1</span>
+                    <span className="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-bold text-xs">
+                      1
+                    </span>
                     <p>Enter your landlord&apos;s Ethereum address</p>
                   </div>
                   <div className="flex items-start gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-bold text-xs">2</span>
+                    <span className="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-bold text-xs">
+                      2
+                    </span>
                     <p>Set the agreed monthly rent amount in USDC</p>
                   </div>
                   <div className="flex items-start gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-bold text-xs">3</span>
+                    <span className="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-bold text-xs">
+                      3
+                    </span>
                     <p>Choose the day of the month rent is due (1-28)</p>
                   </div>
                   <div className="flex items-start gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-bold text-xs">4</span>
+                    <span className="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-bold text-xs">
+                      4
+                    </span>
                     <p>Click &quot;Create Lease&quot; to mint the Lease NFT to yourself</p>
                   </div>
                   <div className="flex items-start gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-bold text-xs">5</span>
+                    <span className="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-bold text-xs">
+                      5
+                    </span>
                     <p>The lease will be active immediately and stored on-chain</p>
                   </div>
                 </div>
 
                 <div className="mt-6 p-4 bg-purple-50 rounded-lg border border-purple-200">
                   <p className="text-xs text-purple-900">
-                    <span className="font-bold">Note:</span> As a tenant, you are creating this lease and will receive the Lease NFT. Both you and your landlord will have verifiable proof of the agreement on the blockchain.
+                    <span className="font-bold">Note:</span> As a tenant, you are creating this lease and will receive
+                    the Lease NFT. Both you and your landlord will have verifiable proof of the agreement on the
+                    blockchain.
                   </p>
                 </div>
               </div>

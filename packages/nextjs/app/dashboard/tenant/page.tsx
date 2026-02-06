@@ -66,13 +66,13 @@ const Dashboard: NextPage = () => {
     const day = Number(dueDay);
     const currentMonth = today.getMonth();
     const currentYear = today.getFullYear();
-    
+
     // Get next occurrence of due day
     let nextDue = new Date(currentYear, currentMonth, day);
     if (nextDue < today) {
       nextDue = new Date(currentYear, currentMonth + 1, day);
     }
-    
+
     const diffTime = nextDue.getTime() - today.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays > 0 ? `${diffDays} days away` : "Due today";
@@ -84,13 +84,13 @@ const Dashboard: NextPage = () => {
     const day = Number(dueDay);
     const currentMonth = today.getMonth();
     const currentYear = today.getFullYear();
-    
+
     // Get next occurrence of due day
     let nextDue = new Date(currentYear, currentMonth, day);
     if (nextDue < today) {
       nextDue = new Date(currentYear, currentMonth + 1, day);
     }
-    
+
     return nextDue.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
   };
 
@@ -98,9 +98,9 @@ const Dashboard: NextPage = () => {
     if (!startDate) return "N/A";
     const start = new Date(Number(startDate) * 1000);
     const end = endDate && Number(endDate) > 0 ? new Date(Number(endDate) * 1000) : null;
-    
+
     if (!end) return "Indefinite";
-    
+
     const diffTime = end.getTime() - start.getTime();
     const diffMonths = Math.round(diffTime / (1000 * 60 * 60 * 24 * 30));
     return `${diffMonths} months`;
@@ -180,8 +180,8 @@ const Dashboard: NextPage = () => {
               <p className="text-sm text-gray-400">Manage your lease, pay rent, and track your reputation on-chain.</p>
             </div>
             <div className="flex items-center gap-3">
-              <Link 
-                href="/create-lease/tenant" 
+              <Link
+                href="/create-lease/tenant"
                 className="btn btn-sm btn-outline btn-primary text-white hover:bg-primary hover:border-primary"
               >
                 + Create New Lease
@@ -222,20 +222,20 @@ const Dashboard: NextPage = () => {
               <div>
                 <div className="flex items-center gap-3 mb-2">
                   <h2 className="text-xl font-bold text-black">Sunset Apartments, Unit 3B</h2>
-                  <div className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold ${
-                    lease.status === 0 
-                      ? "bg-green-100 text-green-700" 
-                      : lease.status === 1 
-                      ? "bg-blue-100 text-blue-700" 
-                      : "bg-red-100 text-red-700"
-                  }`}>
-                    <span className={`w-2 h-2 rounded-full ${
-                      lease.status === 0 
-                        ? "bg-green-500" 
-                        : lease.status === 1 
-                        ? "bg-blue-500" 
-                        : "bg-red-500"
-                    }`}></span>
+                  <div
+                    className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold ${
+                      lease.status === 0
+                        ? "bg-green-100 text-green-700"
+                        : lease.status === 1
+                          ? "bg-blue-100 text-blue-700"
+                          : "bg-red-100 text-red-700"
+                    }`}
+                  >
+                    <span
+                      className={`w-2 h-2 rounded-full ${
+                        lease.status === 0 ? "bg-green-500" : lease.status === 1 ? "bg-blue-500" : "bg-red-500"
+                      }`}
+                    ></span>
                     {lease.status === 0 ? "ACTIVE" : lease.status === 1 ? "COMPLETED" : "TERMINATED"}
                   </div>
                 </div>
@@ -318,7 +318,7 @@ const Dashboard: NextPage = () => {
                 </div>
               </div>
 
-              <Link 
+              <Link
                 href={`/pay-rent?leaseId=${selectedLeaseId}`}
                 className="btn w-full bg-purple-600 hover:bg-purple-700 border-none text-white rounded-lg"
               >
@@ -370,16 +370,16 @@ const Dashboard: NextPage = () => {
                 <div className="w-full bg-gray-200 rounded-full h-2 mb-1">
                   <div
                     className="bg-gradient-to-r from-yellow-400 to-orange-500 h-2 rounded-full"
-                    style={{ 
-                      width: `${lease.endDate && Number(lease.endDate) > 0 
-                        ? Math.min((Number(lease.paymentCount || 0n) / 12) * 100, 100) 
-                        : Math.min(Number(lease.paymentCount || 0n) * 8.33, 100)}%` 
+                    style={{
+                      width: `${
+                        lease.endDate && Number(lease.endDate) > 0
+                          ? Math.min((Number(lease.paymentCount || 0n) / 12) * 100, 100)
+                          : Math.min(Number(lease.paymentCount || 0n) * 8.33, 100)
+                      }%`,
                     }}
                   ></div>
                 </div>
-                <p className="text-xs text-gray-500">
-                  {formatAmount(lease.totalPaid)} USDC total paid
-                </p>
+                <p className="text-xs text-gray-500">{formatAmount(lease.totalPaid)} USDC total paid</p>
               </div>
 
               {/* Real-time Balance */}
@@ -391,7 +391,7 @@ const Dashboard: NextPage = () => {
                 <p className="text-lg font-bold text-green-900">{formatAmount(lease.totalPaid)} USDC</p>
               </div>
 
-              <Link 
+              <Link
                 href={`/lease/${selectedLeaseId.toString()}`}
                 className="btn w-full bg-blue-500 hover:bg-blue-600 border-none text-white rounded-lg"
               >
@@ -418,10 +418,7 @@ const Dashboard: NextPage = () => {
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div>
                   <p className="text-xs text-gray-500 mb-1">Total Deposited</p>
-                  <p className="text-xl font-bold text-black">
-                    {formatAmount(lease.totalPaid)}{" "}
-                    USDC
-                  </p>
+                  <p className="text-xl font-bold text-black">{formatAmount(lease.totalPaid)} USDC</p>
                   <p className="text-xs text-gray-500">{lease.paymentCount?.toString()} payments locked</p>
                 </div>
                 <div>
@@ -441,9 +438,7 @@ const Dashboard: NextPage = () => {
                     return (
                       <div key={i} className="flex-1 flex flex-col items-center">
                         <div
-                          className={`w-full rounded-t transition-all ${
-                            isActive ? "bg-green-500" : "bg-green-200"
-                          }`}
+                          className={`w-full rounded-t transition-all ${isActive ? "bg-green-500" : "bg-green-200"}`}
                           style={{ height: `${heights[i]}%` }}
                         ></div>
                         <p className="text-xs text-gray-400 mt-1">{month}</p>
@@ -469,7 +464,8 @@ const Dashboard: NextPage = () => {
 
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                 <p className="text-xs text-blue-900">
-                  <span className="font-bold">Note:</span> Yield feature powered by NomaVault will be activated soon. Your rent payments are securely held on-chain.
+                  <span className="font-bold">Note:</span> Yield feature powered by NomaVault will be activated soon.
+                  Your rent payments are securely held on-chain.
                 </p>
               </div>
             </div>
@@ -520,7 +516,9 @@ const Dashboard: NextPage = () => {
                 <div>
                   <div className="flex justify-between text-xs mb-1">
                     <span className="text-gray-600">Payment History</span>
-                    <span className="font-bold text-blue-600">{reputation?.totalPayments?.toString() || "0"} payments</span>
+                    <span className="font-bold text-blue-600">
+                      {reputation?.totalPayments?.toString() || "0"} payments
+                    </span>
                   </div>
                   <div className="w-full bg-blue-500 rounded-full h-2"></div>
                 </div>
@@ -529,14 +527,17 @@ const Dashboard: NextPage = () => {
                   <div className="flex justify-between text-xs mb-1">
                     <span className="text-gray-600">Account Age</span>
                     <span className="font-bold text-purple-600">
-                      {lease.startDate ? Math.floor((Date.now() - Number(lease.startDate) * 1000) / (1000 * 60 * 60 * 24 * 30)) : 0} months
+                      {lease.startDate
+                        ? Math.floor((Date.now() - Number(lease.startDate) * 1000) / (1000 * 60 * 60 * 24 * 30))
+                        : 0}{" "}
+                      months
                     </span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div 
-                      className="bg-purple-500 h-2 rounded-full" 
-                      style={{ 
-                        width: `${Math.min((lease.startDate ? Math.floor((Date.now() - Number(lease.startDate) * 1000) / (1000 * 60 * 60 * 24 * 30)) : 0) * 8.33, 100)}%` 
+                    <div
+                      className="bg-purple-500 h-2 rounded-full"
+                      style={{
+                        width: `${Math.min((lease.startDate ? Math.floor((Date.now() - Number(lease.startDate) * 1000) / (1000 * 60 * 60 * 24 * 30)) : 0) * 8.33, 100)}%`,
                       }}
                     ></div>
                   </div>
@@ -545,7 +546,8 @@ const Dashboard: NextPage = () => {
 
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                 <p className="text-xs text-blue-900">
-                  <span className="font-bold">Note:</span> Your reputation is updated on-chain after each successful payment. Higher scores unlock better rates and rental opportunities.
+                  <span className="font-bold">Note:</span> Your reputation is updated on-chain after each successful
+                  payment. Higher scores unlock better rates and rental opportunities.
                 </p>
               </div>
             </div>
@@ -577,9 +579,13 @@ const Dashboard: NextPage = () => {
                       </div>
                       <div>
                         <p className="font-bold text-black text-sm">
-                          {payment.paidDate 
-                            ? new Date(Number(payment.paidDate) * 1000).toLocaleString("en-US", { month: "long", year: "numeric" }) 
-                            : "Month"} Rent
+                          {payment.paidDate
+                            ? new Date(Number(payment.paidDate) * 1000).toLocaleString("en-US", {
+                                month: "long",
+                                year: "numeric",
+                              })
+                            : "Month"}{" "}
+                          Rent
                         </p>
                         <p className="text-xs text-gray-500">
                           Paid on {payment.paidDate ? formatDate(payment.paidDate) : "N/A"}
@@ -594,7 +600,9 @@ const Dashboard: NextPage = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-black text-sm">{payment.amount ? formatAmount(payment.amount) : "0"} USDC</p>
+                      <p className="font-bold text-black text-sm">
+                        {payment.amount ? formatAmount(payment.amount) : "0"} USDC
+                      </p>
                       {payment.yieldEarned && Number(payment.yieldEarned) > 0 && (
                         <p className="text-xs text-green-600">+{formatAmount(payment.yieldEarned)} USDC earned</p>
                       )}
