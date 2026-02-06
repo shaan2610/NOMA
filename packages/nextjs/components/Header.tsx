@@ -25,12 +25,24 @@ export const menuLinks: HeaderMenuLink[] = [
     href: "/dashboard/tenant",
   },
   {
-    label: "Create Lease",
-    href: "/create-lease",
+    label: "Landlord Dashboard",
+    href: "/dashboard/landlord",
+  },
+  {
+    label: "Create Lease (Tenant)",
+    href: "/create-lease/tenant",
+  },
+  {
+    label: "Create Lease (Landlord)",
+    href: "/create-lease/landlord",
   },
   {
     label: "Pay Rent",
     href: "/pay-rent",
+  },
+  {
+    label: "Block Explorer",
+    href: "/blockexplorer",
   },
   {
     label: "Debug Contracts",
