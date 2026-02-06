@@ -2,13 +2,24 @@
 
 import { useState } from "react";
 import { useAccount } from "wagmi";
-import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
-import { formatEther } from "viem";
+import { useScaffoldReadContract, useLandlordLeases } from "~~/hooks/scaffold-eth";
 
 export default function LandlordDashboard() {
   const { address } = useAccount();
   const [tenantAddressToVerify, setTenantAddressToVerify] = useState("");
   const [verifiedTenantData, setVerifiedTenantData] = useState<any>(null);
+
+  // Use custom hook to get all landlord lease data
+  const {
+    landlordLeaseIds,
+    allLeases,
+    leasesWithFinancials,
+    allPaymentHistory,
+    totalProperties,
+    totalMonthlyRent,
+    totalSecurityDeposits,
+    totalYieldEarned,
+  } = useLandlordLeases(address);
 
   // Helper functions
   const formatDate = (timestamp: bigint | undefined) => {
@@ -28,194 +39,13 @@ export default function LandlordDashboard() {
     });
   };
 
-  const calculateDaysUntil = (day: number) => {
-    const today = new Date();
-    const currentDay = today.getDate();
-    const currentMonth = today.getMonth();
-    const currentYear = today.getFullYear();
-
-    let targetDate = new Date(currentYear, currentMonth, day);
-    if (currentDay >= day) {
-      targetDate = new Date(currentYear, currentMonth + 1, day);
-    }
-
-    const diffTime = targetDate.getTime() - today.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
-  };
-
-  // Read landlord's leases
-  const { data: landlordLeaseIds } = useScaffoldReadContract({
-    contractName: "LeaseNFT",
-    functionName: "getLandlordLeases",
-    args: [address],
-  });
-
-  // Read ALL leases details for the landlord
-  const leaseId = landlordLeaseIds && landlordLeaseIds.length > 0 ? landlordLeaseIds[0] : undefined;
-  const leaseId2 = landlordLeaseIds && landlordLeaseIds.length > 1 ? landlordLeaseIds[1] : undefined;
-
-  const { data: leaseData } = useScaffoldReadContract({
-    contractName: "LeaseNFT",
-    functionName: "leases",
-    args: [leaseId],
-  });
-
-  const { data: leaseData2 } = useScaffoldReadContract({
-    contractName: "LeaseNFT",
-    functionName: "leases",
-    args: [leaseId2],
-  });
-
-  // Destructure lease data properly (it's a tuple/array)
-  const lease = leaseData ? {
-    tenant: leaseData[1] as string,
-    landlord: leaseData[2] as string,
-    monthlyRent: leaseData[3] as bigint,
-    dueDay: leaseData[4] as bigint,
-    startDate: leaseData[5] as bigint,
-    endDate: leaseData[6] as bigint,
-    status: leaseData[7] as number,
-    paymentCount: leaseData[8] as bigint,
-    totalPaid: leaseData[9] as bigint,
-  } : undefined;
-
-  const lease2 = leaseData2 ? {
-    tenant: leaseData2[1] as string,
-    landlord: leaseData2[2] as string,
-    monthlyRent: leaseData2[3] as bigint,
-    dueDay: leaseData2[4] as bigint,
-    startDate: leaseData2[5] as bigint,
-    endDate: leaseData2[6] as bigint,
-    status: leaseData2[7] as number,
-    paymentCount: leaseData2[8] as bigint,
-    totalPaid: leaseData2[9] as bigint,
-  } : undefined;
-
-  const { data: leaseDeposit } = useScaffoldReadContract({
-    contractName: "NomaVault",
-    functionName: "leaseDeposits",
-    args: [leaseId as bigint],
-  });
-
-  const { data: leaseDeposit2 } = useScaffoldReadContract({
-    contractName: "NomaVault",
-    functionName: "leaseDeposits",
-    args: [leaseId2 as bigint],
-  });
-
-  const { data: leaseYield } = useScaffoldReadContract({
-    contractName: "NomaVault",
-    functionName: "leaseYield",
-    args: [leaseId as bigint],
-  });
-
-  const { data: leaseYield2 } = useScaffoldReadContract({
-    contractName: "NomaVault",
-    functionName: "leaseYield",
-    args: [leaseId2 as bigint],
-  });
-
-  // Read landlord reputation
+  // Read landlord reputation (kept for potential future use)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data: landlordReputation } = useScaffoldReadContract({
     contractName: "ReputationRegistry",
     functionName: "getReputation",
     args: [address],
   });
-
-  // Read payment history for first 10 leases (extendable if needed)
-  const { data: paymentHistory0 } = useScaffoldReadContract({
-    contractName: "NomaPayment",
-    functionName: "getPaymentHistory",
-    args: [landlordLeaseIds?.[0]],
-    watch: true,
-  });
-
-  const { data: paymentHistory1 } = useScaffoldReadContract({
-    contractName: "NomaPayment",
-    functionName: "getPaymentHistory",
-    args: [landlordLeaseIds?.[1]],
-    watch: true,
-  });
-
-  const { data: paymentHistory2 } = useScaffoldReadContract({
-    contractName: "NomaPayment",
-    functionName: "getPaymentHistory",
-    args: [landlordLeaseIds?.[2]],
-    watch: true,
-  });
-
-  const { data: paymentHistory3 } = useScaffoldReadContract({
-    contractName: "NomaPayment",
-    functionName: "getPaymentHistory",
-    args: [landlordLeaseIds?.[3]],
-    watch: true,
-  });
-
-  const { data: paymentHistory4 } = useScaffoldReadContract({
-    contractName: "NomaPayment",
-    functionName: "getPaymentHistory",
-    args: [landlordLeaseIds?.[4]],
-    watch: true,
-  });
-
-  const { data: paymentHistory5 } = useScaffoldReadContract({
-    contractName: "NomaPayment",
-    functionName: "getPaymentHistory",
-    args: [landlordLeaseIds?.[5]],
-    watch: true,
-  });
-
-  const { data: paymentHistory6 } = useScaffoldReadContract({
-    contractName: "NomaPayment",
-    functionName: "getPaymentHistory",
-    args: [landlordLeaseIds?.[6]],
-    watch: true,
-  });
-
-  const { data: paymentHistory7 } = useScaffoldReadContract({
-    contractName: "NomaPayment",
-    functionName: "getPaymentHistory",
-    args: [landlordLeaseIds?.[7]],
-    watch: true,
-  });
-
-  const { data: paymentHistory8 } = useScaffoldReadContract({
-    contractName: "NomaPayment",
-    functionName: "getPaymentHistory",
-    args: [landlordLeaseIds?.[8]],
-    watch: true,
-  });
-
-  const { data: paymentHistory9 } = useScaffoldReadContract({
-    contractName: "NomaPayment",
-    functionName: "getPaymentHistory",
-    args: [landlordLeaseIds?.[9]],
-    watch: true,
-  });
-
-  // Combine all payment histories from all leases
-  const allPaymentHistory = [
-    ...(paymentHistory0 || []),
-    ...(paymentHistory1 || []),
-    ...(paymentHistory2 || []),
-    ...(paymentHistory3 || []),
-    ...(paymentHistory4 || []),
-    ...(paymentHistory5 || []),
-    ...(paymentHistory6 || []),
-    ...(paymentHistory7 || []),
-    ...(paymentHistory8 || []),
-    ...(paymentHistory9 || []),
-  ].sort((a: any, b: any) => {
-    // Sort by payment date descending (most recent first)
-    return Number(b.paidDate || 0n) - Number(a.paidDate || 0n);
-  });
-
-  // Calculate portfolio summary from REAL data
-  const totalProperties = landlordLeaseIds?.length || 0;
-  const totalSecurityDeposits = (leaseDeposit || 0n) + (leaseDeposit2 || 0n);
-  const totalYieldEarned = (leaseYield || 0n) + (leaseYield2 || 0n);
-  const monthlyRent = (lease?.monthlyRent || 0n) + (lease2?.monthlyRent || 0n);
 
   // Calculate APY based on yield
   const calculateAPY = (deposit: bigint, yieldEarned: bigint) => {
@@ -326,7 +156,7 @@ export default function LandlordDashboard() {
                 </div>
                 <span className="text-sm text-gray-600 font-medium">Monthly Rent</span>
               </div>
-              <p className="text-3xl font-bold text-black">{formatUSDC(monthlyRent)} USDC</p>
+              <p className="text-3xl font-bold text-black">{formatUSDC(totalMonthlyRent)} USDC</p>
             </div>
           </div>
         </div>
@@ -335,121 +165,68 @@ export default function LandlordDashboard() {
         <div className="mb-8">
           <h2 className="text-2xl font-bold mb-4">Security Deposits Earning Yield</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Card 1 - Real Data */}
-            {lease && leaseId !== undefined && (
-              <div className="bg-white rounded-2xl shadow-xl p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <span className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-600 text-sm font-bold rounded-lg">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                    EARNING {calculateAPY(leaseDeposit || 0n, leaseYield || 0n)}%
-                  </span>
-                  <span className="text-gray-500 text-sm">Lease #{leaseId.toString()}</span>
+            {/* Render cards for each lease with financial data */}
+            {leasesWithFinancials.slice(0, 6).map((leaseFinancial, index) => {
+              const lease = allLeases[index];
+              if (!lease) return null;
+
+              return (
+                <div key={leaseFinancial.leaseId.toString()} className="bg-white rounded-2xl shadow-xl p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <span className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-600 text-sm font-bold rounded-lg">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                      </svg>
+                      EARNING {calculateAPY(leaseFinancial.deposit, leaseFinancial.yield)}%
+                    </span>
+                    <span className="text-gray-500 text-sm">Lease #{leaseFinancial.leaseId.toString()}</span>
+                  </div>
+
+                  <div className="mb-6">
+                    <p className="text-3xl font-bold text-black mb-1">{formatUSDC(leaseFinancial.deposit)} USDC</p>
+                    <p className="text-sm text-gray-600">Security Deposit</p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+                    <div>
+                      <p className="text-gray-600 mb-1">Tenant</p>
+                      <p className="text-black font-medium">{lease.tenant.slice(0, 6)}...{lease.tenant.slice(-4)}</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-600 mb-1">Lease Ends</p>
+                      <p className="text-black font-medium">{formatDate(lease.endDate)}</p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+                    <div>
+                      <p className="text-gray-600 mb-1">Yield Rate</p>
+                      <p className="text-green-600 font-bold">🔼 {calculateAPY(leaseFinancial.deposit, leaseFinancial.yield)}% APY</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-600 mb-1">Earned So Far</p>
+                      <p className="text-green-600 font-bold">+{formatUSDC(leaseFinancial.yield)} USDC</p>
+                    </div>
+                  </div>
+
+                  <div className="mb-6">
+                    <p className="text-sm text-gray-600 mb-2">Tenant Credit Score</p>
+                    <div className="w-full bg-gray-200 rounded-full h-2.5">
+                      <div className="bg-green-500 h-2.5 rounded-full" style={{ width: `${Math.min(100, (Number(lease.paymentCount) * 10))}%` }}></div>
+                    </div>
+                    <div className="flex justify-end items-center gap-1 mt-1">
+                      <p className="text-sm text-green-600 font-bold">
+                        {Number(lease.paymentCount) >= 10 ? "Excellent" : Number(lease.paymentCount) >= 5 ? "Good" : "Building"}
+                      </p>
+                    </div>
+                  </div>
+
+                  <button className="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition-colors">
+                    View Tenant History
+                  </button>
                 </div>
-
-                <div className="mb-6">
-                  <p className="text-3xl font-bold text-black mb-1">{formatUSDC(leaseDeposit)} USDC</p>
-                  <p className="text-sm text-gray-600">Security Deposit</p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-                  <div>
-                    <p className="text-gray-600 mb-1">Tenant</p>
-                    <p className="text-black font-medium">{lease.tenant.slice(0, 6)}...{lease.tenant.slice(-4)}</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-600 mb-1">Lease Ends</p>
-                    <p className="text-black font-medium">{formatDate(lease.endDate)}</p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-                  <div>
-                    <p className="text-gray-600 mb-1">Yield Rate</p>
-                    <p className="text-green-600 font-bold">🔼 {calculateAPY(leaseDeposit || 0n, leaseYield || 0n)}% APY</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-600 mb-1">Earned So Far</p>
-                    <p className="text-green-600 font-bold">+{formatUSDC(leaseYield)} USDC</p>
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <p className="text-sm text-gray-600 mb-2">Tenant Credit Score</p>
-                  <div className="w-full bg-gray-200 rounded-full h-2.5">
-                    <div className="bg-green-500 h-2.5 rounded-full" style={{ width: `${Math.min(100, (Number(lease.paymentCount) * 10))}%` }}></div>
-                  </div>
-                  <div className="flex justify-end items-center gap-1 mt-1">
-                    <p className="text-sm text-green-600 font-bold">
-                      {Number(lease.paymentCount) >= 10 ? "Excellent" : Number(lease.paymentCount) >= 5 ? "Good" : "Building"}
-                    </p>
-                  </div>
-                </div>
-
-                <button className="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition-colors">
-                  View Tenant History
-                </button>
-              </div>
-            )}
-
-            {/* Card 2 - Real Data */}
-            {lease2 && leaseId2 !== undefined && (
-              <div className="bg-white rounded-2xl shadow-xl p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <span className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-600 text-sm font-bold rounded-lg">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                    EARNING {calculateAPY(leaseDeposit2 || 0n, leaseYield2 || 0n)}%
-                  </span>
-                  <span className="text-gray-500 text-sm">Lease #{leaseId2.toString()}</span>
-                </div>
-
-                <div className="mb-6">
-                  <p className="text-3xl font-bold text-black mb-1">{formatUSDC(leaseDeposit2)} USDC</p>
-                  <p className="text-sm text-gray-600">Security Deposit</p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-                  <div>
-                    <p className="text-gray-600 mb-1">Tenant</p>
-                    <p className="text-black font-medium">{lease2.tenant.slice(0, 6)}...{lease2.tenant.slice(-4)}</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-600 mb-1">Lease Ends</p>
-                    <p className="text-black font-medium">{formatDate(lease2.endDate)}</p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-                  <div>
-                    <p className="text-gray-600 mb-1">Yield Rate</p>
-                    <p className="text-green-600 font-bold">🔼 {calculateAPY(leaseDeposit2 || 0n, leaseYield2 || 0n)}% APY</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-600 mb-1">Earned So Far</p>
-                    <p className="text-green-600 font-bold">+{formatUSDC(leaseYield2)} USDC</p>
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <p className="text-sm text-gray-600 mb-2">Tenant Credit Score</p>
-                  <div className="w-full bg-gray-200 rounded-full h-2.5">
-                    <div className="bg-green-500 h-2.5 rounded-full" style={{ width: `${Math.min(100, (Number(lease2.paymentCount) * 10))}%` }}></div>
-                  </div>
-                  <div className="flex justify-end items-center gap-1 mt-1">
-                    <p className="text-sm text-green-600 font-bold">
-                      {Number(lease2.paymentCount) >= 10 ? "Excellent" : Number(lease2.paymentCount) >= 5 ? "Good" : "Building"}
-                    </p>
-                  </div>
-                </div>
-
-                <button className="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition-colors">
-                  View Tenant History
-                </button>
-              </div>
-            )}
+              );
+            })}
           </div>
         </div>
 
@@ -473,67 +250,41 @@ export default function LandlordDashboard() {
         <div className="mb-8">
           <h2 className="text-2xl font-bold mb-4">Incoming Rent Payments</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Payment Card 1 - Real Data */}
-            {lease && leaseId !== undefined && (
-              <div className="bg-white rounded-2xl shadow-xl p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <span className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-600 text-sm font-bold rounded-lg">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
-                    {lease.status === 0 ? "ACTIVE" : "LOCKED"}
-                  </span>
-                  <span className="text-gray-500 text-sm">{formatDate(lease.startDate)}</span>
-                </div>
+            {/* Render payment cards for all leases */}
+            {allLeases.slice(0, 6).map((lease, index) => {
+              const leaseId = landlordLeaseIds?.[index];
+              if (!leaseId) return null;
 
-                <div className="mb-4">
-                  <p className="text-3xl font-bold text-black mb-1">{formatUSDC(lease.monthlyRent)} USDC</p>
-                  <p className="text-sm text-gray-600">From: {lease.tenant.slice(0, 6)}...{lease.tenant.slice(-4)} (Lease #{leaseId.toString()})</p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="text-gray-600 mb-1">Next Due Date</p>
-                    <p className="text-black font-medium">Day {Number(lease.dueDay)} of month</p>
+              return (
+                <div key={leaseId.toString()} className="bg-white rounded-2xl shadow-xl p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <span className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-600 text-sm font-bold rounded-lg">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                      {lease.status === 0 ? "ACTIVE" : "LOCKED"}
+                    </span>
+                    <span className="text-gray-500 text-sm">{formatDate(lease.startDate)}</span>
                   </div>
-                  <div>
-                    <p className="text-gray-600 mb-1">Total Paid</p>
-                    <p className="text-black font-medium">{formatUSDC(lease.totalPaid)} USDC</p>
+
+                  <div className="mb-4">
+                    <p className="text-3xl font-bold text-black mb-1">{formatUSDC(lease.monthlyRent)} USDC</p>
+                    <p className="text-sm text-gray-600">From: {lease.tenant.slice(0, 6)}...{lease.tenant.slice(-4)} (Lease #{leaseId.toString()})</p>
                   </div>
-                </div>
-              </div>
-            )}
 
-            {/* Payment Card 2 - Real Data */}
-            {lease2 && leaseId2 !== undefined && (
-              <div className="bg-white rounded-2xl shadow-xl p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <span className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-600 text-sm font-bold rounded-lg">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
-                    {lease2.status === 0 ? "ACTIVE" : "LOCKED"}
-                  </span>
-                  <span className="text-gray-500 text-sm">{formatDate(lease2.startDate)}</span>
-                </div>
-
-                <div className="mb-4">
-                  <p className="text-3xl font-bold text-black mb-1">{formatUSDC(lease2.monthlyRent)} USDC</p>
-                  <p className="text-sm text-gray-600">From: {lease2.tenant.slice(0, 6)}...{lease2.tenant.slice(-4)} (Lease #{leaseId2.toString()})</p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="text-gray-600 mb-1">Next Due Date</p>
-                    <p className="text-black font-medium">Day {Number(lease2.dueDay)} of month</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-600 mb-1">Total Paid</p>
-                    <p className="text-black font-medium">{formatUSDC(lease2.totalPaid)} USDC</p>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <p className="text-gray-600 mb-1">Next Due Date</p>
+                      <p className="text-black font-medium">Day {Number(lease.dueDay)} of month</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-600 mb-1">Total Paid</p>
+                      <p className="text-black font-medium">{formatUSDC(lease.totalPaid)} USDC</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              );
+            })}
           </div>
         </div>
 
