@@ -211,7 +211,12 @@ export default function LandlordDashboard() {
                   </svg>
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-2">No Properties Yet</h3>
-                <p className="text-gray-600">Create your first lease to start earning yield on security deposits.</p>
+                <p className="text-gray-600 mb-4">
+                  Create your first lease to start earning yield on security deposits.
+                </p>
+                <Link href="/create-lease/landlord" className="btn btn-primary btn-sm">
+                  + Create New Lease
+                </Link>
               </div>
             ) : (
               leasesWithFinancials.slice(0, 6).map((leaseFinancial, index) => {
@@ -334,7 +339,10 @@ export default function LandlordDashboard() {
                   </svg>
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-2">No Active Leases</h3>
-                <p className="text-gray-600">Create your first lease to start receiving rent payments.</p>
+                <p className="text-gray-600 mb-4">Create your first lease to start receiving rent payments.</p>
+                <Link href="/create-lease/landlord" className="btn btn-primary btn-sm">
+                  + Create New Lease
+                </Link>
               </div>
             ) : (
               allLeases.slice(0, 6).map((lease, index) => {

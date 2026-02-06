@@ -160,7 +160,10 @@ const Dashboard: NextPage = () => {
         <div className="w-full max-w-7xl mx-auto">
           <div className="mb-8">
             <h1 className="text-4xl font-bold text-white mb-2">Tenant Dashboard</h1>
-            <p className="text-gray-300">No active lease found. Contact your landlord to create a lease.</p>
+            <p className="text-gray-300 mb-6">No active lease found. Create a new lease to get started.</p>
+            <Link href="/create-lease/tenant" className="btn btn-primary btn-lg">
+              + Create New Lease
+            </Link>
           </div>
         </div>
       </div>
