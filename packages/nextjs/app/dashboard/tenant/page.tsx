@@ -127,7 +127,13 @@ const Dashboard: NextPage = () => {
               <h1 className="text-4xl font-bold text-white mb-2">Tenant Dashboard</h1>
               <p className="text-gray-300">Manage your lease, pay rent, and track your reputation on-chain.</p>
             </div>
-            <div className="text-right">
+            <div className="text-right flex flex-col items-end gap-2">
+              <Link 
+                href="/create-lease/tenant" 
+                className="btn btn-sm btn-outline btn-primary text-white hover:bg-primary hover:border-primary"
+              >
+                + Create New Lease
+              </Link>
               <div className="badge badge-lg badge-primary text-white font-bold">
                 📋 Viewing Lease #{selectedLeaseId?.toString()}
               </div>
