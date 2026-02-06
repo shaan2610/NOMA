@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useAccount } from "wagmi";
+import Link from "next/link";
 import { useScaffoldReadContract, useLandlordLeases } from "~~/hooks/scaffold-eth";
 
 export default function LandlordDashboard() {
@@ -78,8 +79,27 @@ export default function LandlordDashboard() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Landlord Dashboard</h1>
-          <p className="text-gray-400">Manage your properties, security deposits, and verify tenant payment history.</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold mb-2">Landlord Dashboard</h1>
+              <p className="text-gray-400">Manage your properties, security deposits, and verify tenant payment history.</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <Link 
+                href="/create-lease/landlord" 
+                className="btn btn-sm btn-outline btn-primary text-white hover:bg-primary hover:border-primary"
+              >
+                + Create New Lease
+              </Link>
+              {totalProperties > 0 && (
+                <div className="text-right">
+                  <div className="badge badge-lg badge-primary text-white font-bold">
+                    🏠 {totalProperties} {totalProperties === 1 ? 'Property' : 'Properties'}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
         {!address && (

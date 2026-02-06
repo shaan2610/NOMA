@@ -181,7 +181,7 @@ const Dashboard: NextPage = () => {
             </div>
             <div className="flex items-center gap-3">
               <Link 
-                href="/create-lease" 
+                href="/create-lease/tenant" 
                 className="btn btn-sm btn-outline btn-primary text-white hover:bg-primary hover:border-primary"
               >
                 + Create New Lease
