@@ -118,7 +118,7 @@ const Home: NextPage = () => {
 
                   {/* Button */}
                   <Link
-                    href="/create-lease"
+                    href="/dasboard/landlord"
                     className="flex items-center justify-between text-blue-600 hover:text-blue-700 font-semibold transition-colors group"
                   >
                     <span>Continue as Landlord</span>

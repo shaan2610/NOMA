@@ -5,21 +5,21 @@ import Link from "next/link";
 import { useAccount } from "wagmi";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
-export default function CreateLease() {
+export default function CreateLeaseAsLandlord() {
   const { address } = useAccount();
   const [formData, setFormData] = useState({
-    landlord: "",
+    tenant: "",
     monthlyRent: "",
     dueDay: "1",
   });
 
-  // Write: Create lease as tenant
+  // Write: Create lease as landlord
   const { writeContractAsync: createLease, isMining } = useScaffoldWriteContract("LeaseNFT");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.landlord || !formData.monthlyRent) {
+    if (!formData.tenant || !formData.monthlyRent) {
       alert("Please fill all required fields");
       return;
     }
@@ -29,13 +29,13 @@ export default function CreateLease() {
       const monthlyRentWithDecimals = BigInt(Math.floor(Number(formData.monthlyRent) * 1e6));
 
       await createLease({
-        functionName: "createLeaseAsTenant",
-        args: [formData.landlord as `0x${string}`, monthlyRentWithDecimals, BigInt(formData.dueDay)],
+        functionName: "createLeaseAsLandlord",
+        args: [formData.tenant as `0x${string}`, monthlyRentWithDecimals, BigInt(formData.dueDay)],
       });
       alert("Lease created successfully!");
       // Reset form
       setFormData({
-        landlord: "",
+        tenant: "",
         monthlyRent: "",
         dueDay: "1",
       });
@@ -59,14 +59,14 @@ export default function CreateLease() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-3xl font-bold text-white mb-1">Create New Lease (Tenant)</h1>
-              <p className="text-sm text-gray-400">Propose a new lease agreement to your landlord</p>
+              <h1 className="text-3xl font-bold text-white mb-1">Create New Lease (Landlord)</h1>
+              <p className="text-sm text-gray-400">Set up a new lease agreement for your tenant</p>
             </div>
             <Link 
-              href="/dashboard/tenant" 
+              href="/" 
               className="btn btn-sm btn-outline btn-primary text-white hover:bg-primary hover:border-primary"
             >
-              ← Back to Dashboard
+              ← Back to Home
             </Link>
           </div>
 
@@ -84,22 +84,22 @@ export default function CreateLease() {
             <h2 className="text-2xl font-bold text-black mb-6">Lease Details</h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Landlord Address */}
+              {/* Tenant Address */}
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text text-black font-semibold">Landlord Address *</span>
+                  <span className="label-text text-black font-semibold">Tenant Address *</span>
                 </label>
                 <input
                   type="text"
-                  name="landlord"
+                  name="tenant"
                   placeholder="0x..."
                   className="input input-bordered w-full bg-gray-50 text-black border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 rounded-lg"
-                  value={formData.landlord}
+                  value={formData.tenant}
                   onChange={handleChange}
                   required
                 />
                 <label className="label">
-                  <span className="label-text-alt text-gray-500">Enter your landlord&apos;s Ethereum wallet address</span>
+                  <span className="label-text-alt text-gray-500">Enter your tenant&apos;s Ethereum wallet address</span>
                 </label>
               </div>
 
@@ -125,7 +125,7 @@ export default function CreateLease() {
                   </span>
                 </div>
                 <label className="label">
-                  <span className="label-text-alt text-gray-500">Enter the agreed monthly rent amount (e.g., 1500 for $1,500)</span>
+                  <span className="label-text-alt text-gray-500">Set the monthly rent amount (e.g., 1500 for $1,500)</span>
                 </label>
               </div>
 
@@ -190,15 +190,15 @@ export default function CreateLease() {
                 </svg>
               </div>
               <div className="flex-1">
-                <h3 className="text-lg font-bold text-black mb-3">How it works (Tenant)</h3>
+                <h3 className="text-lg font-bold text-black mb-3">How it works (Landlord)</h3>
                 <div className="space-y-2 text-sm text-gray-700">
                   <div className="flex items-start gap-3">
                     <span className="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-bold text-xs">1</span>
-                    <p>Enter your landlord&apos;s Ethereum address</p>
+                    <p>Enter your tenant&apos;s Ethereum address</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-bold text-xs">2</span>
-                    <p>Set the agreed monthly rent amount in USDC</p>
+                    <p>Set the monthly rent amount in USDC</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-bold text-xs">3</span>
@@ -206,7 +206,7 @@ export default function CreateLease() {
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-bold text-xs">4</span>
-                    <p>Click &quot;Create Lease&quot; to mint the Lease NFT to yourself</p>
+                    <p>Click &quot;Create Lease&quot; to mint the Lease NFT to your tenant</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-bold text-xs">5</span>
@@ -216,7 +216,7 @@ export default function CreateLease() {
 
                 <div className="mt-6 p-4 bg-purple-50 rounded-lg border border-purple-200">
                   <p className="text-xs text-purple-900">
-                    <span className="font-bold">Note:</span> As a tenant, you are creating this lease and will receive the Lease NFT. Both you and your landlord will have verifiable proof of the agreement on the blockchain.
+                    <span className="font-bold">Note:</span> As a landlord, you are creating this lease for your tenant. The Lease NFT will be minted to the tenant&apos;s address. Both you and your tenant will have verifiable proof of the agreement on the blockchain.
                   </p>
                 </div>
               </div>
