@@ -163,10 +163,28 @@ export default function LandlordDashboard() {
 
         {/* Security Deposits Earning Yield */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">Security Deposits Earning Yield</h2>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold">Security Deposits Earning Yield</h2>
+            {leasesWithFinancials.length > 6 && (
+              <span className="text-sm text-gray-400">
+                Showing 6 of {leasesWithFinancials.length} properties
+              </span>
+            )}
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Render cards for each lease with financial data */}
-            {leasesWithFinancials.slice(0, 6).map((leaseFinancial, index) => {
+            {leasesWithFinancials.length === 0 ? (
+              <div className="col-span-2 text-center py-12 bg-white rounded-2xl shadow-xl">
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">No Properties Yet</h3>
+                <p className="text-gray-600">Create your first lease to start earning yield on security deposits.</p>
+              </div>
+            ) : (
+              leasesWithFinancials.slice(0, 6).map((leaseFinancial, index) => {
               const lease = allLeases[index];
               if (!lease) return null;
 
@@ -226,7 +244,8 @@ export default function LandlordDashboard() {
                   </button>
                 </div>
               );
-            })}
+            })
+            )}
           </div>
         </div>
 
@@ -248,10 +267,28 @@ export default function LandlordDashboard() {
 
         {/* Incoming Rent Payments */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">Incoming Rent Payments</h2>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold">Incoming Rent Payments</h2>
+            {allLeases.length > 6 && (
+              <span className="text-sm text-gray-400">
+                Showing 6 of {allLeases.length} properties
+              </span>
+            )}
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Render payment cards for all leases */}
-            {allLeases.slice(0, 6).map((lease, index) => {
+            {allLeases.length === 0 ? (
+              <div className="col-span-2 text-center py-12 bg-white rounded-2xl shadow-xl">
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">No Active Leases</h3>
+                <p className="text-gray-600">Create your first lease to start receiving rent payments.</p>
+              </div>
+            ) : (
+              allLeases.slice(0, 6).map((lease, index) => {
               const leaseId = landlordLeaseIds?.[index];
               if (!leaseId) return null;
 
@@ -284,7 +321,8 @@ export default function LandlordDashboard() {
                   </div>
                 </div>
               );
-            })}
+            })
+            )}
           </div>
         </div>
 
